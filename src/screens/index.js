@@ -1,5 +1,13 @@
 import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignupScreen";
 import WelcomeScreen from "./WelcomeScreen";
+import OTPScreen from "./OTPScreen";
+import EmailAuthenticationScreen from "./EmailAuthentication";
+import HomeScreen from "./HomeScreen";
 
-export { LoginScreen, SignUpScreen, WelcomeScreen };
+export {
+  LoginScreen,
+  WelcomeScreen,
+  OTPScreen,
+  EmailAuthenticationScreen,
+  HomeScreen,
+};

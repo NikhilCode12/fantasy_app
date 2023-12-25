@@ -8,17 +8,19 @@ import {
   Text,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   TextInput,
   Button,
+  Image,
   ToastAndroid,
 } from "react-native";
 import CheckBox from "../components/Checkbox";
 
-export default function LoginScreen({ navigation }) {
-  const [phoneNum, setPhoneNum] = useState();
+export default function EmailAuthentication({ navigation }) {
+  const [email, setEmail] = useState("");
   const [isChecked, setisChecked] = useState(false);
-  const onChangePhone = (number) => {
-    setPhoneNum(number);
+  const onChangeEmail = (email) => {
+    setEmail(email);
   };
 
   return (
@@ -34,14 +36,14 @@ export default function LoginScreen({ navigation }) {
         >
           <StatusBar hidden />
           <View style={styles.heading}>
-            <Text style={styles.headingTitle}>Login/Register</Text>
+            <Text style={styles.headingTitle}>Welcome/Signup</Text>
             <Text style={styles.headingSubTitle}>
-              Please enter your account credentials
+              Verify to begin your journey
             </Text>
           </View>
           <View style={styles.ending}>
             <Text style={{ fontSize: 14, marginBottom: 8 }}>
-              Enter Mobile Number
+              Enter Email Address
             </Text>
             <View
               style={{
@@ -53,22 +55,21 @@ export default function LoginScreen({ navigation }) {
                 paddingVertical: 8,
               }}
             >
-              <Text style={styles.numberSize}>{"+91 "}</Text>
               <TextInput
                 style={{
-                  ...styles.numberSize,
-                  width: "80%",
+                  ...styles.emailSize,
+                  width: "90%",
                   color: "black",
                 }}
+                placeholder="abc@email.com"
                 cursorColor={"grey"}
-                value={phoneNum}
-                onChangeText={onChangePhone}
-                keyboardType="phone-pad"
-                maxLength={10}
+                value={email}
+                onChangeText={onChangeEmail}
+                keyboardType="email-address"
               />
               <DeleteIcon
                 onPress={() => {
-                  setPhoneNum(null);
+                  setEmail("");
                 }}
               />
             </View>
@@ -91,7 +92,7 @@ export default function LoginScreen({ navigation }) {
               </Text>
             </View>
             <Button
-              title="Verify mobile"
+              title="Verify email"
               color={isChecked ? "green" : "grey"}
               onPress={() => {
                 if (isChecked) {
@@ -125,19 +126,100 @@ export default function LoginScreen({ navigation }) {
               <Text
                 style={{ fontSize: 14, marginBottom: 1 }}
                 onPress={() => {
-                  navigation.navigate("EmailAuthentication");
+                  navigation.navigate("Login");
                 }}
               >
-                Other options
+                Login via mobile
               </Text>
               <View
                 style={{
                   borderBottomWidth: 1,
                   borderBottomColor: "black",
                   borderStyle: "dotted",
-                  width: "27.5%",
+                  width: "33%",
                 }}
               ></View>
+            </View>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
+                marginVertical: 12,
+              }}
+            >
+              <View style={styles.smallCircle}></View>
+              <View style={styles.smallCircle}></View>
+              <View style={styles.smallCircle}></View>
+              <View
+                style={{
+                  borderRadius: 100,
+                  backgroundColor: "grey",
+                  width: 28,
+                  height: 28,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginHorizontal: 4,
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.light,
+                    fontSize: 9,
+                    textAlign: "center",
+                  }}
+                >
+                  OR
+                </Text>
+              </View>
+              <View style={styles.smallCircle}></View>
+              <View style={styles.smallCircle}></View>
+              <View style={styles.smallCircle}></View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 12,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => console.log("Facebook")}
+                style={{
+                  marginRight: 6,
+                  ...styles.socialLogoIcons,
+                }}
+              >
+                <Image
+                  source={require("../../assets/facebook.png")}
+                  style={styles.socialLogos}
+                  resizeMethod="contain"
+                />
+                <Text style={styles.socialLogoText}>Facebook</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => console.log("Google")}
+                style={{
+                  marginLeft: 6,
+                  ...styles.socialLogoIcons,
+                }}
+              >
+                <Image
+                  source={require("../../assets/google.png")}
+                  style={styles.socialLogos}
+                  resizeMethod="contain"
+                />
+                <Text style={styles.socialLogoText}>Google</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: 22 }}>
+              <Button
+                title="Enter home screen"
+                color={COLORS.dark}
+                onPress={() => {
+                  navigation.navigate("Home");
+                }}
+              />
             </View>
           </View>
         </LinearGradient>
@@ -173,8 +255,35 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
-  numberSize: {
-    fontSize: 16,
+  emailSize: {
+    fontSize: 14,
     fontWeight: "600",
+  },
+  smallCircle: {
+    borderRadius: 100,
+    marginHorizontal: 2,
+    backgroundColor: "grey",
+    width: 2,
+    height: 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  socialLogos: {
+    width: 36,
+    height: 36,
+    marginRight: 8,
+  },
+  socialLogoText: {
+    marginLeft: 4,
+  },
+  socialLogoIcons: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 52,
+    borderWidth: 1,
+    borderColor: "grey",
+    borderRadius: 5,
   },
 });

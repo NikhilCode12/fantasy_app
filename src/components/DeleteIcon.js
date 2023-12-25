@@ -1,18 +1,18 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 
-const BackArrow = ({ onPress }) => {
+const DeleteIcon = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <FontAwesomeIcon
-        icon={faArrowLeft}
+        icon={faDeleteLeft}
         size={26}
-        style={{ position: "absolute", top: 0, left: 0 }}
+        style={{ alignSelf: "flex-end" }}
       />
     </TouchableOpacity>
   );
 };
 
-export default BackArrow;
+export default DeleteIcon;

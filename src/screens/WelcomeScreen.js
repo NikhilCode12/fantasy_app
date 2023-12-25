@@ -67,7 +67,7 @@ export default function WelcomeScreen({ navigation }) {
             Click on Get Started to Play and Enjoy!
           </Text>
           <Button
-            title="Get Started"
+            title="GET STARTED"
             style={{ marginVertical: 22, width: "100%" }}
             onPress={() => {
               navigation.navigate("Login");
