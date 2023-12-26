@@ -9,6 +9,7 @@ const BackArrow = ({ onPress }) => {
       <FontAwesomeIcon
         icon={faArrowLeft}
         size={26}
+        color="white"
         style={{ position: "absolute", top: 0, left: 0 }}
       />
     </TouchableOpacity>

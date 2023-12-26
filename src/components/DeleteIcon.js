@@ -9,6 +9,7 @@ const DeleteIcon = ({ onPress }) => {
       <FontAwesomeIcon
         icon={faDeleteLeft}
         size={26}
+        color="lightgrey"
         style={{ alignSelf: "flex-end" }}
       />
     </TouchableOpacity>
