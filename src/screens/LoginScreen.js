@@ -10,16 +10,16 @@ import {
   TextInput,
   Button,
   ToastAndroid,
-  ScrollView,
   SafeAreaView,
 } from "react-native";
 import CheckBox from "../components/Checkbox";
 import BackArrow from "../components/BackArrow";
 
 export default function LoginScreen({ navigation }) {
-  const [phoneNum, setPhoneNum] = useState();
+  const [phoneNum, setPhoneNum] = useState("");
   const [isFocused, setisFocused] = useState(false);
   const [isChecked, setisChecked] = useState(false);
+
   const onChangePhone = (number) => {
     setPhoneNum(number);
   };
@@ -77,7 +77,7 @@ export default function LoginScreen({ navigation }) {
             />
             <DeleteIcon
               onPress={() => {
-                setPhoneNum(null);
+                setPhoneNum("");
               }}
             />
           </View>
@@ -101,13 +101,13 @@ export default function LoginScreen({ navigation }) {
           </View>
           <Button
             title="Verify mobile"
-            color={isChecked ? COLORS.btn : "grey"}
+            color={isChecked && phoneNum.length === 10 ? COLORS.btn : "grey"}
             onPress={() => {
-              if (isChecked) {
+              if (isChecked && phoneNum.length === 10) {
                 navigation.navigate("Otp");
               } else {
                 ToastAndroid.show(
-                  "Please certify if you are above 18",
+                  "Please certify if you are above 18 and enter a valid 10-digit mobile number",
                   ToastAndroid.BOTTOM
                 );
               }
@@ -145,7 +145,7 @@ export default function LoginScreen({ navigation }) {
                 navigation.navigate("EmailAuthentication");
               }}
             >
-              other options
+              Other options
             </Text>
             <View
               style={{
@@ -177,24 +177,5 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   headingSubTitle: {
-    color: COLORS.primary,
-    fontSize: 14,
-    fontWeight: "800",
-  },
-  ending: {
-    flex: 5,
-    backgroundColor: COLORS.teflon,
-    paddingHorizontal: 22,
-    paddingVertical: 30,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-  },
-  numberSize: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: COLORS.primary,
-  },
-  textColor: {
-    color: COLORS.light,
-  },
-});
+    color: COLORS.primary
+
