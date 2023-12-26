@@ -220,7 +220,7 @@ export default function EmailAuthentication({ navigation }) {
                 <Image
                   source={require("../../assets/facebook.png")}
                   style={styles.socialLogos}
-                  resizeMethod="contain"
+                  resizeMethod="auto"
                 />
                 <Text style={styles.socialLogoText}>Facebook</Text>
               </TouchableOpacity>
