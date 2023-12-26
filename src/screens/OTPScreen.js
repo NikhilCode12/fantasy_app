@@ -9,14 +9,17 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
 import Button from "../components/Button";
+import BackArrow from "../components/BackArrow";
 import _ from "lodash";
 
 export default function OtpScreen({ navigation }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [isLoading, setIsLoading] = useState(false);
   const refs = useRef([]);
 
   // Debounce the handleChange function to improve performance
@@ -51,10 +54,15 @@ export default function OtpScreen({ navigation }) {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+      >
         <LinearGradient
           colors={["#063970", COLORS.primary]}
-          style={{ flex: 1 }}>
+          style={{ flex: 1 }}
+        >
+          <View style={{ paddingTop: 16, paddingHorizontal: 12 }}>
+            <BackArrow onPress={() => navigation.navigate("Login")} />
+          </View>
           <View style={styles.container}>
             <Text style={styles.heading}>Enter OTP</Text>
             <Text style={styles.subHeading}>
@@ -66,6 +74,7 @@ export default function OtpScreen({ navigation }) {
                   key={index}
                   style={styles.otpInput}
                   value={value}
+                  cursorColor={COLORS.dark}
                   maxLength={1}
                   onChangeText={(text) => handleChange(text, index)}
                   ref={(input) => (refs.current[index] = input)}
@@ -74,30 +83,45 @@ export default function OtpScreen({ navigation }) {
               ))}
             </View>
             <TouchableOpacity
-              onPress={() => console.log("Didn't receive code?")}>
+              onPress={() => console.log("Didn't receive code?")}
+            >
               <Text style={styles.resendText}>Didn't receive code?</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleResendCode}>
               <Text style={styles.resendCode}>Resend Code</Text>
             </TouchableOpacity>
-
             <Button
               title="Verify OTP"
               onPress={() => {
                 const enteredOtp = otp.join("");
-                // Implement logic to verify the OTP
-                if (enteredOtp === "123456") {
-                  console.log("OTP Verified!");
-                  navigation.navigate("Success");
-                } else {
-                  ToastAndroid.show(
-                    "Invalid OTP. Please try again.",
-                    ToastAndroid.SHORT
-                  );
-                }
+                setIsLoading(true);
+                setTimeout(() => {
+                  setIsLoading(false);
+
+                  if (enteredOtp === "123456") {
+                    ToastAndroid.show(
+                      "OTP Verified. Redirecting to Home...",
+                      ToastAndroid.SHORT
+                    );
+                    setTimeout(() => {
+                      navigation.navigate("Home");
+                    }, 1000);
+                  } else {
+                    ToastAndroid.show(
+                      "Invalid OTP. Please try again.",
+                      ToastAndroid.SHORT
+                    );
+                    setOtp(["", "", "", "", "", ""]);
+                  }
+                }, 2000);
               }}
             />
+            {isLoading && (
+              <View style={styles.loader}>
+                <ActivityIndicator size="large" color={COLORS.dark} />
+              </View>
+            )}
           </View>
         </LinearGradient>
       </KeyboardAvoidingView>
@@ -109,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingVertical: 48,
   },
   heading: {
     color: COLORS.light,
@@ -149,5 +173,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     textDecorationLine: "underline",
+    marginBottom: 20,
+  },
+  loader: {
+    marginTop: 20,
+    borderRadius: 10,
   },
 });
