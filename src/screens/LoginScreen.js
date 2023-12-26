@@ -15,7 +15,7 @@ import {
 import CheckBox from "../components/Checkbox";
 
 export default function LoginScreen({ navigation }) {
-  const [phoneNum, setPhoneNum] = useState();
+  const [phoneNum, setPhoneNum] = useState("");
   const [isChecked, setisChecked] = useState(false);
   const onChangePhone = (number) => {
     setPhoneNum(number);
@@ -26,12 +26,10 @@ export default function LoginScreen({ navigation }) {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-      >
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
         <LinearGradient
           colors={["#063970", COLORS.primary]}
-          style={{ flex: 1 }}
-        >
+          style={{ flex: 1 }}>
           <StatusBar hidden />
           <View style={styles.heading}>
             <Text style={styles.headingTitle}>Login/Register</Text>
@@ -51,8 +49,7 @@ export default function LoginScreen({ navigation }) {
                 borderRadius: 5,
                 alignItems: "center",
                 paddingVertical: 8,
-              }}
-            >
+              }}>
               <Text style={styles.numberSize}>{"+91 "}</Text>
               <TextInput
                 style={{
@@ -68,7 +65,7 @@ export default function LoginScreen({ navigation }) {
               />
               <DeleteIcon
                 onPress={() => {
-                  setPhoneNum(null);
+                  setPhoneNum("");
                 }}
               />
             </View>
@@ -78,8 +75,7 @@ export default function LoginScreen({ navigation }) {
                 marginBottom: 22,
                 flexDirection: "row",
                 alignItems: "center",
-              }}
-            >
+              }}>
               <CheckBox
                 checked={isChecked}
                 onChange={() => {
@@ -92,13 +88,13 @@ export default function LoginScreen({ navigation }) {
             </View>
             <Button
               title="Verify mobile"
-              color={isChecked ? "green" : "grey"}
+              color={isChecked && phoneNum.length === 10 ? "green" : "grey"}
               onPress={() => {
-                if (isChecked) {
+                if (isChecked && phoneNum.length === 10) {
                   navigation.navigate("Otp");
                 } else {
                   ToastAndroid.show(
-                    "Please certify if you are above 18",
+                    "Please certify if you are above 18 and enter a valid 10-digit mobile number",
                     ToastAndroid.BOTTOM
                   );
                 }
@@ -109,8 +105,7 @@ export default function LoginScreen({ navigation }) {
                 flexDirection: "row",
                 justifyContent: "center",
                 marginVertical: 12,
-              }}
-            >
+              }}>
               <Text style={{ marginRight: 4, fontSize: 12 }}>
                 By continuing, I agree to fanverse's
               </Text>
@@ -120,14 +115,12 @@ export default function LoginScreen({ navigation }) {
               style={{
                 alignItems: "flex-end",
                 marginVertical: 12,
-              }}
-            >
+              }}>
               <Text
                 style={{ fontSize: 14, marginBottom: 1 }}
                 onPress={() => {
                   navigation.navigate("EmailAuthentication");
-                }}
-              >
+                }}>
                 Other options
               </Text>
               <View
@@ -136,8 +129,7 @@ export default function LoginScreen({ navigation }) {
                   borderBottomColor: "black",
                   borderStyle: "dotted",
                   width: "27.5%",
-                }}
-              ></View>
+                }}></View>
             </View>
           </View>
         </LinearGradient>
