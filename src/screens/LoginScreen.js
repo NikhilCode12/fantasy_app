@@ -52,8 +52,7 @@ export default function LoginScreen({ navigation }) {
               borderWidth: 2,
               borderColor: COLORS.light_grey,
               borderBottomColor: isFocused ? COLORS.primary : "transparent",
-            }}
-          >
+            }}>
             <Text style={styles.numberSize}>{"+91 "}</Text>
             <TextInput
               style={{
@@ -87,8 +86,7 @@ export default function LoginScreen({ navigation }) {
               marginBottom: 22,
               flexDirection: "row",
               alignItems: "center",
-            }}
-          >
+            }}>
             <CheckBox
               checked={isChecked}
               onChange={() => {
@@ -118,8 +116,7 @@ export default function LoginScreen({ navigation }) {
               flexDirection: "row",
               justifyContent: "center",
               marginVertical: 12,
-            }}
-          >
+            }}>
             <Text style={{ marginRight: 4, fontSize: 12, ...styles.textColor }}>
               By continuing, I agree to fanverse's
             </Text>
@@ -128,8 +125,7 @@ export default function LoginScreen({ navigation }) {
                 fontWeight: "bold",
                 fontSize: 12,
                 ...styles.textColor,
-              }}
-            >
+              }}>
               T&C.
             </Text>
           </View>
@@ -137,14 +133,12 @@ export default function LoginScreen({ navigation }) {
             style={{
               alignItems: "flex-end",
               marginVertical: 12,
-            }}
-          >
+            }}>
             <Text
               style={{ fontSize: 14, marginBottom: 1, ...styles.textColor }}
               onPress={() => {
                 navigation.navigate("EmailAuthentication");
-              }}
-            >
+              }}>
               Other options
             </Text>
             <View
@@ -153,8 +147,7 @@ export default function LoginScreen({ navigation }) {
                 borderBottomColor: "lightgrey",
                 borderStyle: "dotted",
                 width: "26%",
-              }}
-            ></View>
+              }}></View>
           </View>
         </View>
       </LinearGradient>
@@ -177,5 +170,24 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   headingSubTitle: {
-    color: COLORS.primary
-
+    color: COLORS.primary,
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  ending: {
+    flex: 5,
+    backgroundColor: COLORS.teflon,
+    paddingHorizontal: 22,
+    paddingVertical: 30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  numberSize: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: COLORS.primary,
+  },
+  textColor: {
+    color: COLORS.light,
+  },
+});
