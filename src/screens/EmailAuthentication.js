@@ -15,9 +15,11 @@ import {
   ToastAndroid,
 } from "react-native";
 import CheckBox from "../components/Checkbox";
+import BackArrow from "../components/BackArrow";
 
 export default function EmailAuthentication({ navigation }) {
   const [email, setEmail] = useState("");
+  const [isFocused, setisFocused] = useState(false);
   const [isChecked, setisChecked] = useState(false);
   const onChangeEmail = (email) => {
     setEmail(email);
@@ -35,6 +37,9 @@ export default function EmailAuthentication({ navigation }) {
           style={{ flex: 1 }}
         >
           <StatusBar hidden />
+          <View style={{ paddingTop: 16, paddingHorizontal: 12 }}>
+            <BackArrow onPress={() => navigation.navigate("Login")} />
+          </View>
           <View style={styles.heading}>
             <Text style={styles.headingTitle}>Welcome/Signup</Text>
             <Text style={styles.headingSubTitle}>
@@ -42,17 +47,20 @@ export default function EmailAuthentication({ navigation }) {
             </Text>
           </View>
           <View style={styles.ending}>
-            <Text style={{ fontSize: 14, marginBottom: 8 }}>
+            <Text style={{ fontSize: 14, marginBottom: 8, color: "white" }}>
               Enter Email Address
             </Text>
             <View
               style={{
-                backgroundColor: COLORS.light_grey,
+                backgroundColor: COLORS.teflon,
                 paddingHorizontal: 12,
                 flexDirection: "row",
                 borderRadius: 5,
                 alignItems: "center",
                 paddingVertical: 8,
+                borderWidth: 2,
+                borderColor: COLORS.light_grey,
+                borderBottomColor: isFocused ? COLORS.primary : "transparent",
               }}
             >
               <TextInput
@@ -60,12 +68,21 @@ export default function EmailAuthentication({ navigation }) {
                   ...styles.emailSize,
                   width: "90%",
                   color: "black",
+                  color: COLORS.primary,
+                  fontWeight: "bold",
                 }}
                 placeholder="abc@email.com"
-                cursorColor={"grey"}
+                placeholderTextColor={"lightgrey"}
+                cursorColor={COLORS.primary}
                 value={email}
                 onChangeText={onChangeEmail}
                 keyboardType="email-address"
+                onFocus={() => {
+                  setisFocused(true);
+                }}
+                onBlur={() => {
+                  setisFocused(false);
+                }}
               />
               <DeleteIcon
                 onPress={() => {
@@ -87,13 +104,13 @@ export default function EmailAuthentication({ navigation }) {
                   setisChecked(!isChecked);
                 }}
               />
-              <Text style={{ marginLeft: 8, fontSize: 12 }}>
+              <Text style={{ marginLeft: 8, fontSize: 12, color: "white" }}>
                 I certify that I am above 18 years
               </Text>
             </View>
             <Button
               title="Verify email"
-              color={isChecked ? "green" : "grey"}
+              color={isChecked ? COLORS.btn : "grey"}
               onPress={() => {
                 if (isChecked) {
                   navigation.navigate("Otp");
@@ -112,10 +129,20 @@ export default function EmailAuthentication({ navigation }) {
                 marginVertical: 12,
               }}
             >
-              <Text style={{ marginRight: 4, fontSize: 12 }}>
+              <Text
+                style={{ marginRight: 4, fontSize: 12, color: COLORS.light }}
+              >
                 By continuing, I agree to fanverse's
               </Text>
-              <Text style={{ fontWeight: "bold", fontSize: 12 }}>T&C.</Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 12,
+                  color: COLORS.light,
+                }}
+              >
+                T&C.
+              </Text>
             </View>
             <View
               style={{
@@ -124,7 +151,7 @@ export default function EmailAuthentication({ navigation }) {
               }}
             >
               <Text
-                style={{ fontSize: 14, marginBottom: 1 }}
+                style={{ fontSize: 14, marginBottom: 1, color: COLORS.light }}
                 onPress={() => {
                   navigation.navigate("Login");
                 }}
@@ -134,7 +161,7 @@ export default function EmailAuthentication({ navigation }) {
               <View
                 style={{
                   borderBottomWidth: 1,
-                  borderBottomColor: "black",
+                  borderBottomColor: "lightgrey",
                   borderStyle: "dotted",
                   width: "33%",
                 }}
@@ -207,7 +234,7 @@ export default function EmailAuthentication({ navigation }) {
                 <Image
                   source={require("../../assets/google.png")}
                   style={styles.socialLogos}
-                  resizeMethod="contain"
+                  resizeMethod="auto"
                 />
                 <Text style={styles.socialLogoText}>Google</Text>
               </TouchableOpacity>
@@ -215,7 +242,7 @@ export default function EmailAuthentication({ navigation }) {
             <View style={{ marginTop: 22 }}>
               <Button
                 title="Enter home screen"
-                color={COLORS.dark}
+                color={COLORS.btn}
                 onPress={() => {
                   navigation.navigate("Home");
                 }}
@@ -249,7 +276,7 @@ const styles = StyleSheet.create({
   },
   ending: {
     flex: 5,
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.teflon,
     paddingHorizontal: 22,
     paddingVertical: 30,
     borderTopLeftRadius: 30,
@@ -275,6 +302,7 @@ const styles = StyleSheet.create({
   },
   socialLogoText: {
     marginLeft: 4,
+    color: COLORS.light,
   },
   socialLogoIcons: {
     flex: 1,
