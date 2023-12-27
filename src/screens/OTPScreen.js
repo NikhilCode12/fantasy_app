@@ -105,7 +105,7 @@ export default function OtpScreen({ navigation }) {
                       ToastAndroid.SHORT
                     );
                     setTimeout(() => {
-                      navigation.navigate("Home");
+                      navigation.navigate("BottomNavigation");
                     }, 1000);
                   } else {
                     ToastAndroid.show(

@@ -244,7 +244,7 @@ export default function EmailAuthentication({ navigation }) {
                 title="Enter home screen"
                 color={COLORS.btn}
                 onPress={() => {
-                  navigation.navigate("Home");
+                  navigation.navigate("BottomNavigation");
                 }}
               />
             </View>
