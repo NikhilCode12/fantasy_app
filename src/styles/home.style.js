@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   appBar: {
     marginTop: 16,
-    marginHorizontal: 18,
+    marginHorizontal: 14,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 16,
     alignItems: "center",
+  },
+  appBarIconsBg: {
+    backgroundColor: COLORS.transparentBg,
+    borderRadius: 5,
+    padding: 8,
   },
 });
 

@@ -22,9 +22,9 @@ const games = {
     name: "Football",
     icon: "sports-soccer",
   },
-  Hockey: {
-    name: "Hockey",
-    icon: "sports-hockey",
+  NBA: {
+    name: "NBA",
+    icon: "sports-basketball",
   },
   Esports: {
     name: "Esports",
@@ -80,7 +80,10 @@ const Main = () => {
                     ? COLORS.bgLightBlack
                     : COLORS.light_grey,
                 height: "100%",
-                paddingHorizontal: 6,
+                paddingHorizontal: 9,
+                borderBottomWidth: selectedGame === game ? 1.75 : 0,
+                borderBottomColor:
+                  selectedGame === game ? COLORS.primary : null,
               }}
               key={index}
               onPress={() => handleGameSelection(game)}
@@ -89,14 +92,14 @@ const Main = () => {
                 key={index}
                 name={games[game].icon}
                 style={{ marginTop: 8 }}
-                size={20}
+                size={22}
                 color={selectedGame === game ? COLORS.primary : COLORS.dark}
               />
               <Text
                 style={{
                   ...styles.gameScrollBarItems,
                   color: selectedGame === game ? COLORS.primary : COLORS.dark,
-                  marginTop: 2,
+                  marginTop: 1,
                 }}
               >
                 {game}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "league": "IPL",
+    "team1": "Mumbai Indians",
+    "team2": "Chennai Super Kings",
+    "time": "12:00 PM",
+    "venue": "Wankhede Stadium"
+  },
+  {
+    "id": 2,
+    "league": "Big Bash League",
+    "team1": "Sydney Sixers",
+    "team2": "Perth Scorchers",
+    "time": "3:30 PM",
+    "venue": "Sydney Cricket Ground"
+  },
+  {
+    "id": 3,
+    "league": "T20 World Cup",
+    "team1": "India",
+    "team2": "England",
+    "time": "10:00 AM",
+    "venue": "Melbourne Cricket Ground"
+  },
+  {
+    "id": 4,
+    "league": "Ashes",
+    "team1": "Australia",
+    "team2": "England",
+    "time": "6:45 PM",
+    "venue": "Adelaide Oval"
+  },
+  {
+    "id": 5,
+    "league": "Caribbean Premier League",
+    "team1": "Trinbago Knight Riders",
+    "team2": "Guyana Amazon Warriors",
+    "time": "1:15 PM",
+    "venue": "Queen's Park Oval"
+  },
+  {
+    "id": 6,
+    "league": "Pakistan Super League",
+    "team1": "Lahore Qalandars",
+    "team2": "Karachi Kings",
+    "time": "4:30 PM",
+    "venue": "Gaddafi Stadium"
+  },
+  {
+    "id": 7,
+    "league": "Vitality Blast",
+    "team1": "Nottinghamshire",
+    "team2": "Yorkshire",
+    "time": "5:45 PM",
+    "venue": "Trent Bridge"
+  },
+  {
+    "id": 8,
+    "league": "Super Smash",
+    "team1": "Auckland Aces",
+    "team2": "Wellington Firebirds",
+    "time": "12:30 PM",
+    "venue": "Eden Park"
+  },
+  {
+    "id": 9,
+    "league": "Mzansi Super League",
+    "team1": "Jozi Stars",
+    "team2": "Cape Town Blitz",
+    "time": "8:00 PM",
+    "venue": "New Wanderers Stadium"
+  }
+]

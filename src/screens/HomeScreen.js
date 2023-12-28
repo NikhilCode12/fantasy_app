@@ -7,31 +7,35 @@ import Main from "../components/home/Main";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
-  const openDrawer = () => {
-    navigation.navigate("DrawerNavigation");
-  };
+const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.appBarContainer}>
         <View style={styles.appBar}>
-          <TouchableOpacity onPress={openDrawer}>
-            <Ionicons name="person-outline" size={24} color={COLORS.primary} />
+          <TouchableOpacity
+            style={styles.appBarIconsBg}
+            onPress={() => {
+              navigation.navigate("DrawerNavigation");
+            }}
+          >
+            <Ionicons name="person-outline" size={22} color={COLORS.primary} />
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
           <View style={styles.appBarRight}>
-            <TouchableOpacity>
+            <TouchableOpacity style={styles.appBarIconsBg}>
               <Ionicons
                 name="ios-notifications-outline"
-                size={24}
+                size={22}
+                onPress={() => {
+                  navigation.navigate("Notification");
+                }}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity style={styles.appBarIconsBg}>
               <Ionicons
                 name="wallet-outline"
-                size={24}
+                size={22}
                 color={COLORS.primary}
               />
             </TouchableOpacity>

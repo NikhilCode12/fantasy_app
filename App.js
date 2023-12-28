@@ -8,6 +8,7 @@ import {
   EmailAuthenticationScreen,
   WelcomeScreen,
   OTPScreen,
+  NotificationsScreen,
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,11 @@ function App() {
         <Stack.Screen
           name="DrawerNavigation"
           component={DrawerNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={NotificationsScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
