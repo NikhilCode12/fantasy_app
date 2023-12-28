@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
-import DeleteIcon from "../components/DeleteIcon";
+import DeleteIcon from "../components/common/DeleteIcon";
 import {
   View,
   Text,
@@ -12,8 +12,8 @@ import {
   ToastAndroid,
   SafeAreaView,
 } from "react-native";
-import CheckBox from "../components/Checkbox";
-import BackArrow from "../components/BackArrow";
+import CheckBox from "../components/common/Checkbox";
+import BackArrow from "../components/common/BackArrow";
 
 export default function LoginScreen({ navigation }) {
   const [phoneNum, setPhoneNum] = useState("");
@@ -52,7 +52,8 @@ export default function LoginScreen({ navigation }) {
               borderWidth: 2,
               borderColor: COLORS.light_grey,
               borderBottomColor: isFocused ? COLORS.primary : "transparent",
-            }}>
+            }}
+          >
             <Text style={styles.numberSize}>{"+91 "}</Text>
             <TextInput
               style={{
@@ -86,7 +87,8 @@ export default function LoginScreen({ navigation }) {
               marginBottom: 22,
               flexDirection: "row",
               alignItems: "center",
-            }}>
+            }}
+          >
             <CheckBox
               checked={isChecked}
               onChange={() => {
@@ -102,7 +104,7 @@ export default function LoginScreen({ navigation }) {
             color={isChecked && phoneNum.length === 10 ? COLORS.btn : "grey"}
             onPress={() => {
               if (isChecked && phoneNum.length === 10) {
-                navigation.navigate("Otp");
+                navigation.navigate("Otp", { phoneNum });
               } else {
                 ToastAndroid.show(
                   "Please certify if you are above 18 and enter a valid 10-digit mobile number",
@@ -116,7 +118,8 @@ export default function LoginScreen({ navigation }) {
               flexDirection: "row",
               justifyContent: "center",
               marginVertical: 12,
-            }}>
+            }}
+          >
             <Text style={{ marginRight: 4, fontSize: 12, ...styles.textColor }}>
               By continuing, I agree to fanverse's
             </Text>
@@ -125,7 +128,8 @@ export default function LoginScreen({ navigation }) {
                 fontWeight: "bold",
                 fontSize: 12,
                 ...styles.textColor,
-              }}>
+              }}
+            >
               T&C.
             </Text>
           </View>
@@ -133,12 +137,14 @@ export default function LoginScreen({ navigation }) {
             style={{
               alignItems: "flex-end",
               marginVertical: 12,
-            }}>
+            }}
+          >
             <Text
               style={{ fontSize: 14, marginBottom: 1, ...styles.textColor }}
               onPress={() => {
                 navigation.navigate("EmailAuthentication");
-              }}>
+              }}
+            >
               Other options
             </Text>
             <View
@@ -147,7 +153,8 @@ export default function LoginScreen({ navigation }) {
                 borderBottomColor: "lightgrey",
                 borderStyle: "dotted",
                 width: "26%",
-              }}></View>
+              }}
+            ></View>
           </View>
         </View>
       </LinearGradient>

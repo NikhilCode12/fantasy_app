@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
-import DeleteIcon from "../components/DeleteIcon";
+import DeleteIcon from "../components/common/DeleteIcon";
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
   Image,
   ToastAndroid,
 } from "react-native";
-import CheckBox from "../components/Checkbox";
-import BackArrow from "../components/BackArrow";
+import CheckBox from "../components/common/Checkbox";
+import BackArrow from "../components/common/BackArrow";
 
 export default function EmailAuthentication({ navigation }) {
   const [email, setEmail] = useState("");
@@ -244,7 +244,7 @@ export default function EmailAuthentication({ navigation }) {
                 title="Enter home screen"
                 color={COLORS.btn}
                 onPress={() => {
-                  navigation.navigate("Home");
+                  navigation.navigate("BottomNavigation");
                 }}
               />
             </View>

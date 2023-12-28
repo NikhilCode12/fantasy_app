@@ -1,13 +1,15 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import BottomNavigation from "./src/navigation/BottomNavigation";
+
 import {
   LoginScreen,
   EmailAuthenticationScreen,
-  HomeScreen,
   WelcomeScreen,
   OTPScreen,
 } from "./src/screens/index";
+import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -35,8 +37,13 @@ function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="BottomNavigation"
+          component={BottomNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DrawerNavigation"
+          component={DrawerNavigation}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

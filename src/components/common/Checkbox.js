@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import COLORS from "../constants/colors";
+import COLORS from "../../constants/colors";
 
 export default function Checkbox({ checked, onChange }) {
   return (
