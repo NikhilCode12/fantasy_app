@@ -2,15 +2,20 @@ import { StyleSheet } from "react-native";
 import COLORS from "../constants/colors";
 
 const styles = StyleSheet.create({
-  matchesContainer: {},
-  gameScrollBar: {
+  container: {
+    flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: COLORS.bgMateBlack,
   },
-  gameScrollBarItems: {
-    fontSize: 14,
+  text: {
+    color: COLORS.primary,
+    fontSize: 24,
+    marginTop: "-20%",
     fontWeight: "bold",
-    paddingHorizontal: 16,
+    fontStyle: "italic",
   },
 });
+
 export default styles;

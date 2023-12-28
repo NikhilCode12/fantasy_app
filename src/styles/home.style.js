@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
   appBarHeading: {
     fontSize: 20,
-    marginLeft: "8%",
+    marginLeft: "8.5%",
     color: COLORS.light,
     fontWeight: "bold",
   },

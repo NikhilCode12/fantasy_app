@@ -7,7 +7,7 @@ const COLORS = {
   light_grey: "lightgrey",
   teflon: "#29292e",
   bgMateBlack: "#22272b",
-  bgLightBlack: "2e3136",
+  bgLightBlack: "#2e3136",
 };
 
 export default COLORS;
