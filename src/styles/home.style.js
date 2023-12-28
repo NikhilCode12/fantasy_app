@@ -8,15 +8,14 @@ const styles = StyleSheet.create({
   },
   appBar: {
     marginTop: 16,
-    marginHorizontal: 20,
+    marginHorizontal: 18,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   appBarHeading: {
     fontSize: 20,
-    marginLeft: "7%",
-    fontStyle: "normal",
+    marginLeft: "8%",
     color: COLORS.light,
     fontWeight: "bold",
   },

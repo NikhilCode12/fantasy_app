@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
-import DeleteIcon from "../components/DeleteIcon";
+import DeleteIcon from "../components/common/DeleteIcon";
 import {
   View,
   Text,
@@ -12,8 +12,8 @@ import {
   ToastAndroid,
   SafeAreaView,
 } from "react-native";
-import CheckBox from "../components/Checkbox";
-import BackArrow from "../components/BackArrow";
+import CheckBox from "../components/common/Checkbox";
+import BackArrow from "../components/common/BackArrow";
 
 export default function LoginScreen({ navigation }) {
   const [phoneNum, setPhoneNum] = useState("");

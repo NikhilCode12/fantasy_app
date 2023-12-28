@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import {
   HomeScreen,
   PeopleScreen,
@@ -8,21 +7,34 @@ import {
   RewardsScreen,
 } from "./index";
 import COLORS from "../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
-  tabBarShowLabel: false,
+  tabBarShowLabel: true,
   tabBarHideOnKeyboard: true,
+  tabBarLabelStyle: {
+    // color: COLORS.light_grey,
+    fontWeight: "bold",
+    fontSize: 11,
+    marginBottom: 8,
+    marginTop: -8,
+  },
   tabBarStyle: {
+    backgroundColor: COLORS.bgMateBlack,
     position: "absolute",
     bottom: 0,
     right: 0,
     left: 0,
+    paddingHorizontal: 0,
     elevation: 0,
-    height: 50,
+    height: 60,
   },
+  tabBarActiveTintColor: COLORS.primary,
   headerShown: false,
 };
+
+const tabBarSize = 24;
 
 const BottomNavigation = () => {
   return (
@@ -36,8 +48,8 @@ const BottomNavigation = () => {
               <>
                 <Ionicons
                   name={focused ? "home" : "home-outline"}
-                  size={24}
-                  color={focused ? COLORS.btn : COLORS.light_grey}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
                 />
               </>
             );
@@ -45,16 +57,16 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="People"
+        name="Variations"
         component={PeopleScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <>
                 <Ionicons
-                  name={focused ? "people" : "people-outline"}
-                  size={24}
-                  color={focused ? COLORS.btn : COLORS.light_grey}
+                  name={focused ? "ribbon" : "ribbon-outline"}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
                 />
               </>
             );
@@ -70,8 +82,8 @@ const BottomNavigation = () => {
               <>
                 <Ionicons
                   name={focused ? "trophy" : "trophy-outline"}
-                  size={24}
-                  color={focused ? COLORS.btn : COLORS.light_grey}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
                 />
               </>
             );
@@ -87,8 +99,8 @@ const BottomNavigation = () => {
               <>
                 <Ionicons
                   name={focused ? "gift" : "gift-outline"}
-                  size={24}
-                  color={focused ? COLORS.btn : COLORS.light_grey}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
                 />
               </>
             );

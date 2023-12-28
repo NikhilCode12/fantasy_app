@@ -13,8 +13,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
-import Button from "../components/Button";
-import BackArrow from "../components/BackArrow";
+import Button from "../components/common/Button";
+import BackArrow from "../components/common/BackArrow";
 import _ from "lodash";
 
 export default function OtpScreen({ navigation }) {

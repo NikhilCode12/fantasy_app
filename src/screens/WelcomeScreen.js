@@ -2,7 +2,7 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, Text, View } from "react-native";
 import COLORS from "../constants/colors";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 
 export default function WelcomeScreen({ navigation }) {
   return (
