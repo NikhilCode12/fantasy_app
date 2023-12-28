@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import COLORS from "../constants/colors";
+import COLORS from "../../constants/colors";
 
 export default function Button(props) {
   const filledBgColor = props.color || COLORS.dark;
