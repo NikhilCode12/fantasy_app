@@ -4,14 +4,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/home.style";
 import COLORS from "../constants/colors";
 import Main from "../components/home/Main";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+  const openDrawer = () => {
+    navigation.navigate("DrawerNavigation");
+  };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.appBarContainer}>
         <View style={styles.appBar}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openDrawer}>
             <Ionicons name="person-outline" size={24} color={COLORS.primary} />
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
@@ -33,9 +38,7 @@ const HomeScreen = () => {
           </View>
         </View>
       </View>
-      <ScrollView>
-        <Main />
-      </ScrollView>
+      <Main />
     </SafeAreaView>
   );
 };
