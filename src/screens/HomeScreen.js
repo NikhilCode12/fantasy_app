@@ -1,24 +1,39 @@
-import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TouchableOpacity, View, Text, Animated, Easing } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/home.style";
 import COLORS from "../constants/colors";
 import Main from "../components/home/Main";
-import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);
+  const [overlayAnimation] = useState(new Animated.Value(-300));
 
   const openProfileOverlay = () => {
     setProfileOverlayVisible(true);
   };
 
   const closeProfileOverlay = () => {
-    setProfileOverlayVisible(false);
+    Animated.timing(overlayAnimation, {
+      toValue: -300,
+      duration: 300,
+      easing: Easing.ease,
+      useNativeDriver: false,
+    }).start(() => setProfileOverlayVisible(false));
   };
+
+  useEffect(() => {
+    if (isProfileOverlayVisible) {
+      Animated.timing(overlayAnimation, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.ease,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isProfileOverlayVisible, overlayAnimation]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -26,10 +41,7 @@ const HomeScreen = () => {
         <View style={styles.appBar}>
           <TouchableOpacity
             style={styles.appBarIconsBg}
-            onPress={() => {
-              navigation.navigate("DrawerNavigation");
-            }}
-          >
+            onPress={openProfileOverlay}>
             <Ionicons name="person-outline" size={22} color={COLORS.primary} />
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
@@ -39,7 +51,7 @@ const HomeScreen = () => {
                 name="ios-notifications-outline"
                 size={22}
                 onPress={() => {
-                  navigation.navigate("Notification");
+                  // Add navigation logic if needed
                 }}
                 color={COLORS.primary}
               />
@@ -56,9 +68,11 @@ const HomeScreen = () => {
       </View>
       <Main />
 
-      {isProfileOverlayVisible && (
-        <ProfileOverlay onClose={closeProfileOverlay} />
-      )}
+      <ProfileOverlay
+        isVisible={isProfileOverlayVisible}
+        onClose={closeProfileOverlay}
+        overlayAnimation={overlayAnimation}
+      />
     </SafeAreaView>
   );
 };
