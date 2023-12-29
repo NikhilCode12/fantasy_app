@@ -8,6 +8,9 @@ const COLORS = {
   teflon: "#29292e",
   bgMateBlack: "#22272b",
   bgLightBlack: "#2e3136",
+  lightGray: "#808080",
+  transparentBg: "#FFFFFF11",
+  gold: "#FFD700",
 };
 
 export default COLORS;

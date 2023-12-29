@@ -7,7 +7,7 @@ import {
   RewardsScreen,
 } from "./index";
 import COLORS from "../constants/colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -16,7 +16,7 @@ const screenOptions = {
   tabBarLabelStyle: {
     // color: COLORS.light_grey,
     fontWeight: "bold",
-    fontSize: 11,
+    fontSize: 10,
     marginBottom: 8,
     marginTop: -8,
   },
@@ -57,6 +57,23 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
+        name="My Matches"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <>
+                <MaterialCommunityIcons
+                  name={focused ? "stadium" : "stadium-variant"}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
+                />
+              </>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
         name="Variations"
         component={PeopleScreen}
         options={{
@@ -64,7 +81,7 @@ const BottomNavigation = () => {
             return (
               <>
                 <Ionicons
-                  name={focused ? "ribbon" : "ribbon-outline"}
+                  name={focused ? "options" : "options-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />
@@ -81,7 +98,7 @@ const BottomNavigation = () => {
             return (
               <>
                 <Ionicons
-                  name={focused ? "trophy" : "trophy-outline"}
+                  name={focused ? "podium" : "podium-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />

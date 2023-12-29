@@ -145,14 +145,14 @@ export default function LoginScreen({ navigation }) {
                 navigation.navigate("EmailAuthentication");
               }}
             >
-              Other options
+              other options
             </Text>
             <View
               style={{
                 borderBottomWidth: 1,
                 borderBottomColor: "lightgrey",
                 borderStyle: "dotted",
-                width: "26%",
+                width: "26.5%",
               }}
             ></View>
           </View>

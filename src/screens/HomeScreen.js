@@ -24,22 +24,30 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.appBarContainer}>
         <View style={styles.appBar}>
-          <TouchableOpacity onPress={openProfileOverlay}>
-            <Ionicons name="person-outline" size={24} color={COLORS.primary} />
+          <TouchableOpacity
+            style={styles.appBarIconsBg}
+            onPress={() => {
+              navigation.navigate("DrawerNavigation");
+            }}
+          >
+            <Ionicons name="person-outline" size={22} color={COLORS.primary} />
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
           <View style={styles.appBarRight}>
-            <TouchableOpacity onPress={openProfileOverlay}>
+            <TouchableOpacity style={styles.appBarIconsBg}>
               <Ionicons
                 name="ios-notifications-outline"
-                size={24}
+                size={22}
+                onPress={() => {
+                  navigation.navigate("Notification");
+                }}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity style={styles.appBarIconsBg}>
               <Ionicons
                 name="wallet-outline"
-                size={24}
+                size={22}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
