@@ -5,32 +5,22 @@ import COLORS from "../constants/colors";
 import styles from "../styles/profileOverlay.style";
 import { useNavigation } from "@react-navigation/native";
 
-const ProfileOverlay = ({ onClose }) => {
+const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   const navigation = useNavigation();
-  const [translateX] = useState(new Animated.Value(-300));
-
-  useEffect(() => {
-    Animated.timing(translateX, {
-      toValue: 0,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: false,
-    }).start();
-  }, [translateX]);
-
-  const closeOverlay = () => {
-    Animated.timing(translateX, {
-      toValue: -300,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: false,
-    }).start(() => onClose());
-  };
 
   const navigateToPage = (pageName) => {
     navigation.navigate(pageName);
-    closeOverlay();
+    onClose();
   };
+
+  const renderLink = (iconName, text, onPress) => (
+    <TouchableOpacity onPress={onPress} style={styles.linkItem}>
+      <View style={styles.linkContent}>
+        <Ionicons name={iconName} size={18} color={COLORS.primary} />
+        <Text style={styles.linkText}>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.overlayContainer}>
@@ -38,41 +28,27 @@ const ProfileOverlay = ({ onClose }) => {
         style={[
           styles.overlayBox,
           {
-            transform: [{ translateX: translateX }],
+            transform: [{ translateX: overlayAnimation }],
           },
         ]}>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Account")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Wallet")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Wallet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Help & Support")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Help & Support</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("HowToPlay")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>How to Play</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("More")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>More</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("ReferAndEarn")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Refer and Earn</Text>
-        </TouchableOpacity>
+        {renderLink("person-outline", "Account", () =>
+          navigateToPage("Account")
+        )}
+        {renderLink("wallet-outline", "Wallet", () => navigateToPage("Wallet"))}
+        {renderLink("help-circle-outline", "Help & Support", () =>
+          navigateToPage("Help & Support")
+        )}
+        {renderLink("play-circle-outline", "How to Play", () =>
+          navigateToPage("HowToPlay")
+        )}
+        {renderLink("ellipsis-horizontal-outline", "More", () =>
+          navigateToPage("More")
+        )}
+        {renderLink("gift-outline", "Refer and Earn", () =>
+          navigateToPage("ReferAndEarn")
+        )}
 
-        <TouchableOpacity onPress={closeOverlay} style={styles.closeButton}>
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Ionicons name="close-outline" size={24} color={COLORS.primary} />
         </TouchableOpacity>
       </Animated.View>
