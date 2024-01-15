@@ -20,15 +20,54 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
   },
-  linksContainer: {
-    marginTop: 20,
-  },
   linkItem: {
     marginBottom: 15,
+  },
+  linkContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  linkIcon: {
+    marginRight: 10,
   },
   linkText: {
     fontSize: 18,
     color: COLORS.primary,
+    flex: 1,
+  },
+  arrowIcon: {
+    marginLeft: 10,
+  },
+  solidLink: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 10,
+  },
+  solidLinkText: {
+    color: COLORS.white,
+    fontWeight: "bold",
+  },
+
+  // Dark mode container styles
+  darkModeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  darkModeText: {
+    color: COLORS.primary,
+    fontSize: 18,
+  },
+
+  // Divider styles
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.lightGrey,
+    marginBottom: 10,
   },
 });
 

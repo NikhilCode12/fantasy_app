@@ -5,32 +5,36 @@ import COLORS from "../constants/colors";
 import styles from "../styles/profileOverlay.style";
 import { useNavigation } from "@react-navigation/native";
 
-const ProfileOverlay = ({ onClose }) => {
+const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   const navigation = useNavigation();
-  const [translateX] = useState(new Animated.Value(-300));
-
-  useEffect(() => {
-    Animated.timing(translateX, {
-      toValue: 0,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: false,
-    }).start();
-  }, [translateX]);
-
-  const closeOverlay = () => {
-    Animated.timing(translateX, {
-      toValue: -300,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: false,
-    }).start(() => onClose());
-  };
+  const [isDarkMode, setDarkMode] = useState(false);
 
   const navigateToPage = (pageName) => {
     navigation.navigate(pageName);
-    closeOverlay();
+    onClose();
   };
+
+  const renderLink = (iconName, text, onPress, isSolid = false) => (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.linkItem, isSolid && styles.solidLink]}>
+      <View style={styles.linkContent}>
+        <View style={styles.linkIcon}>
+          <Ionicons
+            name={iconName}
+            size={isSolid ? 22 : 18}
+            color={COLORS.primary}
+          />
+        </View>
+        <Text style={[styles.linkText, isSolid && styles.solidLinkText]}>
+          {text}
+        </Text>
+        <View style={styles.arrowIcon}>
+          <Ionicons name="ios-arrow-forward" size={18} color={COLORS.primary} />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.overlayContainer}>
@@ -38,41 +42,43 @@ const ProfileOverlay = ({ onClose }) => {
         style={[
           styles.overlayBox,
           {
-            transform: [{ translateX: translateX }],
+            transform: [{ translateX: overlayAnimation }],
           },
         ]}>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Account")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Wallet")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Wallet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("Help & Support")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Help & Support</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("HowToPlay")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>How to Play</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("More")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>More</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateToPage("ReferAndEarn")}
-          style={styles.linkItem}>
-          <Text style={styles.linkText}>Refer and Earn</Text>
-        </TouchableOpacity>
+        {renderLink(
+          "person-outline",
+          "Account",
+          () => navigateToPage("Account"),
+          true
+        )}
+        {renderLink("md-trophy-outline", "Join Contest", () =>
+          navigateToPage("JoinContest")
+        )}
+        {renderLink("wallet-outline", "My Wallet", () =>
+          navigateToPage("Wallet")
+        )}
+        {renderLink("play-circle-outline", "How to Play", () =>
+          navigateToPage("HowToPlay")
+        )}
+        {renderLink("gift-outline", "Refer & Earn", () =>
+          navigateToPage("ReferAndEarn")
+        )}
+        {renderLink("megaphone-outline", "Offers & Programs", () =>
+          navigateToPage("OffersAndPrograms")
+        )}
+        {renderLink("help-circle-outline", "Help & Support", () =>
+          navigateToPage("HelpAndSupport")
+        )}
 
-        <TouchableOpacity onPress={closeOverlay} style={styles.closeButton}>
+        {/* Toggle Switch for Dark Mode */}
+        <View style={styles.darkModeContainer}>
+          <Text style={styles.darkModeText}>Dark Mode</Text>
+        </View>
+
+        {/* Divider */}
+        <View style={styles.divider} />
+
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Ionicons name="close-outline" size={24} color={COLORS.primary} />
         </TouchableOpacity>
       </Animated.View>
