@@ -7,7 +7,7 @@ import Main from "../components/home/Main";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);
   const [overlayAnimation] = useState(new Animated.Value(-300));
 
@@ -41,7 +41,8 @@ const HomeScreen = () => {
         <View style={styles.appBar}>
           <TouchableOpacity
             style={styles.appBarIconsBg}
-            onPress={openProfileOverlay}>
+            onPress={openProfileOverlay}
+          >
             <Ionicons name="person-outline" size={22} color={COLORS.primary} />
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
@@ -51,7 +52,7 @@ const HomeScreen = () => {
                 name="ios-notifications-outline"
                 size={22}
                 onPress={() => {
-                  // Add navigation logic if needed
+                  navigation.navigate("Notification");
                 }}
                 color={COLORS.primary}
               />
@@ -60,6 +61,9 @@ const HomeScreen = () => {
               <Ionicons
                 name="wallet-outline"
                 size={22}
+                onPress={() => {
+                  navigation.navigate("Wallet");
+                }}
                 color={COLORS.primary}
               />
             </TouchableOpacity>

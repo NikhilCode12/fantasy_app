@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import styles from "../../styles/upcoming.style";
 import COLORS from "../../constants/colors";
+import LottieView from "lottie-react-native";
 
 const Upcoming = () => {
   const [loading, setLoading] = useState(true);

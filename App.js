@@ -9,6 +9,8 @@ import {
   WelcomeScreen,
   OTPScreen,
   NotificationsScreen,
+  WalletScreen,
+  TopUpScreen,
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
@@ -50,6 +52,18 @@ function App() {
         <Stack.Screen
           name="Notification"
           component={NotificationsScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Wallet"
+          component={WalletScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="addBalance"
+          component={TopUpScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
