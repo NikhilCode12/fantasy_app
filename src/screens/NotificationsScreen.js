@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     color: COLORS.light_grey,
+    fontWeight: "bold",
     marginHorizontal: 20,
   },
   scrollView: {
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     color: COLORS.light_grey,
   },
   notificationTimestamp: {
-    fontSize: 8,
+    fontSize: 10,
     color: COLORS.light_grey,
     marginTop: 5,
   },
