@@ -14,8 +14,8 @@ import styles from "../styles/wallet.screen.style";
 import { Ionicons } from "@expo/vector-icons";
 
 const user = {
-  balance: "0",
-  amountUnutilised: "2",
+  balance: "0.00",
+  amountUnutilised: "0",
   winnings: "0",
   bonus: "50",
 };
@@ -59,7 +59,7 @@ const WalletScreen = ({ navigation }) => {
             <TouchableOpacity>
               <Ionicons
                 name="information-circle-outline"
-                size={18}
+                size={20}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -78,7 +78,7 @@ const WalletScreen = ({ navigation }) => {
             <TouchableOpacity>
               <Ionicons
                 name="information-circle-outline"
-                size={18}
+                size={20}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -100,7 +100,7 @@ const WalletScreen = ({ navigation }) => {
             <TouchableOpacity>
               <Ionicons
                 name="information-circle-outline"
-                size={18}
+                size={20}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
@@ -130,7 +130,7 @@ const WalletScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.detailssubText}>
-            Add/Remove cards, Wallets, etc.
+            Add/Remove cards, wallets, etc.
           </Text>
         </View>
         <View style={styles.detailsContainerBox}>

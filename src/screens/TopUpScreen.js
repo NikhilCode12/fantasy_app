@@ -82,8 +82,8 @@ const TopUpScreen = ({ navigation }) => {
       Toast.show({
         type: "error",
         position: "bottom",
-        text1: "Please enter a valid amount",
-        visibilityTime: 1000,
+        text1: "Please enter a valid amount!",
+        visibilityTime: 1500,
       });
     } else {
       setInputColor(COLORS.lightGray);
@@ -91,7 +91,7 @@ const TopUpScreen = ({ navigation }) => {
     }
   };
 
-  const amountValues = [500, 1000, 1500, 2000];
+  const amountValues = ["500", "1,000", "1,500", "2,000"];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -133,19 +133,17 @@ const TopUpScreen = ({ navigation }) => {
             transform: [{ translateX: shakeAnimation }],
           }}
         >
-          <Text style={{ color: COLORS.primary, fontSize: 24 }}>
-            {"\u20B9"}
-          </Text>
+          <Text style={{ color: COLORS.light, fontSize: 24 }}>{"\u20B9"}</Text>
           <TextInput
             style={{
               ...styles.numberSize,
               width: "80%",
               marginLeft: -4,
               fontSize: 20,
-              color: COLORS.primary,
-              fontWeight: "bold",
+              color: COLORS.light,
+              fontWeight: "700",
             }}
-            cursorColor={COLORS.primary}
+            cursorColor={COLORS.light}
             value={addedAmount}
             onChangeText={onChangeAmount}
             keyboardType="phone-pad"
@@ -180,25 +178,28 @@ const TopUpScreen = ({ navigation }) => {
               flexDirection: "row",
               marginTop: 12,
               justifyContent: "space-between",
+              gap: 12,
             }}
           >
             {amountValues.map((amount, index) => (
               <TouchableOpacity
                 key={index}
                 style={{
-                  backgroundColor: COLORS.bgMateBlack,
-                  borderWidth: 1,
-                  borderColor: COLORS.primary,
+                  backgroundColor: COLORS.bgLightBlack,
                   paddingHorizontal: 12,
                   marginRight: 10,
                   paddingVertical: 8,
                   borderRadius: 5,
                 }}
                 onPress={() => {
-                  const formattedValue = new Intl.NumberFormat("en-IN").format(
-                    parseInt(amount, 10)
-                  );
-                  setAddedAmount(formattedValue.toString());
+                  const numericValue = amount.replace(/[^0-9]/g, "");
+                  if (!isNaN(numericValue)) {
+                    const formattedValue = new Intl.NumberFormat(
+                      "en-IN"
+                    ).format(parseInt(numericValue, 10));
+                    setAddedAmount(formattedValue.toString());
+                    setShowPayButton(true);
+                  }
                 }}
               >
                 <Text style={{ ...styles.buttonText, fontSize: 14 }}>
@@ -218,12 +219,12 @@ const TopUpScreen = ({ navigation }) => {
               width: "100%",
             }}
           >
+            <Toast ref={(ref) => Toast.setRef(ref)} />
             <Button
               title={`Pay \u20B9${addedAmount}`}
               color={"#005d4b"}
               onPress={onPressPay}
             />
-            <Toast ref={(ref) => Toast.setRef(ref)} />
           </View>
         )}
       </View>

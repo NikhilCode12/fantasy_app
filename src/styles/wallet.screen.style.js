@@ -34,9 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: COLORS.bgLightBlack,
     marginHorizontal: 12,
-    borderWidth: 1,
     borderRadius: 5,
-    borderColor: COLORS.primary,
   },
   balanceBox: {
     flexDirection: "column",
@@ -50,14 +48,14 @@ const styles = StyleSheet.create({
     color: COLORS.light,
   },
   balanceText: {
-    color: COLORS.primary,
+    color: COLORS.light,
     fontSize: 22,
-    fontWeight: "700",
+    fontWeight: "bold",
   },
   separator: {
     borderTopWidth: 0.25,
     marginVertical: 6,
-    borderTopColor: COLORS.light_grey,
+    borderTopColor: COLORS.lightGray,
     marginHorizontal: 2,
   },
   menuContainer: {
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   amountText: {
-    color: COLORS.primary,
+    color: COLORS.light,
     fontSize: 14,
     fontWeight: "700",
   },
@@ -107,8 +105,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 8,
     backgroundColor: COLORS.transparentBg,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
     borderRadius: 5,
     justifyContent: "space-between",
     alignItems: "center",
@@ -122,8 +118,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 8,
     backgroundColor: COLORS.transparentBg,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
     borderRadius: 5,
   },
   detailssubText: {
