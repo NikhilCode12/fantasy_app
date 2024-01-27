@@ -11,6 +11,7 @@ import {
   NotificationsScreen,
   WalletScreen,
   TopUpScreen,
+  WithdrawlScreen,
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
@@ -64,6 +65,12 @@ function App() {
         <Stack.Screen
           name="addBalance"
           component={TopUpScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Withdraw"
+          component={WithdrawlScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

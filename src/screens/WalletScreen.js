@@ -46,7 +46,7 @@ const WalletScreen = ({ navigation }) => {
           </Text>
           <Button
             title="ADD BALANCE"
-            color={"#005d4b"}
+            color={"teal"}
             onPress={() => {
               navigation.navigate("addBalance");
             }}
@@ -88,7 +88,12 @@ const WalletScreen = ({ navigation }) => {
               {"\u20B9"}
               {user.winnings}
             </Text>
-            <TouchableOpacity style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => {
+                navigation.navigate("Withdraw");
+              }}
+            >
               <Text style={styles.buttonText}>WITHDRAW INSTANTLY</Text>
             </TouchableOpacity>
           </View>

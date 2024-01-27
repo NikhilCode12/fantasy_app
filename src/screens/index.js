@@ -6,6 +6,7 @@ import HomeScreen from "./HomeScreen";
 import NotificationsScreen from "./NotificationsScreen";
 import WalletScreen from "./WalletScreen";
 import TopUpScreen from "./TopUpScreen";
+import WithdrawlScreen from "./WithdrawlScreen";
 
 export {
   LoginScreen,
@@ -16,4 +17,5 @@ export {
   NotificationsScreen,
   WalletScreen,
   TopUpScreen,
+  WithdrawlScreen,
 };
