@@ -35,6 +35,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "^14.1.0",
     "react-native-toast-message": "^2.2.0",
+    "react-native-typewriter": "^0.7.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6"
   },
