@@ -4,6 +4,8 @@ import OTPScreen from "./OTPScreen";
 import EmailAuthenticationScreen from "./EmailAuthentication";
 import HomeScreen from "./HomeScreen";
 import NotificationsScreen from "./NotificationsScreen";
+import WalletScreen from "./WalletScreen";
+import TopUpScreen from "./TopUpScreen";
 
 export {
   LoginScreen,
@@ -12,4 +14,6 @@ export {
   EmailAuthenticationScreen,
   HomeScreen,
   NotificationsScreen,
+  WalletScreen,
+  TopUpScreen,
 };

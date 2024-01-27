@@ -11,6 +11,7 @@ import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const notifications = [
   {
@@ -40,15 +41,13 @@ const NotificationsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.backArrow}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            size={26}
+        <TouchableOpacity style={styles.backArrow}>
+          <Ionicons
+            name="arrow-back"
+            size={24}
+            onPress={() => {
+              navigation.goBack();
+            }}
             color={COLORS.primary}
           />
         </TouchableOpacity>
@@ -87,14 +86,14 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 12,
+    padding: 16,
     backgroundColor: COLORS.bgMateBlack,
   },
   headerText: {
     fontSize: 18,
     color: COLORS.light_grey,
-    marginHorizontal: 12,
-    marginTop: 6,
+    fontWeight: "bold",
+    marginHorizontal: 20,
   },
   scrollView: {
     flex: 1,
@@ -106,10 +105,10 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 10,
     backgroundColor: COLORS.transparentBg,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
+    // borderWidth: 1,
+    // borderColor: COLORS.primary,
     borderRadius: 8,
-    marginVertical: 12,
+    marginVertical: 8,
     marginHorizontal: 20,
   },
   icon: {
@@ -129,13 +128,16 @@ const styles = StyleSheet.create({
     color: COLORS.light_grey,
   },
   notificationTimestamp: {
-    fontSize: 8,
+    fontSize: 10,
     color: COLORS.light_grey,
     marginTop: 5,
   },
   backArrow: {
-    paddingTop: 12,
-    paddingHorizontal: 12,
+    backgroundColor: COLORS.transparentBg,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 8,
   },
 });
 

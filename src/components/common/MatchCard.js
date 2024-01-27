@@ -57,18 +57,12 @@ const MatchCard = ({ team1, team2, time, venue }) => {
 const styles = StyleSheet.create({
   card: {
     height: 90,
-    borderWidth: 1.5,
     borderRadius: 10,
-    borderColor: COLORS.primary,
-    marginVertical: 16,
-    marginHorizontal: 12,
+    marginVertical: 12,
+    marginHorizontal: 8,
     backgroundColor: COLORS.transparentBg,
     padding: 20,
     shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 1,
   },
   matchDetails: {
     flexDirection: "row",
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   teamName: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "bold",
     color: COLORS.light_grey,
     textAlign: "center",
@@ -93,7 +87,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   vsText: {
-    fontSize: 18,
+    fontSize: 16,
     fontStyle: "italic",
     fontWeight: "bold",
   },
