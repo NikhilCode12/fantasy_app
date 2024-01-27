@@ -11,6 +11,8 @@ const COLORS = {
   lightGray: "#808080",
   transparentBg: "#FFFFFF11",
   gold: "#FFD700",
+  silver: "#C0C2C4",
+  bronze: "#EAC696",
 };
 
 export default COLORS;
