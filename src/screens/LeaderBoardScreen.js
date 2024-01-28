@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,18 +6,30 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import LeaderBoard from "../components/leaderboard/LeaderBoard";
+import animationData from "../../assets/comingsoon.json";
+import LottieView from "lottie-react-native";
+import { ActivityIndicator } from "react-native";
+import TypeWriter from "react-native-typewriter";
 
 const LeaderBoardScreen = ({ navigation }) => {
   const [selectedWidget, setSelectedWidget] = useState("Ranking");
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleWidgetPress = (widgetName) => {
     setSelectedWidget(widgetName);
   };
+
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,6 +130,39 @@ const LeaderBoardScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       {selectedWidget === "Ranking" ? <LeaderBoard /> : null}
+      {selectedWidget === "Rules" || selectedWidget === "Rewards" ? (
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 50,
+          }}
+        >
+          {isLoading ? (
+            <ActivityIndicator size="large" color={COLORS.primary} />
+          ) : (
+            <>
+              <LottieView
+                source={animationData}
+                autoPlay
+                loop
+                style={{ width: 300, height: 300 }}
+              />
+              <TypeWriter
+                typing={1}
+                style={{
+                  color: COLORS.primary,
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  fontStyle: "italic",
+                }}
+              >
+                {"COMING SOON..."}
+              </TypeWriter>
+            </>
+          )}
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
