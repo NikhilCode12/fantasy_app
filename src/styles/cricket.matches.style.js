@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: COLORS.btn,
+    borderColor: COLORS.lightGray,
     borderRadius: 5,
     paddingHorizontal: 12,
     gap: 6,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     marginVertical: 8,
-    color: COLORS.primary,
+    color: COLORS.light,
   },
 });
 export default styles;
