@@ -1,74 +1,142 @@
 [
   {
     "id": 1,
-    "league": "IPL",
-    "team1": "Mumbai Indians",
-    "team2": "Chennai Super Kings",
-    "time": "12:00 PM",
-    "venue": "Wankhede Stadium"
+    "league": "Indian Premier League",
+    "teamAImage": "mumbai_indians_image_url",
+    "teamAName": "MI",
+    "teamBImage": "chennai_super_kings_image_url",
+    "teamBName": "CSK",
+    "timeRemaining": "0h:15m",
+    "timeVenue": {
+      "time": "12:00 PM",
+      "venue": "Wankhede Stadium"
+    },
+    "winnings": "5"
   },
   {
     "id": 2,
     "league": "Big Bash League",
-    "team1": "Sydney Sixers",
-    "team2": "Perth Scorchers",
-    "time": "3:30 PM",
-    "venue": "Sydney Cricket Ground"
+    "teamAImage": "sydney_sixers_image_url",
+    "teamAName": "Sydney ",
+    "teamBImage": "perth_scorchers_image_url",
+    "teamBName": "Perth ",
+    "timeRemaining": "4h:20m",
+    "timeVenue": {
+      "time": "3:30 PM",
+      "venue": "Sydney Cricket Ground"
+    },
+    "winnings": "7.50"
   },
   {
     "id": 3,
     "league": "T20 World Cup",
-    "team1": "India",
-    "team2": "England",
-    "time": "10:00 AM",
-    "venue": "Melbourne Cricket Ground"
+    "teamAImage": "india_image_url",
+    "teamAName": "India",
+    "teamBImage": "england_image_url",
+    "teamBName": "England",
+    "timeRemaining": "6h:80m",
+    "timeVenue": {
+      "time": "10:00 AM",
+      "venue": "Melbourne Cricket Ground"
+    },
+    "winnings": "6.52"
   },
   {
     "id": 4,
     "league": "Ashes",
-    "team1": "Australia",
-    "team2": "England",
-    "time": "6:45 PM",
-    "venue": "Adelaide Oval"
+    "teamAImage": "australia_image_url",
+    "teamAName": "Australia",
+    "teamBImage": "england_image_url",
+    "teamBName": "England",
+    "timeRemaining": "3h:18m",
+    "timeVenue": {
+      "time": "6:45 PM",
+      "venue": "Adelaide Oval"
+    },
+    "winnings": "5"
   },
   {
     "id": 5,
     "league": "Caribbean Premier League",
-    "team1": "Trinbago Knight Riders",
-    "team2": "Guyana Amazon Warriors",
-    "time": "1:15 PM",
-    "venue": "Queen's Park Oval"
+    "teamAImage": "trinbago_knight_riders_image_url",
+    "teamAName": "Trinbago ",
+    "teamBImage": "guyana_amazon_warriors_image_url",
+    "teamBName": "Guyana ",
+    "timeRemaining": "1h:30m",
+    "timeVenue": {
+      "time": "1:15 PM",
+      "venue": "Queen's Park Oval"
+    },
+    "winnings": "7.50"
   },
   {
     "id": 6,
     "league": "Pakistan Super League",
-    "team1": "Lahore Qalandars",
-    "team2": "Karachi Kings",
-    "time": "4:30 PM",
-    "venue": "Gaddafi Stadium"
+    "teamAImage": "lahore_qalandars_image_url",
+    "teamAName": "Lahore ",
+    "teamBImage": "karachi_kings_image_url",
+    "teamBName": "Karachi ",
+    "timeRemaining": "2h:30m",
+    "timeVenue": {
+      "time": "4:30 PM",
+      "venue": "Gaddafi Stadium"
+    },
+    "winnings": "8"
   },
   {
     "id": 7,
     "league": "Vitality Blast",
-    "team1": "Nottinghamshire",
-    "team2": "Yorkshire",
-    "time": "5:45 PM",
-    "venue": "Trent Bridge"
+    "teamAImage": "nottinghamshire_image_url",
+    "teamAName": "Nottinghamshire",
+    "teamBImage": "yorkshire_image_url",
+    "teamBName": "Yorkshire",
+    "timeRemaining": "3h:50m",
+    "timeVenue": {
+      "time": "5:45 PM",
+      "venue": "Trent Bridge"
+    },
+    "winnings": "6"
   },
   {
     "id": 8,
     "league": "Super Smash",
-    "team1": "Auckland Aces",
-    "team2": "Wellington Firebirds",
-    "time": "12:30 PM",
-    "venue": "Eden Park"
+    "teamAImage": "auckland_aces_image_url",
+    "teamAName": "Auckland ",
+    "teamBImage": "wellington_firebirds_image_url",
+    "teamBName": "Wellington ",
+    "timeRemaining": "2h:19m",
+    "timeVenue": {
+      "time": "12:30 PM",
+      "venue": "Eden Park"
+    },
+    "winnings": "6.50"
   },
   {
     "id": 9,
     "league": "Mzansi Super League",
-    "team1": "Jozi Stars",
-    "team2": "Cape Town Blitz",
-    "time": "8:00 PM",
-    "venue": "New Wanderers Stadium"
+    "teamAImage": "jozi_stars_image_url",
+    "teamAName": "Jozi Stars",
+    "teamBImage": "cape_town_blitz_image_url",
+    "teamBName": "Cape Town ",
+    "timeRemaining": "8h:45m",
+    "timeVenue": {
+      "time": "8:00 PM",
+      "venue": "New Wanderers Stadium"
+    },
+    "winnings": "7.50"
+  },
+  {
+    "id": 10,
+    "league": "Test League",
+    "teamAImage": "test_team_a_image_url",
+    "teamAName": "Test Team A",
+    "teamBImage": "test_team_b_image_url",
+    "teamBName": "Test Team B",
+    "timeRemaining": "11h:18m",
+    "timeVenue": {
+      "time": "2:00 PM",
+      "venue": "Test Stadium"
+    },
+    "winnings": "7.25"
   }
 ]

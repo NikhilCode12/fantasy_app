@@ -16,14 +16,13 @@ import styles2 from "../styles/top-up.screen.style.js";
 import DeleteIcon from "../components/common/DeleteIcon.js";
 import Toast from "react-native-toast-message";
 
-const TopUpScreen = ({ navigation }) => {
+const WithdrawScreen = ({ navigation }) => {
   const [addedAmount, setAddedAmount] = useState("");
   const [isFocused, setisFocused] = useState(false);
   const [inputColor, setInputColor] = useState(COLORS.lightGray);
   const [showPayButton, setShowPayButton] = useState(false);
 
   const toastRef = useRef(null);
-
   useEffect(() => {
     if (inputColor === "crimson") {
       const timer = setTimeout(() => {
@@ -50,6 +49,7 @@ const TopUpScreen = ({ navigation }) => {
       setShowPayButton(false);
     }
   };
+
   const shakeAnimation = new Animated.Value(0);
 
   const startShakeAnimation = () => {
@@ -81,13 +81,13 @@ const TopUpScreen = ({ navigation }) => {
     ]).start();
   };
   const onPressPay = () => {
-    if (parseInt(addedAmount, 10) < 1) {
+    if (parseInt(addedAmount, 10) < 100) {
       setInputColor("crimson");
       startShakeAnimation();
       Toast.show({
         type: "error",
         position: "bottom",
-        text1: "Please enter a valid amount!",
+        text1: "Withdrawl amount should be more than \u20B9100",
         visibilityTime: 1500,
       });
     } else {
@@ -111,7 +111,7 @@ const TopUpScreen = ({ navigation }) => {
             color={COLORS.primary}
           />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Add Balance</Text>
+        <Text style={styles.headerText}>Withdraw</Text>
       </View>
       <View style={styles2.topUpContainer}>
         <Text
@@ -120,7 +120,7 @@ const TopUpScreen = ({ navigation }) => {
             fontWeight: "700",
           }}
         >
-          Enter Amount (Min {"\u20B9"}1)
+          Enter Amount (Min {"\u20B9"}100)
         </Text>
         <Animated.View
           style={{
@@ -226,7 +226,7 @@ const TopUpScreen = ({ navigation }) => {
           >
             <Toast ref={toastRef} />
             <Button
-              title={`Pay \u20B9${addedAmount}`}
+              title={`Withdraw \u20B9${addedAmount}`}
               color={"teal"}
               onPress={onPressPay}
             />
@@ -237,4 +237,4 @@ const TopUpScreen = ({ navigation }) => {
   );
 };
 
-export default TopUpScreen;
+export default WithdrawScreen;

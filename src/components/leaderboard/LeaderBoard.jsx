@@ -13,7 +13,7 @@ import COLORS from "../../constants/colors";
 const generateDummyUsers = () => {
   const users = [];
 
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 50; i++) {
     const points = (Math.random() * (2500 - 500) + 500).toFixed(2);
 
     const user = {
@@ -80,6 +80,12 @@ const LeaderBoard = () => {
     fetchData();
   }, []);
 
+  const targetUserName = "User1";
+  const targetUser = users.find((user) => user.name === targetUserName);
+  const updatedUsers = targetUser
+    ? [targetUser, ...users.filter((user) => user.name !== targetUserName)]
+    : users;
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -94,21 +100,52 @@ const LeaderBoard = () => {
       {loading ? (
         <ActivityIndicator size="large" color={COLORS.primary} />
       ) : (
-        users.map((user, index) => (
-          <TouchableOpacity key={index} style={styles.personCard}>
+        updatedUsers.map((user, index) => (
+          <View
+            key={index}
+            style={[
+              styles.personCard,
+              user.name === targetUserName && {
+                backgroundColor: "#F0F0F0",
+                borderLeftColor: "red",
+              },
+            ]}
+          >
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                marginVertical: 4,
+                marginVertical: 6,
                 marginHorizontal: 8,
               }}
             >
-              <Ionicons name="person-circle" color={COLORS.light} size={36} />
+              <Ionicons
+                name="person-circle"
+                color={
+                  user.name === targetUserName ? COLORS.dark : COLORS.light
+                }
+                size={40}
+              />
               <View style={{ marginHorizontal: 4 }}>
-                <Text style={styles.personNameText}>{user.name}</Text>
-                <Text style={styles.personPointsText}>
+                <Text
+                  style={[
+                    styles.personNameText,
+                    user.name === targetUserName
+                      ? { color: COLORS.dark }
+                      : { color: COLORS.light },
+                  ]}
+                >
+                  {user.name}
+                </Text>
+                <Text
+                  style={[
+                    styles.personPointsText,
+                    user.name === targetUserName && {
+                      color: COLORS.bgMateBlack,
+                    },
+                  ]}
+                >
                   {user.points.toFixed(2)} Points
                 </Text>
               </View>
@@ -132,7 +169,7 @@ const LeaderBoard = () => {
               )}
               <Text style={styles.personRankText}>Rank {user.rank}</Text>
             </View>
-          </TouchableOpacity>
+          </View>
         ))
       )}
     </ScrollView>
@@ -147,12 +184,15 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.bgLightBlack,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
+    marginBottom: 18,
+    shadowColor: COLORS.lightGray,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+    borderLeftWidth: 3,
     borderBottomRightRadius: 6,
-    borderRightColor: COLORS.lightGray,
-    borderBottomColor: COLORS.lightGray,
+    borderLeftColor: COLORS.primary,
   },
   personNameText: {
     color: COLORS.light,
