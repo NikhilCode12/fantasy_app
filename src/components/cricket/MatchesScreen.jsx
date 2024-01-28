@@ -9,6 +9,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import icon from "../../../assets/icon.png";
 
 const MatchesScreen = () => {
+  const convertTimeToMinutes = (timeRemaining) => {
+    const [hours, minutes] = timeRemaining.split(":");
+    return parseInt(hours) * 60 + parseInt(minutes);
+  };
+
+  const sortedMatches = matchesData.sort((a, b) => {
+    const timeA = convertTimeToMinutes(a.timeRemaining);
+    const timeB = convertTimeToMinutes(b.timeRemaining);
+    return timeA - timeB;
+  });
+
   return (
     <SafeAreaView contentContainerStyle={{ flex: 1 }}>
       <ScrollView
@@ -35,7 +46,7 @@ const MatchesScreen = () => {
             <Text style={styles.matchText2}>{"Filter"}</Text>
           </TouchableOpacity>
         </View>
-        {matchesData.map((match) => (
+        {sortedMatches.map((match) => (
           <MatchCard
             key={match.id}
             league={match.league}
