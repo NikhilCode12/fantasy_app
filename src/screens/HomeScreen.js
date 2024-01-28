@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, View, Text, Animated, Easing } from "react-native";
+import { TouchableOpacity, View, Text, Animated, Easing , BackHandler  } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/home.style";
 import COLORS from "../constants/colors";
@@ -34,7 +34,19 @@ const HomeScreen = ({ navigation }) => {
       }).start();
     }
   }, [isProfileOverlayVisible, overlayAnimation]);
+ useEffect(() => {
+    const backAction = () => {
+      closeProfileOverlay();
+      return true;
+    };
 
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.appBarContainer}>

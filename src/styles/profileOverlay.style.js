@@ -13,12 +13,13 @@ const styles = StyleSheet.create({
   overlayBox: {
     flex: 1,
     padding: 20,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.bgMateBlack,
   },
   closeButton: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: 30,
+    right: 20,
+    marginBottom:50
   },
   linkItem: {
     marginBottom: 15,
@@ -31,43 +32,86 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   linkText: {
-    fontSize: 18,
-    color: COLORS.primary,
+    fontSize: 14,
+    color: COLORS.light,
+    marginLeft:"4%",
+    fontWeight:400,
     flex: 1,
   },
   arrowIcon: {
     marginLeft: 10,
+    
   },
   solidLink: {
-    backgroundColor: COLORS.primary,
+    backgroundColor:COLORS.transparentBg,
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginBottom: 10,
+    marginBottom: 35, width:"80%"
   },
   solidLinkText: {
-    color: COLORS.white,
+    color: COLORS.light,
     fontWeight: "bold",
   },
 
   // Dark mode container styles
   darkModeContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 10,
+    paddingVertical:18,
+    borderColor:COLORS.delta,
+    borderTopWidth:1,
+    borderBottomWidth:1
   },
   darkModeText: {
-    color: COLORS.primary,
-    fontSize: 18,
+    color: COLORS.light,
+  fontSize: 14,
+    marginLeft:"6%"
+    
+  },
+  darkmodetoggler:{
+    position:"absolute",
+    right:"0%"
   },
 
   // Divider styles
   divider: {
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.lightGrey,
-    marginBottom: 10,
+    borderBottomColor: COLORS,
+  },
+  // follow us
+  followuscontainer:{
+    marginTop:"95%", 
+  },
+  followustext:{
+    color:COLORS.light,
+    fontSize: 14,
+    fontWeight:"700",
+  },
+  iconscontainer:{
+    flexDirection:"row",
+    marginTop:"5%",
+    justifyContent:"space-between",
+    maxWidth:"90%"
+  },
+
+  //logout
+ button: {
+    backgroundColor:COLORS.bgLightBlack,
+    padding: 10,
+    borderRadius: 5,
+    // borderWidth: 2,
+    borderColor: COLORS.light,
+    marginBottom:"5%",
+  },
+  text: {
+    color: COLORS.logoutcolor,
+    textAlign: 'center',
+    fontWeight:"600",
+    fontSize: 14,
   },
 });
 
