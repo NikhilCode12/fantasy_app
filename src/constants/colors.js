@@ -13,6 +13,9 @@ const COLORS = {
   gold: "#FFD700",
   silver: "#C0C2C4",
   bronze: "#EAC696",
+  delta :"#a5a6a4",
+  mako:"43454b",
+  logoutcolor:"#e66960"
 };
 
 export default COLORS;
