@@ -12,6 +12,8 @@ import {
   WalletScreen,
   TopUpScreen,
   WithdrawlScreen,
+  MyTransactions,
+  AddCardsScreen
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
@@ -73,6 +75,19 @@ function App() {
           component={WithdrawlScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="MyTransactions"
+          component={MyTransactions}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="AddCards"
+          component={AddCardsScreen}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

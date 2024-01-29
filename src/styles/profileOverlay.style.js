@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
   // follow us
   followuscontainer:{
-    marginTop:"95%", 
+    // marginTop:"95%", 
+    top:"30%" 
   },
   followustext:{
     color:COLORS.light,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     marginBottom:"5%",
   },
   text: {
-    color: COLORS.logoutcolor,
+    color: COLORS.darkRed,
     textAlign: 'center',
     fontWeight:"600",
     fontSize: 14,
