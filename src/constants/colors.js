@@ -15,7 +15,9 @@ const COLORS = {
   bronze: "#EAC696",
   delta :"#a5a6a4",
   mako:"43454b",
-  logoutcolor:"#e66960"
+  darkRed:"#e66960",
+  darkGreen:"#309635",
+  wheat:"wheat"
 };
 
 export default COLORS;
