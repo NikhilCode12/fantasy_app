@@ -121,7 +121,9 @@ const WalletScreen = ({ navigation }) => {
       <View style={styles.detailsContainer}>
         <View style={styles.detailsBox}>
           <Text style={styles.detailsText}>My Transactions</Text>
-          <TouchableOpacity style={styles.arrowStyle}>
+          <TouchableOpacity style={styles.arrowStyle}  onPress={() => {
+                navigation.navigate("MyTransactions");
+              }}>
             <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
           </TouchableOpacity>
         </View>
@@ -130,7 +132,9 @@ const WalletScreen = ({ navigation }) => {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.detailsText}>Manage Payments</Text>
-            <TouchableOpacity style={styles.arrowStyle}>
+            <TouchableOpacity style={styles.arrowStyle} onPress={() => {
+                navigation.navigate("AddCards");
+              }}>
               <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
             </TouchableOpacity>
           </View>

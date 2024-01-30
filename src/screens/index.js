@@ -7,6 +7,8 @@ import NotificationsScreen from "./NotificationsScreen";
 import WalletScreen from "./WalletScreen";
 import TopUpScreen from "./TopUpScreen";
 import WithdrawlScreen from "./WithdrawlScreen";
+import MyTransactions from "./MyTransactions";
+import AddCardsScreen from "./AddCardsScreen";
 
 export {
   LoginScreen,
@@ -18,4 +20,6 @@ export {
   WalletScreen,
   TopUpScreen,
   WithdrawlScreen,
+  MyTransactions,
+  AddCardsScreen
 };
