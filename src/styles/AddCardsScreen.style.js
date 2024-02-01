@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     padding: 8,
     color:COLORS.light,
-    placeholderTextColor:COLORS.wheat
+    // placeholderTextColor:COLORS.wheat
   },
   addButton: {
     backgroundColor: COLORS.transparentBg, 

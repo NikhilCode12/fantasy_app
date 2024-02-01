@@ -147,7 +147,9 @@ const WalletScreen = ({ navigation }) => {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.detailsText}>Invite & Collect</Text>
-            <TouchableOpacity style={styles.arrowStyle}>
+            <TouchableOpacity style={styles.arrowStyle} onPress={() => {
+                navigation.navigate("InviteFriends");
+              }}>
               <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
