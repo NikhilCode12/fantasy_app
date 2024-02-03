@@ -1,0 +1,24 @@
+[
+    {
+        "id":1,
+        "CompanyName":"StarBucks",
+        "Tagline":"Free Coffee at StarBucks",
+        "CurrentPoints":100,
+        "TotalPoints":100
+    },
+    {
+        "id":2,
+        "CompanyName":"Spotify",
+        "Tagline":"$ 10 Spotify Card",
+        "CurrentPoints":340,
+        "TotalPoints":350
+    },
+    {
+        "id":2,
+        "CompanyName":"Spotify",
+        "Tagline":"$ 10 Spotify Card",
+        "CurrentPoints":340,
+        "TotalPoints":350
+    }
+
+]

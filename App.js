@@ -14,7 +14,8 @@ import {
   WithdrawlScreen,
   MyTransactions,
   AddCardsScreen,
-  InviteFriendsScreen
+  InviteFriendsScreen,
+  PrivateContestJoin
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 const Stack = createNativeStackNavigator();
@@ -92,6 +93,12 @@ function App() {
         <Stack.Screen
           name="InviteFriends"
           component={InviteFriendsScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="PrivateContestJoin"
+          component={PrivateContestJoin}
           options={{ headerShown: false }}
         />
 

@@ -61,7 +61,7 @@ export default function InviteFriendsScreen({navigation}){
             color={COLORS.primary} 
           />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Add Cards</Text>
+        <Text style={styles.headerText}>Invite Friends</Text>
       </View>
     
       <Image source={require("../../assets/inviteAndEarn.jpg")} style={styles.image} />
