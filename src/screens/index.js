@@ -10,6 +10,7 @@ import WithdrawlScreen from "./WithdrawlScreen";
 import MyTransactions from "./MyTransactions";
 import AddCardsScreen from "./AddCardsScreen";
 import InviteFriendsScreen from "./InviteFriendsScreen";
+import PrivateContestJoin from "./PrivateContestJoin";
 
 export {
   LoginScreen,
@@ -23,5 +24,6 @@ export {
   WithdrawlScreen,
   MyTransactions,
   AddCardsScreen,
-  InviteFriendsScreen
+  InviteFriendsScreen,
+  PrivateContestJoin
 };
