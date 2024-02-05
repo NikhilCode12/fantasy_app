@@ -9,6 +9,8 @@ import TopUpScreen from "./TopUpScreen";
 import WithdrawlScreen from "./WithdrawlScreen";
 import MyTransactions from "./MyTransactions";
 import AddCardsScreen from "./AddCardsScreen";
+import InviteFriendsScreen from "./InviteFriendsScreen";
+import PrivateContestJoin from "./PrivateContestJoin";
 
 export {
   LoginScreen,
@@ -21,5 +23,7 @@ export {
   TopUpScreen,
   WithdrawlScreen,
   MyTransactions,
-  AddCardsScreen
+  AddCardsScreen,
+  InviteFriendsScreen,
+  PrivateContestJoin
 };

@@ -71,6 +71,9 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         {renderLink("gift-outline", "Refer & Earn", () =>
           navigateToPage("ReferAndEarn")
         )}
+        {renderLink("game-controller", "Private Contest", () =>
+          navigateToPage("PrivateContestJoin")
+        )}
         {/* {renderLink("megaphone-outline", "Offers & Programs", () =>
           navigateToPage("OffersAndPrograms")
         )} */}

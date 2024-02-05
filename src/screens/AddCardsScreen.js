@@ -42,6 +42,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Cardholder Name"
+          placeholderTextColor={COLORS.light_grey}
           onChangeText={(name) => setCardHolderName(name)}
         />
 
@@ -51,6 +52,7 @@ const AddCardsScreen = ({ navigation }) => {
           placeholder="Card Number (16 digits)"
           keyboardType="numeric"
           maxLength={16}
+          placeholderTextColor={COLORS.light_grey}
           onChangeText={(number) => setCardNumber(number)}
         />
 
@@ -66,6 +68,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="CVV"
+          placeholderTextColor={COLORS.light_grey}
           keyboardType="numeric"
           maxLength={3}
           onChangeText={(cvv) => setCvv(cvv)}

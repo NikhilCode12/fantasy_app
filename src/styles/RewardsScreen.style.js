@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import COLORS from "../constants/colors";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -8,8 +9,12 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
+    padding: 5,
+    // backgroundColor: COLORS.transparentBg,
     backgroundColor: COLORS.bgMateBlack,
+    position:"absolute",
+    top:15,left:6,
+    borderRadius:50,
   },
   headerText: {
     fontSize: 18,
@@ -18,36 +23,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   backArrow: {
-    backgroundColor: COLORS.transparentBg,
+    // backgroundColor: COLORS.transparentBg,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
   },
-
-  formContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  input: {
-    height: 40,
-    borderColor: COLORS.lightGray,
-    borderWidth: 1,
-    marginTop: 12,
-    padding: 8,
-    color: COLORS.light,
-    placeholderTextColor: COLORS.wheat,
-  },
-  addButton: {
-    backgroundColor: COLORS.transparentBg,
-    padding: 12,
+  arrowStyle: {
+    backgroundColor: COLORS.bgMateBlack,
     borderRadius: 5,
-    marginTop: 16,
-    alignItems: "center",
+    padding: 4,
   },
-  addButtonText: {
-    color: COLORS.light,
-    fontSize: 16,
-  },
+
+  
 });
+
 export default styles;

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import COLORS from "../constants/colors";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -24,30 +25,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
   },
-
-  formContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  input: {
-    height: 40,
-    borderColor: COLORS.lightGray,
-    borderWidth: 1,
-    marginTop: 12,
-    padding: 8,
-    color: COLORS.light,
-    placeholderTextColor: COLORS.wheat,
-  },
-  addButton: {
-    backgroundColor: COLORS.transparentBg,
-    padding: 12,
+  arrowStyle: {
+    backgroundColor: COLORS.bgMateBlack,
     borderRadius: 5,
-    marginTop: 16,
-    alignItems: "center",
+    padding: 4,
   },
-  addButtonText: {
-    color: COLORS.light,
-    fontSize: 16,
+  mainContainer:{
+    paddingHorizontal:14
   },
+  joinContestHead:{
+    fontSize:18,
+    fontWeight:"600",
+    paddingHorizontal:8,
+    color:COLORS.light
+  },
+  mainHead:
+    { fontSize:18,
+    
+    paddingHorizontal:8,
+    color:COLORS.light},
+  
+  btnContainer:{marginTop:20,width:"200%",flexDirection:"row"},
+  warningText:{fontSize:12, color:COLORS.darkRed, marginTop:8},
+  inputBox:{fontSize:16,color:COLORS.light, paddingHorizontal:10,paddingVertical:8, borderRadius:5,borderColor:COLORS.light, backgroundColor:COLORS.transparentBg,width:"95%",marginTop:8},
+
 });
+
 export default styles;
