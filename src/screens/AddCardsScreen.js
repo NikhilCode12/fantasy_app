@@ -10,6 +10,35 @@ const AddCardsScreen = ({ navigation }) => {
   const [cvv, setCvv] = useState('');
 
   const handleAddCard = () => {
+    if(cardHolderName=="")
+    {
+       ToastAndroid.show(
+                      "Enter CardHolder Name",
+                      ToastAndroid.SHORT
+                    );
+                  } else if(cardNumber.length!=16)
+                  {
+      ToastAndroid.show(
+                     "Enter Valid Card Number",
+                     ToastAndroid.SHORT
+                   );
+
+    }
+    else if(expiryDate.length!=5)
+    { 
+      ToastAndroid.show(
+                     "Enter Date in format MM/YY",
+                     ToastAndroid.SHORT
+                   );
+                  }
+                  else if(cvv.length!=3) {
+      ToastAndroid.show(
+                     "Enter Date in format MM/YY",
+                     ToastAndroid.SHORT
+                   );
+
+    }
+    else
      ToastAndroid.show(
                       "Card Added Successfully",
                       ToastAndroid.SHORT
@@ -38,6 +67,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Cardholder Name"
+          placeholderTextColor={COLORS.light_grey}
           onChangeText={(name) => setCardHolderName(name)}
         />
 
@@ -47,6 +77,7 @@ const AddCardsScreen = ({ navigation }) => {
           placeholder="Card Number (16 digits)"
           keyboardType="numeric"
           maxLength={16}
+            placeholderTextColor={COLORS.light_grey}
           onChangeText={(number) => setCardNumber(number)}
         />
 
@@ -54,7 +85,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Expiry Date (MM/YY)"
-          
+            placeholderTextColor={COLORS.light_grey}
           maxLength={5}
           onChangeText={(date) => setExpiryDate(date)}
         />
@@ -63,6 +94,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="CVV"
+            placeholderTextColor={COLORS.light_grey}
           keyboardType="numeric"
           maxLength={3}
           onChangeText={(cvv) => setCvv(cvv)}
