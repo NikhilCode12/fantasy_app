@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import COLORS from "../constants/colors";
 const styles = StyleSheet.create({
-   container: {
+  container: {
     flex: 1,
     backgroundColor: COLORS.bgMateBlack,
   },
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
   },
- 
+
   formContainer: {
     flex: 1,
     padding: 16,
@@ -35,15 +35,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 12,
     padding: 8,
-    color:COLORS.light,
-    placeholderTextColor:COLORS.wheat
+    color: COLORS.light,
   },
   addButton: {
-    backgroundColor: COLORS.transparentBg, 
+    backgroundColor: COLORS.transparentBg,
     padding: 12,
     borderRadius: 5,
     marginTop: 16,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addButtonText: {
     color: COLORS.light,

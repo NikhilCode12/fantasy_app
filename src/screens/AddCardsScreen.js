@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ToastAndroid } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/AddCardsScreen.style";
-import COLORS from '../constants/colors';
+import COLORS from "../constants/colors";
 const AddCardsScreen = ({ navigation }) => {
-  const [cardHolderName, setCardHolderName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvv, setCvv] = useState('');
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
 
   const handleAddCard = () => {
-     ToastAndroid.show(
-                      "Card Added Successfully",
-                      ToastAndroid.SHORT
-                    );
+    ToastAndroid.show("Card Added Successfully", ToastAndroid.SHORT);
     // Implement logic to handle adding the credit card
     // You can access the entered values: cardHolderName, cardNumber, expiryDate, cvv
   };
@@ -28,7 +32,7 @@ const AddCardsScreen = ({ navigation }) => {
             onPress={() => {
               navigation.goBack();
             }}
-            color={COLORS.primary} 
+            color={COLORS.primary}
           />
         </TouchableOpacity>
         <Text style={styles.headerText}>Add Cards</Text>
@@ -54,7 +58,6 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Expiry Date (MM/YY)"
-          
           maxLength={5}
           onChangeText={(date) => setExpiryDate(date)}
         />
@@ -76,7 +79,5 @@ const AddCardsScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-
 
 export default AddCardsScreen;
