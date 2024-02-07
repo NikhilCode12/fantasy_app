@@ -1,15 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, LeaderBoardScreen, RewardsScreen } from "./index";
+import ContestsScreen from "../components/variations/ContestsScreen";
 import COLORS from "../constants/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import VariationsScreen from "../components/variations/VariationsScreen";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: true,
   tabBarHideOnKeyboard: true,
   tabBarLabelStyle: {
-    // color: COLORS.light_grey,
     fontWeight: "bold",
     fontSize: 10,
     marginBottom: 8,
@@ -31,18 +31,18 @@ const screenOptions = {
 
 const tabBarSize = 24;
 
-const BottomNavigation = () => {
+const ContestsNavigation = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Variations"
+        component={VariationsScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <>
                 <Ionicons
-                  name={focused ? "home" : "home-outline"}
+                  name={focused ? "options" : "options-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />
@@ -52,14 +52,14 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="My Matches"
-        component={HomeScreen}
+        name="My Contests"
+        component={ContestsScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <>
-                <MaterialCommunityIcons
-                  name={focused ? "stadium" : "stadium-variant"}
+                <Ionicons
+                  name={focused ? "trophy" : "trophy-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />
@@ -69,31 +69,14 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="LeaderBoard"
-        component={LeaderBoardScreen}
+        name="My Teams"
+        component={ContestsScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <>
                 <Ionicons
-                  name={focused ? "podium" : "podium-outline"}
-                  size={tabBarSize}
-                  color={focused ? COLORS.primary : COLORS.light_grey}
-                />
-              </>
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Rewards"
-        component={RewardsScreen}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <>
-                <Ionicons
-                  name={focused ? "gift" : "gift-outline"}
+                  name={focused ? "people" : "people-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />
@@ -106,4 +89,4 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation;
+export default ContestsNavigation;

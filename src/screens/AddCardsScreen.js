@@ -1,48 +1,23 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ToastAndroid } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/AddCardsScreen.style";
-import COLORS from '../constants/colors';
+import COLORS from "../constants/colors";
 const AddCardsScreen = ({ navigation }) => {
-  const [cardHolderName, setCardHolderName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvv, setCvv] = useState('');
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
 
   const handleAddCard = () => {
-    if(cardHolderName=="")
-    {
-       ToastAndroid.show(
-                      "Enter CardHolder Name",
-                      ToastAndroid.SHORT
-                    );
-                  } else if(cardNumber.length!=16)
-                  {
-      ToastAndroid.show(
-                     "Enter Valid Card Number",
-                     ToastAndroid.SHORT
-                   );
-
-    }
-    else if(expiryDate.length!=5)
-    { 
-      ToastAndroid.show(
-                     "Enter Date in format MM/YY",
-                     ToastAndroid.SHORT
-                   );
-                  }
-                  else if(cvv.length!=3) {
-      ToastAndroid.show(
-                     "Enter Date in format MM/YY",
-                     ToastAndroid.SHORT
-                   );
-
-    }
-    else
-     ToastAndroid.show(
-                      "Card Added Successfully",
-                      ToastAndroid.SHORT
-                    );
+    ToastAndroid.show("Card Added Successfully", ToastAndroid.SHORT);
     // Implement logic to handle adding the credit card
     // You can access the entered values: cardHolderName, cardNumber, expiryDate, cvv
   };
@@ -57,7 +32,7 @@ const AddCardsScreen = ({ navigation }) => {
             onPress={() => {
               navigation.goBack();
             }}
-            color={COLORS.primary} 
+            color={COLORS.primary}
           />
         </TouchableOpacity>
         <Text style={styles.headerText}>Add Cards</Text>
@@ -77,7 +52,7 @@ const AddCardsScreen = ({ navigation }) => {
           placeholder="Card Number (16 digits)"
           keyboardType="numeric"
           maxLength={16}
-            placeholderTextColor={COLORS.light_grey}
+          placeholderTextColor={COLORS.light_grey}
           onChangeText={(number) => setCardNumber(number)}
         />
 
@@ -85,7 +60,6 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Expiry Date (MM/YY)"
-            placeholderTextColor={COLORS.light_grey}
           maxLength={5}
           onChangeText={(date) => setExpiryDate(date)}
         />
@@ -94,7 +68,7 @@ const AddCardsScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="CVV"
-            placeholderTextColor={COLORS.light_grey}
+          placeholderTextColor={COLORS.light_grey}
           keyboardType="numeric"
           maxLength={3}
           onChangeText={(cvv) => setCvv(cvv)}
@@ -108,7 +82,5 @@ const AddCardsScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-
 
 export default AddCardsScreen;

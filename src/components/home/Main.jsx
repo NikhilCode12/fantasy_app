@@ -32,7 +32,7 @@ const games = {
   },
 };
 
-const Main = () => {
+const Main = ({ onMatchCardPress }) => {
   const [selectedGame, setSelectedGame] = useState("Cricket");
   const handleGameSelection = (gameName) => {
     setSelectedGame(gameName);
@@ -108,7 +108,11 @@ const Main = () => {
           ))}
         </ScrollView>
       </View>
-      {selectedGame === "Cricket" ? <CricketMatches /> : <Upcoming />}
+      {selectedGame === "Cricket" ? (
+        <CricketMatches onMatchCardPress={onMatchCardPress} />
+      ) : (
+        <Upcoming />
+      )}
     </SafeAreaView>
   );
 };

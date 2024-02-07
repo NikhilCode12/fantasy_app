@@ -20,7 +20,7 @@ export default function WelcomeScreen({ navigation }) {
             position: "absolute",
             borderWidth: 6,
             borderColor: COLORS.dark,
-            top: 125,
+            top: 90,
             left: 75,
           }}
         />
@@ -29,7 +29,7 @@ export default function WelcomeScreen({ navigation }) {
         style={{
           paddingHorizontal: 20,
           position: "absolute",
-          top: 390,
+          top: 350,
           width: "100%",
         }}
       >
@@ -68,7 +68,7 @@ export default function WelcomeScreen({ navigation }) {
           </Text>
           <Button
             title="GET STARTED"
-            style={{ marginVertical: 22, width: "100%" }}
+            style={{ marginVertical: 14, width: "100%" }}
             onPress={() => {
               navigation.navigate("Login");
             }}

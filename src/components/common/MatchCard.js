@@ -12,6 +12,7 @@ import styles from "../../styles/matchcard.style.js";
 import { FontAwesome } from "@expo/vector-icons";
 
 const MatchCard = ({
+  onMatchCardPress,
   league,
   teamAImage,
   teamAName,
@@ -23,8 +24,12 @@ const MatchCard = ({
 }) => {
   const [notified, setNotified] = useState(false);
 
+  const handleMatchCardPress = () => {
+    const data = { timeRemaining };
+    onMatchCardPress(data);
+  };
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={handleMatchCardPress}>
       {/* Card Container */}
       <View style={styles.cardContainer}>
         {/* Top of Match Card */}

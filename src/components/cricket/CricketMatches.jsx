@@ -5,7 +5,7 @@ import COLORS from "../../constants/colors";
 import MatchesScreen from "./MatchesScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const CricketMatches = () => {
+const CricketMatches = ({ onMatchCardPress }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const CricketMatches = () => {
         </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <MatchesScreen />
+          <MatchesScreen onMatchCardPress={onMatchCardPress} />
         </ScrollView>
       )}
     </SafeAreaView>
