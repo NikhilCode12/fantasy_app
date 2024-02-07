@@ -8,7 +8,7 @@ import matchesData from "../../constants/matchesdummy.json";
 import { SafeAreaView } from "react-native-safe-area-context";
 import icon from "../../../assets/icon.png";
 
-const MatchesScreen = () => {
+const MatchesScreen = ({ onMatchCardPress }) => {
   const convertTimeToMinutes = (timeRemaining) => {
     const [hours, minutes] = timeRemaining.split(":");
     return parseInt(hours) * 60 + parseInt(minutes);
@@ -49,6 +49,7 @@ const MatchesScreen = () => {
         {sortedMatches.map((match) => (
           <MatchCard
             key={match.id}
+            onMatchCardPress={onMatchCardPress}
             league={match.league}
             teamAImage={icon}
             teamAName={match.teamAName}

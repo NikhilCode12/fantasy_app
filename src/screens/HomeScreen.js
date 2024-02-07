@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, View, Text, Animated, Easing , BackHandler  } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Animated,
+  Easing,
+  BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/home.style";
 import COLORS from "../constants/colors";
 import Main from "../components/home/Main";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
+import { useNavigation } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({}) => {
+  const navigation = useNavigation();
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);
   const [overlayAnimation] = useState(new Animated.Value(-300));
+
+  const handleMatchCardPress = (data) => {
+    navigation.navigate("Variations", { data: data });
+  };
 
   const openProfileOverlay = () => {
     setProfileOverlayVisible(true);
@@ -34,15 +47,15 @@ const HomeScreen = ({ navigation }) => {
       }).start();
     }
   }, [isProfileOverlayVisible, overlayAnimation]);
- useEffect(() => {
+  useEffect(() => {
     const backAction = () => {
       closeProfileOverlay();
       return true;
     };
 
     const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
+      "hardwareBackPress",
+      backAction
     );
 
     return () => backHandler.remove();
@@ -82,8 +95,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <Main />
-
+      <Main onMatchCardPress={handleMatchCardPress} />
       <ProfileOverlay
         isVisible={isProfileOverlayVisible}
         onClose={closeProfileOverlay}

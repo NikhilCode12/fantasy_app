@@ -25,5 +25,5 @@ export {
   MyTransactions,
   AddCardsScreen,
   InviteFriendsScreen,
-  PrivateContestJoin
+  PrivateContestJoin,
 };

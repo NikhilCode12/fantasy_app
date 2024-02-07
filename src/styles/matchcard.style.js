@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.transparentBg,
     marginVertical: 8,
     borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
   },
 
   topContainer: {
@@ -17,16 +17,16 @@ const styles = StyleSheet.create({
 
   leagueText: {
     color: COLORS.silver,
-    fontWeight: "500",
+    fontWeight: "700",
     marginBottom: 8,
     fontSize: 11,
   },
 
   teamNameText: {
     color: COLORS.silver,
-    fontWeight: "500",
+    fontWeight: "700",
     textAlign: "center",
-    fontSize: 12,
+    fontSize: 13,
   },
 
   teamContainer: {
