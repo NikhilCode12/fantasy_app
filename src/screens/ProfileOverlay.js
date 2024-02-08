@@ -69,7 +69,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
           navigateToPage("HowToPlay")
         )}
         {renderLink("gift-outline", "Refer & Earn", () =>
-          navigateToPage("ReferAndEarn")
+          navigateToPage("InviteFriends")
         )}
         {renderLink("game-controller", "Private Contest", () =>
           navigateToPage("PrivateContestJoin")
