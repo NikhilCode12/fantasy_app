@@ -25,6 +25,8 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   };
 
   const renderLink = (iconName, text, onPress, isSolid = false) => (
+  
+
     <TouchableOpacity
       onPress={onPress}
       style={[styles.linkItem, isSolid && styles.solidLink]}
@@ -37,9 +39,16 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
             color={isSolid ? COLORS.light : COLORS.primary}
           />
         </View>
-        <Text style={[styles.linkText, isSolid && styles.solidLinkText]}>
+        {isSolid ?  <View style={{flexDirection:"column"}}>
+        <View style={styles.accountTextContainer}><Text style={[ isSolid && styles.solidLinkText]}>{text}</Text></View>
+        <View style={styles.pointsTextContainer}><Text style={styles.pointsText}>Points: 320</Text></View>
+       
+      </View>
+      :  <Text style={[styles.linkText, isSolid && styles.solidLinkText]}>
           {text}
-        </Text>
+        
+        </Text>}
+       
         {isSolid == false && (
           <View style={styles.arrowIcon}>
             <Ionicons name="ios-arrow-forward" size={18} color={COLORS.light} />
@@ -47,6 +56,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         )}
       </View>
     </TouchableOpacity>
+    
   );
 
   return (
@@ -62,7 +72,9 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Ionicons name="close-outline" size={24} color={COLORS.primary} />
         </TouchableOpacity>
-        {renderLink("person-outline", "Account", () => {}, true)}
+        {renderLink("person-outline", "Account", () => {
+          navigateToPage("AccountScreen")
+        }, true)}
         {renderLink("md-trophy-outline", "Join Contest", () => {
           /* navigateToPage("JoinContest") */
         })}

@@ -18,6 +18,7 @@ import {
   AddCardsScreen,
   InviteFriendsScreen,
   PrivateContestJoin,
+  AccountScreen,
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 import VariationsScreen from "./src/components/variations/VariationsScreen";
@@ -118,6 +119,11 @@ function App() {
         <Stack.Screen
           name="Contests"
           component={ContestsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AccountScreen"
+          component={AccountScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
