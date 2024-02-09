@@ -5,7 +5,6 @@ import BottomNavigation from "./src/navigation/BottomNavigation";
 import VariationStackNavigator from "./src/navigation/VariationStackNavigator";
 import ContestsScreen from "./src/components/variations/ContestsScreen";
 
-
 import {
   LoginScreen,
   EmailAuthenticationScreen,
@@ -112,14 +111,14 @@ function App() {
         />
 
         <Stack.Screen
-          name="Variations"
+          name="VariationsScreen"
           component={VariationsScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="Contests"
-        component={ContestsScreen}
-        options={{ headerShown: false }}
+          component={ContestsScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

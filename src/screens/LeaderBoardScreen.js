@@ -34,15 +34,13 @@ const LeaderBoardScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backArrow}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-            onPress={() => {
-              navigation.goBack();
-            }}
-            color={COLORS.primary}
-          />
+        <TouchableOpacity
+          style={styles.backArrow}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Leaderboard</Text>
         <TouchableOpacity style={styles.backArrow}>

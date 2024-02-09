@@ -18,6 +18,14 @@ const games = {
     name: "Cricket",
     icon: "sports-cricket",
   },
+  Formula1: {
+    name: "Formula 1",
+    icon: "sports-motorsports",
+  },
+  UFC: {
+    name: "UFC",
+    icon: "sports-mma",
+  },
   Football: {
     name: "Football",
     icon: "sports-soccer",

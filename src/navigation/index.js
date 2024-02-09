@@ -1,6 +1,6 @@
 import HomeScreen from "../screens/HomeScreen";
-import PeopleScreen from "../screens/PeopleScreen";
 import RewardsScreen from "../screens/RewardsScreen";
 import LeaderBoardScreen from "../screens/LeaderBoardScreen";
+import VariationsScreen from "../screens/VariationsScreen";
 
-export { HomeScreen, PeopleScreen, RewardsScreen, LeaderBoardScreen };
+export { HomeScreen, RewardsScreen, LeaderBoardScreen, VariationsScreen };

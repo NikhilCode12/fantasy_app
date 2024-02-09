@@ -12,7 +12,7 @@ const VariationStackNavigator = () => {
       }}
     >
       <VariationsStack.Screen
-        name="Variations"
+        name="VariationsScreen"
         component={VariationsScreen}
         options={{ headerShown: false }}
       />
