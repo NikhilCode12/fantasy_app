@@ -38,6 +38,14 @@ const styles = StyleSheet.create({
     fontWeight:400,
     flex: 1,
   },
+  linkText2: {
+    fontSize: 14,
+    color: COLORS.light,
+    marginLeft:"4%",
+    fontWeight:400,
+    flex: 1,
+  },
+
   arrowIcon: {
     marginLeft: 10,
     
@@ -51,9 +59,16 @@ const styles = StyleSheet.create({
   },
   solidLinkText: {
     color: COLORS.light,
-    fontWeight: "bold",
+    fontWeight: "700",
+    // flexDirection:"column",
+    // alignItems:"center"
   },
+  accountTextContainer:{
+    paddingLeft:2,paddingTop:2,
+  },
+  pointsTextContainer:{paddingLeft:2,paddingTop:5},
 
+  pointsText:{color:COLORS.light, fontSize: 12,fontWeight:"700"},
   // Dark mode container styles
   darkModeContainer: {
     flexDirection: "row",
@@ -84,8 +99,8 @@ const styles = StyleSheet.create({
   },
   // follow us
   followuscontainer:{
-    // marginTop:"95%", 
-    top:"30%" 
+    marginTop:"70%", 
+    // top:"30%" 
   },
   followustext:{
     color:COLORS.light,

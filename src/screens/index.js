@@ -11,6 +11,7 @@ import MyTransactions from "./MyTransactions";
 import AddCardsScreen from "./AddCardsScreen";
 import InviteFriendsScreen from "./InviteFriendsScreen";
 import PrivateContestJoin from "./PrivateContestJoin";
+import AccountScreen from "./AccountScreen";
 
 export {
   LoginScreen,
@@ -26,4 +27,5 @@ export {
   AddCardsScreen,
   InviteFriendsScreen,
   PrivateContestJoin,
+  AccountScreen,
 };
