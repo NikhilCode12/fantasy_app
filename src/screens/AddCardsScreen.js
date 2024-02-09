@@ -25,13 +25,13 @@ const AddCardsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backArrow}>
+        <TouchableOpacity style={styles.backArrow}  onPress={() => {
+              navigation.goBack();
+            }}>
           <Ionicons
             name="arrow-back"
             size={24}
-            onPress={() => {
-              navigation.goBack();
-            }}
+           
             color={COLORS.primary}
           />
         </TouchableOpacity>
