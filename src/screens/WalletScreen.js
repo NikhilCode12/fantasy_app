@@ -25,15 +25,13 @@ const WalletScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backArrow}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-            onPress={() => {
-              navigation.goBack();
-            }}
-            color={COLORS.primary}
-          />
+        <TouchableOpacity
+          style={styles.backArrow}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerText}>My Wallet</Text>
       </View>
@@ -119,44 +117,47 @@ const WalletScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.detailsContainer}>
-        <View style={styles.detailsBox}>
+        <TouchableOpacity
+          style={styles.detailsBox}
+          onPress={() => {
+            navigation.navigate("MyTransactions");
+          }}
+        >
           <Text style={styles.detailsText}>My Transactions</Text>
-          <TouchableOpacity style={styles.arrowStyle}  onPress={() => {
-                navigation.navigate("MyTransactions");
-              }}>
-            <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.detailsContainerBox}>
+          <Ionicons name="chevron-forward" size={18} color={COLORS.primary} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.detailsContainerBox}
+          onPress={() => {
+            navigation.navigate("AddCards");
+          }}
+        >
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.detailsText}>Manage Payments</Text>
-            <TouchableOpacity style={styles.arrowStyle} onPress={() => {
-                navigation.navigate("AddCards");
-              }}>
-              <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
-            </TouchableOpacity>
+            <Ionicons name="chevron-forward" size={18} color={COLORS.primary} />
           </View>
           <Text style={styles.detailssubText}>
             Add/Remove cards, wallets, etc.
           </Text>
-        </View>
-        <View style={styles.detailsContainerBox}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.detailsContainerBox}
+          onPress={() => {
+            navigation.navigate("InviteFriends");
+          }}
+        >
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.detailsText}>Invite & Collect</Text>
-            <TouchableOpacity style={styles.arrowStyle} onPress={() => {
-                navigation.navigate("InviteFriends");
-              }}>
-              <Ionicons name="arrow-forward" size={18} color={COLORS.primary} />
-            </TouchableOpacity>
+            <Ionicons name="chevron-forward" size={18} color={COLORS.primary} />
           </View>
           <Text style={styles.detailssubText}>
             Bring your friends on Fanverse and earn rewards
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

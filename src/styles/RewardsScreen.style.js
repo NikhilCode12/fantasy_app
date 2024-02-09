@@ -12,9 +12,11 @@ const styles = StyleSheet.create({
     padding: 5,
     // backgroundColor: COLORS.transparentBg,
     backgroundColor: COLORS.bgMateBlack,
-    position:"absolute",
-    top:15,left:6,
-    borderRadius:50,
+    position: "absolute",
+    top: 15,
+    left: 6,
+    borderRadius: 50,
+    zIndex: 100,
   },
   headerText: {
     fontSize: 18,
@@ -34,8 +36,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 4,
   },
-
-  
 });
 
 export default styles;

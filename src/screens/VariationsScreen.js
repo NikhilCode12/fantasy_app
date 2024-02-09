@@ -1,13 +1,12 @@
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import styles from "../../styles/variations.style.js";
+import styles from "../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors.js";
+import COLORS from "../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 
-const VariationsScreen = ({ route }) => {
-  const { data } = route.params;
+const VariationsScreen = () => {
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
   const variations = [
@@ -30,13 +29,8 @@ const VariationsScreen = ({ route }) => {
             <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
           <View style={styles.matchDetails}>
-            <Text style={styles.matchTeamText}>
-              {"Team A"} vs {"Team B"}
-            </Text>
-            <Text style={styles.matchTimeText}>
-              {data.timeRemaining}
-              {" left"}
-            </Text>
+            <Text style={styles.matchTeamText}>{"Variations"}</Text>
+            <Text style={styles.matchTimeText}>{"Fanverse zone"}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -61,11 +55,7 @@ const VariationsScreen = ({ route }) => {
           <TouchableOpacity
             style={styles.variationCard}
             onPress={() => {
-              navigation.navigate("Contests", {
-                data: data,
-                amount: amount,
-                variation: item.title,
-              });
+              // navigation.navigate("");
             }}
           >
             <Text style={styles.variationTitle}>{item.title}</Text>

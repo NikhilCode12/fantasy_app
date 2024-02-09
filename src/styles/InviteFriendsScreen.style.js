@@ -1,21 +1,21 @@
-import { StyleSheet ,Dimensions} from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import COLORS from "../constants/colors";
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
-   container: {
+  container: {
     flex: 1,
     backgroundColor: COLORS.bgMateBlack,
     // padding: 20,
   },
   referralCode: {
-    alignItems:"center",
+    alignItems: "center",
     borderWidth: 1,
-    marginHorizontal:80,
+    marginHorizontal: 80,
     borderColor: COLORS.light,
-    paddingHorizontal:8,
-    paddingVertical:12,
-    marginTop:-70,
-    flexDirection:"coloumn",
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+    marginTop: -70,
+    flexDirection: "coloumn",
     borderRadius: 20,
   },
   referralCodeText: {
@@ -27,41 +27,42 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   howItWorks: {
-    marginTop: 20,
+    marginTop: 16,
   },
   howItWorksTitle: {
     color: COLORS.light,
     fontSize: 20,
-    padding:20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    padding: 20,
+    fontWeight: "bold",
+    marginBottom: 4,
   },
   steps: {
     marginLeft: 20,
   },
   step: {
     color: COLORS.light,
-    fontSize: 16,
-    padding:5
+    fontSize: 14,
+    padding: 5,
     // marginBottom: 10,
   },
-  scrollarea:{
-     flex: 1,
+  scrollarea: {
+    flex: 1,
     // padding: 2,
   },
-   headerContainer: {
+  headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
     backgroundColor: COLORS.bgMateBlack,
+    zIndex: 100,
   },
-    headerText: {
+  headerText: {
     fontSize: 18,
     color: COLORS.light_grey,
     marginHorizontal: 20,
     fontWeight: "bold",
   },
-    backArrow: {
+  backArrow: {
     backgroundColor: COLORS.transparentBg,
     borderRadius: 5,
     justifyContent: "center",
@@ -74,37 +75,35 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    marginTop:-100,
-    resizeMode: 'contain', // Adjust the resizeMode as needed
+    marginTop: -100,
+    resizeMode: "contain", // Adjust the resizeMode as needed
   },
-  coupounContainer:{
-    marginHorizontal:"10",
-    height:"25%",
-    flexDirection:"column",
-    alignItems:"center",
-    justifyContent:"space-evenly"
+  coupounContainer: {
+    marginHorizontal: "10",
+    height: "25%",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
-  coupounCode:{
-    color:"#9aa2a6",
-    fontSize:25
-},
-coupountext:{
-    color:"#90cbe8",
-    fontSize:25
+  coupounCode: {
+    color: "#9aa2a6",
+    fontSize: 25,
   },
-  coupounCodeContainer:{
-    flexDirection:"row",
-    justifyContent:"space-around",
-    alignItems:"center",
-    paddingHorizontal:12,
-    paddingVertical:15,
-    backgroundColor:"#11171a",
-    width:"65%",
-    borderColor:"transparent",
-    borderWidth:1,
-    borderRadius:10
-  }
- 
- 
+  coupountext: {
+    color: "#90cbe8",
+    fontSize: 25,
+  },
+  coupounCodeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 15,
+    backgroundColor: "#11171a",
+    width: "65%",
+    borderColor: "transparent",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
 });
-export default styles
+export default styles;

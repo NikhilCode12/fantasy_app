@@ -78,6 +78,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 10,
   },
+  variationsTitleContainer: {
+    borderBottomWidth: 1,
+    width: "auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+    borderBottomColor: "gray",
+  },
+  variationTitleText: {
+    color: COLORS.light_grey,
+    fontSize: 16,
+    paddingVertical: 8,
+    fontWeight: "700",
+  },
 });
 
 export default styles;

@@ -1,6 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, LeaderBoardScreen, RewardsScreen } from "./index";
+import {
+  HomeScreen,
+  LeaderBoardScreen,
+  RewardsScreen,
+  VariationsScreen,
+} from "./index";
 import COLORS from "../constants/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -60,6 +65,23 @@ const BottomNavigation = () => {
               <>
                 <MaterialCommunityIcons
                   name={focused ? "stadium" : "stadium-variant"}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
+                />
+              </>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Variations"
+        component={VariationsScreen}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <>
+                <Ionicons
+                  name={focused ? "options" : "options-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />

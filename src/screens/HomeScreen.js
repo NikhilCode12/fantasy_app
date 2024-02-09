@@ -21,7 +21,7 @@ const HomeScreen = ({}) => {
   const [overlayAnimation] = useState(new Animated.Value(-300));
 
   const handleMatchCardPress = (data) => {
-    navigation.navigate("Variations", { data: data });
+    navigation.navigate("VariationsScreen", { data: data });
   };
 
   const openProfileOverlay = () => {
@@ -72,23 +72,27 @@ const HomeScreen = ({}) => {
           </TouchableOpacity>
           <Text style={styles.appBarHeading}>Fanverse</Text>
           <View style={styles.appBarRight}>
-            <TouchableOpacity style={styles.appBarIconsBg}>
+            <TouchableOpacity
+              style={styles.appBarIconsBg}
+              onPress={() => {
+                navigation.navigate("Notification");
+              }}
+            >
               <Ionicons
                 name="ios-notifications-outline"
                 size={22}
-                onPress={() => {
-                  navigation.navigate("Notification");
-                }}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.appBarIconsBg}>
+            <TouchableOpacity
+              style={styles.appBarIconsBg}
+              onPress={() => {
+                navigation.navigate("Wallet");
+              }}
+            >
               <Ionicons
                 name="wallet-outline"
                 size={22}
-                onPress={() => {
-                  navigation.navigate("Wallet");
-                }}
                 color={COLORS.primary}
               />
             </TouchableOpacity>
