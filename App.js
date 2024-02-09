@@ -2,6 +2,9 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomNavigation from "./src/navigation/BottomNavigation";
+import VariationStackNavigator from "./src/navigation/VariationStackNavigator";
+import ContestsScreen from "./src/components/variations/ContestsScreen";
+
 
 import {
   LoginScreen,
@@ -112,6 +115,11 @@ function App() {
           name="Variations"
           component={VariationsScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Contests"
+        component={ContestsScreen}
+        options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
