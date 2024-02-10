@@ -12,7 +12,8 @@ import AddCardsScreen from "./AddCardsScreen";
 import InviteFriendsScreen from "./InviteFriendsScreen";
 import PrivateContestJoin from "./PrivateContestJoin";
 import AccountScreen from "./AccountScreen";
-
+import HelpandSupportScreen from "./HelpandSupportScreen";
+import HowToPlayScreen from "./HowToPlayScreen";
 export {
   LoginScreen,
   WelcomeScreen,
@@ -28,4 +29,6 @@ export {
   InviteFriendsScreen,
   PrivateContestJoin,
   AccountScreen,
+  HelpandSupportScreen,
+  HowToPlayScreen
 };

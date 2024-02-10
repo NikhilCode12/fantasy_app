@@ -19,6 +19,8 @@ import {
   InviteFriendsScreen,
   PrivateContestJoin,
   AccountScreen,
+  HelpandSupportScreen,
+  HowToPlayScreen,
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 import VariationsScreen from "./src/components/variations/VariationsScreen";
@@ -127,6 +129,16 @@ function App() {
           component={AccountScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="HelpAndSupport"
+          component={HelpandSupportScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HowToPlay"
+          component={HowToPlayScreen}
+          options={{ headerShown: false }}
+         />
         <Stack.Screen
           name="PlayerSelection"
           component={PlayerSelection}
