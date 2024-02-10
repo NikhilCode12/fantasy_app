@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
 import cStyles from "../../styles/contests.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,34 +13,20 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-const contests = [
-  {
-    id: "1",
-    name: "Grand League",
-    size: "1000",
-    entry: "100",
-    winning: "1000",
-  },
-  {
-    id: "2",
-    name: "Mega League",
-    size: "100",
-    entry: "10",
-    winning: "100",
-  },
-  {
-    id: "3",
-    name: "Small League",
-    size: "10",
-    entry: "1",
-    winning: "10",
-  },
-];
+import ContestCard from "../common/ContestCard.js";
+import contests from "../../constants/contests.json";
 
 const ContestsScreen = ({ route }) => {
   const { data, amount, variation } = route.params;
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -101,27 +87,37 @@ const ContestsScreen = ({ route }) => {
           <Text style={cStyles.matchText2}>{"Filter"}</Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Text
+      {isLoading ? (
+        <View
           style={{
-            color: COLORS.primary,
-            fontSize: 20,
-            fontWeight: "bold",
-            marginBottom: 20,
-            fontStyle: "italic",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          {"Work in Progress..."}
-        </Text>
-        <ActivityIndicator size="large" color={COLORS.primary} />
-      </View>
+          <Text
+            style={{
+              color: COLORS.light_grey,
+              fontSize: 14,
+              fontWeight: "bold",
+              marginBottom: 20,
+              fontStyle: "italic",
+            }}
+          >
+            {"Loading, contests are on the way..."}
+          </Text>
+          <ActivityIndicator size="small" color={COLORS.primary} />
+        </View>
+      ) : (
+        <FlatList
+          data={contests}
+          renderItem={({ item }) => (
+            <ContestCard contest={item} variationSelected={variation} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      )}
     </SafeAreaView>
   );
 };
