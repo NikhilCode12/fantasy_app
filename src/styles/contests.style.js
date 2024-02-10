@@ -8,6 +8,7 @@ const cStyles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 20,
+    marginBottom: 10,
     backgroundColor: COLORS.bgLightBlack,
   },
   sortText: {
