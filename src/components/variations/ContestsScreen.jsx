@@ -131,6 +131,9 @@ const ContestsScreen = ({ route }) => {
           keyExtractor={(item, index) => index.toString()}
         />
       )}
+      <TouchableOpacity onPress={() => {}} style={cStyles.createTeamButton}>
+        <Text style={cStyles.buttonText}>Create New Team</Text>
+      </TouchableOpacity> 
     </SafeAreaView>
   );
 };

@@ -42,6 +42,35 @@ const cStyles = StyleSheet.create({
     fontWeight: "500",
     color: COLORS.light_grey,
   },
+  createTeamButton: {
+    backgroundColor: COLORS.dark,
+    position: "absolute",
+    bottom: 14,
+    left: 12,
+    right: 12,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    color: COLORS.silver,
+    fontWeight: "bold",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 10,
+  },
+  buttonText: {
+    color: COLORS.light,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });
 
 export default cStyles;
