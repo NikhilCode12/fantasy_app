@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
@@ -22,9 +23,21 @@ const ContestsScreen = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        navigation.goBack();
+        return true;
+      }
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return (
