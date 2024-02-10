@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   backArrow: {
-    // backgroundColor: COLORS.transparentBg,
+    backgroundColor: COLORS.transparentBg,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",

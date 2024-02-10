@@ -79,24 +79,24 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
           /* navigateToPage("JoinContest") */
         })}
         {renderLink("wallet-outline", "My Wallet", () => {
-          /* navigateToPage("Wallet") */
+           navigateToPage("Wallet") 
         })}
         {renderLink("play-circle-outline", "How to Play", () => {
-          /* navigateToPage("HowToPlay") */
+           navigateToPage("HowToPlay") 
         })}
         {renderLink("gift-outline", "Refer & Earn", () => {
-          /* navigateToPage("InviteFriends") */
+          navigateToPage("InviteFriends") 
         })}
         {renderLink("game-controller", "Private Contest", () => {
-          /* navigateToPage("PrivateContestJoin") */
+           navigateToPage("PrivateContestJoin") 
         })}
         {/* {renderLink("megaphone-outline", "Offers & Programs", () =>
           navigateToPage("OffersAndPrograms")
         )} */}
         {renderLink("help-circle-outline", "Help & Support", () => {
-          /* navigateToPage("HelpAndSupport") */
+         navigateToPage("HelpAndSupport") 
         })}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigateToPage("Welcome")}>
           <Text style={styles.text}>Logout</Text>
         </TouchableOpacity>
         {/* Toggle Switch for Dark Mode */}

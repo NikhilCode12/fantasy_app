@@ -19,13 +19,13 @@ import * as Progress from 'react-native-progress';
 import { Ionicons } from '@expo/vector-icons';
 
 const RewardsCard = ({name,title,currentpoints,totalpoints}) => {
-    const patth = "../../../assets/favicon.png"
+    let patth = require("../../../assets/favicon.png");
     // console.log('Image Path:', patth);
     const score = (currentpoints/totalpoints);
     const lockDesign = currentpoints==totalpoints?"lock-open":"lock-closed";
   return (
     <View style={{
-        backgroundColor:COLORS.light,
+        backgroundColor:COLORS.bgLightBlack,
         paddingHorizontal:10,
         paddingVertical:8,
         flexDirection:"row",
@@ -33,18 +33,18 @@ const RewardsCard = ({name,title,currentpoints,totalpoints}) => {
         alignItems:"center",
         gap:20,
         marginVertical:10, 
-        marginHorizontal:40,
-        borderRadius:10,
+        marginHorizontal:20,
+        borderRadius:4,
         }}>
         <View style={{}}>
-            <Image source= {require(patth)} style={{height:30, width:30}}/>
+            <Image source= {patth} style={{height:30, width:30}}/>
         </View>
         <View style={{}}>
-            <Text>{title}</Text>
-            <Progress.Bar progress={score} width={190} height={2} color='teal'/>
-            <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                <Text>{currentpoints} points </Text>
-                <Ionicons name={lockDesign} size={15}/>
+            <Text style={{color:COLORS.light, fontSize:12}}>{title}</Text>
+            <Progress.Bar progress={score} width={240} height={4} color='teal' style={{marginVertical:2}}/>
+            <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginVertical:2}}>
+                <Text style={{color:COLORS.light, fontSize:12}}>{currentpoints} points </Text>
+                <Ionicons name={lockDesign} size={15} color={COLORS.light_grey}/>
             </View>
         </View>
     </View>
