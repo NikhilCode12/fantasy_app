@@ -45,9 +45,9 @@ const cStyles = StyleSheet.create({
   createTeamButton: {
     backgroundColor: COLORS.dark,
     position: "absolute",
-    bottom: 14,
-    left: 12,
-    right: 12,
+    bottom: 20,
+    left: 16,
+    right: 16,
     borderWidth: 1,
     borderColor: COLORS.primary,
     paddingVertical: 12,

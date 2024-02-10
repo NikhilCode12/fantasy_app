@@ -1,0 +1,162 @@
+{
+  "teams": {
+    "ABC": [
+      {
+        "player_name": "Player1_ABC",
+        "selected_percentage": 75,
+        "points": 230,
+        "credits": 10.5,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player2_ABC",
+        "selected_percentage": 60,
+        "points": 210,
+        "credits": 9.8,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player3_ABC",
+        "selected_percentage": 80,
+        "points": 250,
+        "credits": 11.2,
+        "skill": "WK"
+      },
+      {
+        "player_name": "Player4_ABC",
+        "selected_percentage": 70,
+        "points": 220,
+        "credits": 10.0,
+        "skill": "AR"
+      },
+      {
+        "player_name": "Player5_ABC",
+        "selected_percentage": 65,
+        "points": 240,
+        "credits": 10.9,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player6_ABC",
+        "selected_percentage": 85,
+        "points": 270,
+        "credits": 12.0,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player7_ABC",
+        "selected_percentage": 55,
+        "points": 200,
+        "credits": 9.5,
+        "skill": "AR"
+      },
+      {
+        "player_name": "Player8_ABC",
+        "selected_percentage": 72,
+        "points": 260,
+        "credits": 11.5,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player9_ABC",
+        "selected_percentage": 78,
+        "points": 245,
+        "credits": 11.3,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player10_ABC",
+        "selected_percentage": 68,
+        "points": 225,
+        "credits": 10.3,
+        "skill": "WK"
+      },
+      {
+        "player_name": "Player11_ABC",
+        "selected_percentage": 73,
+        "points": 235,
+        "credits": 10.7,
+        "skill": "BAT"
+      }
+    ],
+    "DEF": [
+      {
+        "player_name": "Player1_DEF",
+        "selected_percentage": 70,
+        "points": 240,
+        "credits": 10.8,
+        "skill": "AR"
+      },
+      {
+        "player_name": "Player2_DEF",
+        "selected_percentage": 55,
+        "points": 200,
+        "credits": 9.5,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player3_DEF",
+        "selected_percentage": 85,
+        "points": 270,
+        "credits": 11.6,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player4_DEF",
+        "selected_percentage": 60,
+        "points": 210,
+        "credits": 10.2,
+        "skill": "WK"
+      },
+      {
+        "player_name": "Player5_DEF",
+        "selected_percentage": 75,
+        "points": 230,
+        "credits": 10.4,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player6_DEF",
+        "selected_percentage": 63,
+        "points": 220,
+        "credits": 10.1,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player7_DEF",
+        "selected_percentage": 68,
+        "points": 225,
+        "credits": 10.3,
+        "skill": "AR"
+      },
+      {
+        "player_name": "Player8_DEF",
+        "selected_percentage": 80,
+        "points": 250,
+        "credits": 11.2,
+        "skill": "BAT"
+      },
+      {
+        "player_name": "Player9_DEF",
+        "selected_percentage": 72,
+        "points": 235,
+        "credits": 10.6,
+        "skill": "BOWL"
+      },
+      {
+        "player_name": "Player10_DEF",
+        "selected_percentage": 77,
+        "points": 260,
+        "credits": 11.3,
+        "skill": "WK"
+      },
+      {
+        "player_name": "Player11_DEF",
+        "selected_percentage": 65,
+        "points": 220,
+        "credits": 10.0,
+        "skill": "AR"
+      }
+    ]
+  }
+}

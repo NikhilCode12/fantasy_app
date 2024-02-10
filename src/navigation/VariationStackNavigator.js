@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import VariationsScreen from "../components/variations/VariationsScreen";
 import ContestsScreen from "../components/variations/ContestsScreen";
+import PlayerSelection from "../components/teams/PlayerSelection";
 
 const VariationsStack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const VariationStackNavigator = () => {
       <VariationsStack.Screen
         name="Contests"
         component={ContestsScreen}
+        options={{ headerShown: false }}
+      />
+      <VariationsStack.Screen
+        name="PlayerSelection"
+        component={PlayerSelection}
         options={{ headerShown: false }}
       />
     </VariationsStack.Navigator>

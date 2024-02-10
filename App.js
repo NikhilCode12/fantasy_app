@@ -22,6 +22,7 @@ import {
 } from "./src/screens/index";
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 import VariationsScreen from "./src/components/variations/VariationsScreen";
+import PlayerSelection from "./src/components/teams/PlayerSelection";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -124,6 +125,11 @@ function App() {
         <Stack.Screen
           name="AccountScreen"
           component={AccountScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PlayerSelection"
+          component={PlayerSelection}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
