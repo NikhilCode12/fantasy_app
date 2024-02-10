@@ -131,6 +131,18 @@ const ContestsScreen = ({ route }) => {
           keyExtractor={(item, index) => index.toString()}
         />
       )}
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("PlayerSelection", {
+            data: data,
+            amount: amount,
+            variation: variation,
+          });
+        }}
+        style={cStyles.createTeamButton}
+      >
+        <Text style={cStyles.buttonText}>Create New Team</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

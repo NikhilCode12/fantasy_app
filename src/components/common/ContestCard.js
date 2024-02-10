@@ -12,6 +12,7 @@ const ContestCard = ({ contest, variationSelected }) => {
     totalSpots,
     megaPrize,
     variation,
+    teams,
   } = contest;
 
   if (variation !== variationSelected) {
@@ -24,7 +25,7 @@ const ContestCard = ({ contest, variationSelected }) => {
   const spotsTakenPercentage = ((totalSpots - spotsLeft) / totalSpots) * 100;
   const redProgressBarStyle = {
     width: `${spotsTakenPercentage}%`,
-    backgroundColor: "#FF7F7F",
+    backgroundColor: COLORS.primary,
   };
 
   return (
@@ -59,6 +60,23 @@ const ContestCard = ({ contest, variationSelected }) => {
         <Text style={styles.prizeText}>
           Mega Prize: <Text style={styles.prizeAmount}>{megaPrize}</Text>
         </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: 4,
+            alignItems: "center",
+          }}
+        >
+          {teams ? (
+            <>
+              <Ionicons name="shirt" size={12} color={COLORS.silver} />
+              <Text style={styles.prizeText}>
+                Teams: <Text style={styles.prizeAmount}>{teams}</Text>
+              </Text>
+            </>
+          ) : null}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -152,7 +170,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   spotsLeftText: {
-    color: "#FF7F7F",
+    color: COLORS.primary,
     fontSize: 11,
     fontWeight: "500",
   },
@@ -167,6 +185,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   prizeText: {
     color: COLORS.light_grey,
