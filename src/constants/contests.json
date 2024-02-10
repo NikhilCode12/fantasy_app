@@ -1,0 +1,453 @@
+[
+  {
+    "winners": 1000,
+    "prizePool": "₹50 Lakhs",
+    "entryFee": "₹50",
+    "spotsLeft": 1000,
+    "totalSpots": 5000,
+    "megaPrize": "₹10 Lakhs",
+    "variation": "7 + 4",
+    "teams": "30"
+  },
+  {
+    "winners": 500,
+    "prizePool": "₹30 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 1500,
+    "totalSpots": 3000,
+    "megaPrize": "₹5 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 200,
+    "prizePool": "₹20 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹2 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 500,
+    "prizePool": "₹30 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 1500,
+    "totalSpots": 3000,
+    "megaPrize": "₹5 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 200,
+    "prizePool": "₹20 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹2 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 800,
+    "prizePool": "₹40 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 200,
+    "totalSpots": 1000,
+    "megaPrize": "₹15 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 400,
+    "prizePool": "₹25 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 700,
+    "totalSpots": 3000,
+    "megaPrize": "₹4 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 150,
+    "prizePool": "₹15 Lakhs",
+    "entryFee": "₹10",
+    "spotsLeft": 850,
+    "totalSpots": 1000,
+    "megaPrize": "₹1 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 600,
+    "prizePool": "₹35 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 400,
+    "totalSpots": 5000,
+    "megaPrize": "₹6 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 300,
+    "prizePool": "₹18 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 500,
+    "totalSpots": 2000,
+    "megaPrize": "₹3 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 700,
+    "prizePool": "₹45 Lakhs",
+    "entryFee": "₹35",
+    "spotsLeft": 100,
+    "totalSpots": 1000,
+    "megaPrize": "₹12 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 450,
+    "prizePool": "₹28 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1200,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.5 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 250,
+    "prizePool": "₹17 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 850,
+    "totalSpots": 1000,
+    "megaPrize": "₹2.5 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 550,
+    "prizePool": "₹32 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 2000,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.5 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 350,
+    "prizePool": "₹22 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 700,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.5 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 900,
+    "prizePool": "₹48 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹13 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 480,
+    "prizePool": "₹29 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1300,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.8 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 180,
+    "prizePool": "₹16 Lakhs",
+    "entryFee": "₹12",
+    "spotsLeft": 900,
+    "totalSpots": 1000,
+    "megaPrize": "₹1.8 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 670,
+    "prizePool": "₹38 Lakhs",
+    "entryFee": "₹35",
+    "spotsLeft": 300,
+    "totalSpots": 5000,
+    "megaPrize": "₹7 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 380,
+    "prizePool": "₹24 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 800,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.8 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 850,
+    "prizePool": "₹47 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 700,
+    "totalSpots": 1000,
+    "megaPrize": "₹12.5 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 430,
+    "prizePool": "₹27 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1400,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.3 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 220,
+    "prizePool": "₹19 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹2.2 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 630,
+    "prizePool": "₹36 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 600,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.3 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 330,
+    "prizePool": "₹21 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 600,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.3 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 950,
+    "prizePool": "₹49 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 600,
+    "totalSpots": 1000,
+    "megaPrize": "₹13.5 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 460,
+    "prizePool": "₹30 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1500,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.6 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 190,
+    "prizePool": "₹17 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 850,
+    "totalSpots": 1000,
+    "megaPrize": "₹1.9 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 610,
+    "prizePool": "₹34 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 500,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.1 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 310,
+    "prizePool": "₹20 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 500,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.1 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 880,
+    "prizePool": "₹46 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 900,
+    "totalSpots": 1000,
+    "megaPrize": "₹13 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 440,
+    "prizePool": "₹28 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1300,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.4 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 230,
+    "prizePool": "₹18 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹2.3 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 640,
+    "prizePool": "₹37 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 700,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.4 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 340,
+    "prizePool": "₹23 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 700,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.4 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 920,
+    "prizePool": "₹48 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹14 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 470,
+    "prizePool": "₹29 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1400,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.7 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 200,
+    "prizePool": "₹16 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 850,
+    "totalSpots": 1000,
+    "megaPrize": "₹2 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 660,
+    "prizePool": "₹39 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 400,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.6 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 350,
+    "prizePool": "₹22 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 800,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.5 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 890,
+    "prizePool": "₹47 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 700,
+    "totalSpots": 1000,
+    "megaPrize": "₹13.8 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 450,
+    "prizePool": "₹30 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1500,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.5 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 210,
+    "prizePool": "₹18 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 850,
+    "totalSpots": 1000,
+    "megaPrize": "₹2.1 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 620,
+    "prizePool": "₹35 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 500,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.2 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 320,
+    "prizePool": "₹21 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 600,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.2 Lakhs",
+    "variation": "Playgrounds"
+  },
+  {
+    "winners": 910,
+    "prizePool": "₹49 Lakhs",
+    "entryFee": "₹40",
+    "spotsLeft": 600,
+    "totalSpots": 1000,
+    "megaPrize": "₹13.2 Lakhs",
+    "variation": "Powerplay"
+  },
+  {
+    "winners": 480,
+    "prizePool": "₹28 Lakhs",
+    "entryFee": "₹25",
+    "spotsLeft": 1300,
+    "totalSpots": 3000,
+    "megaPrize": "₹4.8 Lakhs",
+    "variation": "Fanverse original"
+  },
+  {
+    "winners": 220,
+    "prizePool": "₹19 Lakhs",
+    "entryFee": "₹15",
+    "spotsLeft": 800,
+    "totalSpots": 1000,
+    "megaPrize": "₹2.2 Lakhs",
+    "variation": "7 + 4"
+  },
+  {
+    "winners": 630,
+    "prizePool": "₹36 Lakhs",
+    "entryFee": "₹30",
+    "spotsLeft": 700,
+    "totalSpots": 5000,
+    "megaPrize": "₹6.3 Lakhs",
+    "variation": "10 player fantasy"
+  },
+  {
+    "winners": 330,
+    "prizePool": "₹22 Lakhs",
+    "entryFee": "₹20",
+    "spotsLeft": 700,
+    "totalSpots": 3000,
+    "megaPrize": "₹3.3 Lakhs",
+    "variation": "Playgrounds"
+  }
+]
