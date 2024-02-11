@@ -34,7 +34,7 @@ export default function HowToPlayScreen({navigation}) {
         </TouchableOpacity>
         <Text style={styles.headerText}>How To Play</Text>
       </View>
-      <ScrollView>
+               <ScrollView contentContainerStyle={{paddingBottom:30}}   showsVerticalScrollIndicator={false}>
 
       
             <View style={{flexDirection:"column", marginHorizontal:25, marginVertical:10}}>

@@ -35,7 +35,7 @@ export default function AccountScreen({navigation}) {
         </TouchableOpacity>
         <Text style={styles.headerText}>Account</Text>
       </View>
-      <ScrollView style={styles.scrollarea}>
+         <ScrollView contentContainerStyle={{paddingBottom:50}}   showsVerticalScrollIndicator={false}>
             {/* personal INfo */}
         <View style={styles.personalInfoTop}>
           <View style={styles.imageContainer}>

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   // follow us
   followuscontainer:{
-    marginTop:"70%", 
+    marginTop:20, 
     // top:"30%" 
   },
   followustext:{
