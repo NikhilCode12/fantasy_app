@@ -88,7 +88,7 @@ const RewardsScreen = ({ navigation }) => {
             <Text style={{ color: "#4f9c9c", fontSize: 16 }}>History</Text>
           </TouchableOpacity>
         </View>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom:70}}   showsVerticalScrollIndicator={false}>
         <View style={{ paddingTop: 15 }}>
           <RewardsCard
             name={"starbucks"}

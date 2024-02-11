@@ -5,6 +5,7 @@ import {
   LeaderBoardScreen,
   RewardsScreen,
   VariationsScreen,
+  MyMatchesScreen,
 } from "./index";
 import COLORS from "../constants/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -58,7 +59,7 @@ const BottomNavigation = () => {
       />
       <Tab.Screen
         name="My Matches"
-        component={HomeScreen}
+        component={MyMatchesScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

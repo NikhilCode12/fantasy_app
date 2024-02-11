@@ -46,7 +46,7 @@ export default function HelpandSupportScreen({navigation}) {
         </TouchableOpacity>
         <Text style={styles.headerText}>Help and Support</Text>
       </View>
-                <ScrollView>
+                        <ScrollView contentContainerStyle={{paddingBottom:30}}   showsVerticalScrollIndicator={false}>
             <View style={styles.faqsmainContainer}>
 
                
