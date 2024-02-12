@@ -1,4 +1,11 @@
-import { Text, TouchableOpacity, View, BackHandler, Image } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  BackHandler,
+  Image,
+  ToastAndroid,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,6 +19,10 @@ import PlayerListComponent from "./PlayersList.jsx";
 const PlayerSelection = ({ route }) => {
   const { data, amount, variation } = route.params;
   const navigation = useNavigation();
+  const [totalCredits, setTotalCredits] = useState(100);
+  const [totalPlayers, setTotalPlayers] = useState(0);
+  const [teamABCPlayers, setTeamABCPlayers] = useState(0);
+  const [teamDEFPlayers, setTeamDEFPlayers] = useState(0);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -45,6 +56,74 @@ const PlayerSelection = ({ route }) => {
     const newSelectedPlayers = [...selectedPlayers];
     newSelectedPlayers[index] = false;
     setSelectedPlayers(newSelectedPlayers);
+  };
+
+  const handlePlayerSelectionPress = (player, selectionStatus) => {
+    const index = selectedPlayers.indexOf(player);
+
+    if (selectionStatus && totalPlayers < 11 && index === -1) {
+      // If the player is selected and the total number of players is less than 11 and the player is not already selected
+      const newSelectedPlayers = [...selectedPlayers];
+      const emptyIndex = newSelectedPlayers.indexOf(false);
+      newSelectedPlayers[emptyIndex] = player;
+      setSelectedPlayers(newSelectedPlayers);
+      setTotalPlayers(totalPlayers + 1);
+      if (player.team === "ABC") {
+        setTeamABCPlayers(teamABCPlayers + 1);
+      } else {
+        setTeamDEFPlayers(teamDEFPlayers + 1);
+      }
+    } else if (!selectionStatus && totalPlayers > 0 && index !== -1) {
+      // If the player is deselected and the player is already selected
+      const newSelectedPlayers = [...selectedPlayers];
+      newSelectedPlayers[index] = false;
+      setSelectedPlayers(newSelectedPlayers);
+      setTotalPlayers(totalPlayers - 1);
+      if (player.team === "ABC") {
+        setTeamABCPlayers(teamABCPlayers - 1);
+      } else {
+        setTeamDEFPlayers(teamDEFPlayers - 1);
+      }
+    }
+  };
+
+  const handleUpdateCredits = (credits) => {
+    setTotalCredits(100 - credits);
+  };
+
+  const handleUpdateTotalPlayers = (count) => {
+    setTotalPlayers(count);
+  };
+
+  const handleUpdateTeamABCPlayers = (count) => {
+    setTeamABCPlayers(count);
+  };
+
+  const handleUpdateTeamDEFPlayers = (count) => {
+    setTeamDEFPlayers(count);
+  };
+
+  const handleResetButton = () => {
+    setSelectedPlayers(Array(11).fill(false));
+    setTotalPlayers(0);
+    setTeamABCPlayers(0);
+    setTeamDEFPlayers(0);
+    setTotalCredits(100);
+    ToastAndroid.showWithGravity(
+      "Team Reset Successfully.",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
+
+  const handleContinueButtonPress = () => {
+    if (totalPlayers < 11) {
+      ToastAndroid.showWithGravity(
+        "Please select a team of 11 players.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    }
   };
 
   return (
@@ -85,7 +164,7 @@ const PlayerSelection = ({ route }) => {
           <View style={styles2.playersSelectedContainer}>
             <Text style={styles2.playersText}>{"Players"}</Text>
             <Text style={styles2.playersSelectedText}>
-              {"0 "}
+              {totalPlayers}
               <Text style={styles2.playersText}>{"/ 11"}</Text>
             </Text>
           </View>
@@ -96,7 +175,9 @@ const PlayerSelection = ({ route }) => {
               <View style={styles2.teamLogo} />
               <View style={styles2.teamDataContainer}>
                 <Text style={styles2.playersText}>{"ABC"}</Text>
-                <Text style={styles2.playersSelectedText}>{"0"}</Text>
+                <Text style={styles2.playersSelectedText}>
+                  {teamABCPlayers}
+                </Text>
               </View>
             </View>
             {/* Team 2 logo,title and players */}
@@ -106,7 +187,7 @@ const PlayerSelection = ({ route }) => {
                 <Text
                   style={[styles2.playersSelectedText, { textAlign: "right" }]}
                 >
-                  {"0"}
+                  {teamDEFPlayers}
                 </Text>
               </View>
               <View style={styles2.teamLogo} />
@@ -115,7 +196,7 @@ const PlayerSelection = ({ route }) => {
           {/* Credit Left Container */}
           <View style={styles2.creditsLeftContainer}>
             <Text style={styles2.playersText}>{"Credits Left"}</Text>
-            <Text style={styles2.playersSelectedText}>{"100"}</Text>
+            <Text style={styles2.playersSelectedText}>{totalCredits}</Text>
           </View>
         </View>
         {/* Players selected blocks bar with removal icon */}
@@ -176,8 +257,9 @@ const PlayerSelection = ({ route }) => {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
             alignItems: "center",
+            gap: 4,
+            width: "50%",
           }}
         >
           <Text style={styles2.infoFromTab}>{tabText[activeTab]}</Text>
@@ -186,44 +268,75 @@ const PlayerSelection = ({ route }) => {
               name="information-circle-outline"
               size={16}
               color={COLORS.silver}
-              style={{ marginLeft: 8 }}
+              style={{ marginLeft: 2 }}
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles2.filterElement}>
-          <MaterialCommunityIcons
-            name="filter"
-            size={14}
-            style={{ marginVertical: 4 }}
-            color={COLORS.silver}
-          />
-          <Text style={styles2.matchText2}>{"Filter"}</Text>
-        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "50%",
+            gap: 8,
+          }}
+        >
+          <TouchableOpacity
+            style={styles2.resetElement}
+            onPress={handleResetButton}
+          >
+            <MaterialCommunityIcons
+              name="refresh"
+              size={14}
+              style={{ marginVertical: 4 }}
+              color={COLORS.silver}
+            />
+            <Text style={styles2.matchText2}>{"Reset Team"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles2.filterElement}>
+            <MaterialCommunityIcons
+              name="filter"
+              size={14}
+              style={{ marginVertical: 4 }}
+              color={COLORS.silver}
+            />
+            <Text style={styles2.matchText2}>{"Filter"}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {/* Component rendering on basis of above tab selection */}
       <View style={styles2.playerComponentContainer}>
         <PlayerListComponent
           activePlayerTab={activeTab}
           onAddPlayerPress={() => handleAddPlayer(0)}
+          onPlayerSelectionPress={(player, selectionStatus) =>
+            handlePlayerSelectionPress(player, selectionStatus)
+          }
+          onUpdateCredits={(credits) => handleUpdateCredits(credits)}
+          onUpdateTotalPlayers={handleUpdateTotalPlayers}
+          onUpdateTeamABCPlayers={handleUpdateTeamABCPlayers}
+          onUpdateTeamDEFPlayers={handleUpdateTeamDEFPlayers}
+          tabConditions={tabText}
+          // on reset button clicked
         />
       </View>
       {/* Buttons Container for preview and next */}
       <View style={styles2.buttonsContainer}>
         <TouchableOpacity style={styles2.button}>
-          <Text style={styles2.buttonText}>{"Preview - Lineup"}</Text>
+          <Text style={styles2.buttonText}>{"Preview"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             styles2.button,
             {
               backgroundColor:
-                selectedPlayers.length === 10 ? COLORS.primary : COLORS.silver,
+                totalPlayers === 11 ? COLORS.primary : COLORS.lightGray,
               borderWidth: 0,
             },
           ]}
+          onPress={handleContinueButtonPress}
         >
           <Text style={[styles2.buttonText, { color: COLORS.dark }]}>
-            {"Next"}
+            {"Continue"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -270,7 +383,16 @@ const styles2 = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
     backgroundColor: COLORS.transparentBg,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
+    gap: 6,
+  },
+  resetElement: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    backgroundColor: COLORS.transparentBg,
+    paddingHorizontal: 8,
     gap: 6,
   },
   matchText2: {
@@ -284,7 +406,7 @@ const styles2 = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
   infoFromTab: {
     fontSize: 12,
@@ -305,7 +427,7 @@ const styles2 = StyleSheet.create({
     alignItems: "center",
   },
   activeTab: {
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.light_grey,
   },
   tabText: {
     color: COLORS.light,
@@ -318,7 +440,8 @@ const styles2 = StyleSheet.create({
     fontSize: 14,
   },
   selectedPlayerProgressBlock: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
+    color: COLORS.light,
   },
   block: {
     width: 21,

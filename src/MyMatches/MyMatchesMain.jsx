@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.transparentBg,
     borderRadius: 5,
     paddingVertical: 8,
-    paddingHorizontal: 26,
+    paddingHorizontal: 24,
   },
   widgetText: {
     color: COLORS.light,
