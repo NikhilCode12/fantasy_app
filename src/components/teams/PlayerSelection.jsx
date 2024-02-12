@@ -119,7 +119,29 @@ const PlayerSelection = ({ route }) => {
   const handleContinueButtonPress = () => {
     if (totalPlayers < 11) {
       ToastAndroid.showWithGravity(
-        "Please select a team of 11 players.",
+        "Team must have 11 players.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    }
+  };
+
+  const handlePreviewButtonPress = () => {
+    if (totalPlayers > 0) {
+      navigation.navigate("TeamPreview", {
+        data: data,
+        amount: amount,
+        variation: variation,
+        details: {
+          totalPlayers,
+          teamABCPlayers,
+          teamDEFPlayers,
+          totalCredits,
+        },
+      });
+    } else {
+      ToastAndroid.showWithGravity(
+        "Select atleast 1 player to preview.",
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
@@ -165,7 +187,7 @@ const PlayerSelection = ({ route }) => {
             <Text style={styles2.playersText}>{"Players"}</Text>
             <Text style={styles2.playersSelectedText}>
               {totalPlayers}
-              <Text style={styles2.playersText}>{"/ 11"}</Text>
+              <Text style={styles2.playersText}>{" / 11"}</Text>
             </Text>
           </View>
           {/* Team logos and their players selected data */}
@@ -321,7 +343,10 @@ const PlayerSelection = ({ route }) => {
       </View>
       {/* Buttons Container for preview and next */}
       <View style={styles2.buttonsContainer}>
-        <TouchableOpacity style={styles2.button}>
+        <TouchableOpacity
+          style={styles2.button}
+          onPress={handlePreviewButtonPress}
+        >
           <Text style={styles2.buttonText}>{"Preview"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
