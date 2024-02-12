@@ -1,0 +1,200 @@
+[
+  {
+    "team": "ABC",
+    "name": "Player 9",
+    "selection_percentage": "65.75%",
+    "last_match_status": "",
+    "points": 125,
+    "credits": 10.0,
+    "skill": "WK"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 1",
+    "selection_percentage": "50.25%",
+    "last_match_status": "Played last match",
+    "points": 102,
+    "credits": 8.5,
+    "skill": "WK"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 5",
+    "selection_percentage": "45.80%",
+    "last_match_status": "Played last match",
+    "points": 110,
+    "credits": 10.0,
+    "skill": "WK"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 3",
+    "selection_percentage": "60.50%",
+    "last_match_status": "",
+    "points": 120,
+    "credits": 9.5,
+    "skill": "AR"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 7",
+    "selection_percentage": "70.20%",
+    "last_match_status": "Played last match",
+    "points": 140,
+    "credits": 9.5,
+    "skill": "AR"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 6",
+    "selection_percentage": "35.60%",
+    "last_match_status": "",
+    "points": 75,
+    "credits": 7.5,
+    "skill": "BAT"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 10",
+    "selection_percentage": "42.30%",
+    "last_match_status": "Played last match",
+    "points": 90,
+    "credits": 9.0,
+    "skill": "BAT"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 2",
+    "selection_percentage": "40.12%",
+    "last_match_status": "",
+    "points": 85,
+    "credits": 9.0,
+    "skill": "BAT"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 11",
+    "selection_percentage": "55.20%",
+    "last_match_status": "Played last match",
+    "points": 115,
+    "credits": 9.0,
+    "skill": "AR"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 4",
+    "selection_percentage": "55.75%",
+    "last_match_status": "Played last match",
+    "points": 95,
+    "credits": 8.0,
+    "skill": "BOWL"
+  },
+  {
+    "team": "ABC",
+    "name": "Player 8",
+    "selection_percentage": "50.00%",
+    "last_match_status": "",
+    "points": 100,
+    "credits": 8.5,
+    "skill": "BOWL"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 16",
+    "selection_percentage": "52.50%",
+    "last_match_status": "",
+    "points": 95,
+    "credits": 8.5,
+    "skill": "BOWL"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 22",
+    "selection_percentage": "70.25%",
+    "last_match_status": "",
+    "points": 130,
+    "credits": 10.0,
+    "skill": "BAT"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 18",
+    "selection_percentage": "65.75%",
+    "last_match_status": "Played last match",
+    "points": 120,
+    "credits": 9.5,
+    "skill": "BAT"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 15",
+    "selection_percentage": "58.30%",
+    "last_match_status": "Played last match",
+    "points": 130,
+    "credits": 10.0,
+    "skill": "AR"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 12",
+    "selection_percentage": "48.75%",
+    "last_match_status": "",
+    "points": 105,
+    "credits": 8.0,
+    "skill": "BOWL"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 20",
+    "selection_percentage": "56.00%",
+    "last_match_status": "Played last match",
+    "points": 105,
+    "credits": 6.5,
+    "skill": "BOWL"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 21",
+    "selection_percentage": "85.00%",
+    "last_match_status": "Played last match",
+    "points": 170,
+    "credits": 11.5,
+    "skill": "WK"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 13",
+    "selection_percentage": "75.00%",
+    "last_match_status": "Played last match",
+    "points": 150,
+    "credits": 10.5,
+    "skill": "WK"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 14",
+    "selection_percentage": "60.25%",
+    "last_match_status": "Played last match",
+    "points": 110,
+    "credits": 9.0,
+    "skill": "BAT"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 17",
+    "selection_percentage": "80.20%",
+    "last_match_status": "Played last match",
+    "points": 160,
+    "credits": 11.0,
+    "skill": "WK"
+  },
+  {
+    "team": "DEF",
+    "name": "Player 19",
+    "selection_percentage": "62.30%",
+    "last_match_status": "",
+    "points": 135,
+    "credits": 10.5,
+    "skill": "AR"
+  }
+]

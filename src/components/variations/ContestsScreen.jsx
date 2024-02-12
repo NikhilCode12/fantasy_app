@@ -37,7 +37,7 @@ const ContestsScreen = ({ route }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 100);
   }, []);
 
   return (
@@ -82,55 +82,46 @@ const ContestsScreen = ({ route }) => {
           {variation === "7 + 4" ? " players" : ""}
         </Text>
       </View>
-      <View style={cStyles.sortContainer}>
-        <Text style={cStyles.sortText}>{"Sort by:"}</Text>
-        <TouchableOpacity style={cStyles.sortButton}>
-          <Text style={cStyles.sortButtonText}>{"Entry"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={cStyles.sortButton}>
-          <Text style={cStyles.sortButtonText}>{"Contest Size"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={cStyles.filterElement}>
-          <MaterialCommunityIcons
-            name="filter"
-            size={16}
-            style={{ marginVertical: 4 }}
-            color={COLORS.primary}
-          />
-          <Text style={cStyles.matchText2}>{"Filter"}</Text>
-        </TouchableOpacity>
-      </View>
-      {isLoading ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Text
+      <View style={{ flex: 1, marginBottom: 75 }}>
+        <View style={cStyles.sortContainer}>
+          <Text style={cStyles.sortText}>{"Sort by:"}</Text>
+          <TouchableOpacity style={cStyles.sortButton}>
+            <Text style={cStyles.sortButtonText}>{"Entry"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={cStyles.sortButton}>
+            <Text style={cStyles.sortButtonText}>{"Contest Size"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={cStyles.filterElement}>
+            <MaterialCommunityIcons
+              name="filter"
+              size={16}
+              style={{ marginVertical: 4 }}
+              color={COLORS.primary}
+            />
+            <Text style={cStyles.matchText2}>{"Filter"}</Text>
+          </TouchableOpacity>
+        </View>
+        {isLoading ? (
+          <View
             style={{
-              color: COLORS.light_grey,
-              fontSize: 14,
-              fontWeight: "bold",
-              marginBottom: 20,
-              fontStyle: "italic",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
             }}
           >
-            {"Loading, contests are on the way..."}
-          </Text>
-          <ActivityIndicator size="small" color={COLORS.primary} />
-        </View>
-      ) : (
-        <FlatList
-          data={contests}
-          renderItem={({ item }) => (
-            <ContestCard contest={item} variationSelected={variation} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      )}
+            <ActivityIndicator size="small" color={COLORS.primary} />
+          </View>
+        ) : (
+          <FlatList
+            data={contests}
+            renderItem={({ item }) => (
+              <ContestCard contest={item} variationSelected={variation} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
+      </View>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("PlayerSelection", {

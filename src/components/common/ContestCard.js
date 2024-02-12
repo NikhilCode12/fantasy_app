@@ -25,7 +25,7 @@ const ContestCard = ({ contest, variationSelected }) => {
   const spotsTakenPercentage = ((totalSpots - spotsLeft) / totalSpots) * 100;
   const redProgressBarStyle = {
     width: `${spotsTakenPercentage}%`,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
   };
 
   return (
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   spotsLeftText: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontSize: 11,
     fontWeight: "500",
   },

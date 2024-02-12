@@ -25,6 +25,7 @@ import {
 import DrawerNavigation from "./src/navigation/DrawerNavigation";
 import VariationsScreen from "./src/components/variations/VariationsScreen";
 import PlayerSelection from "./src/components/teams/PlayerSelection";
+import PreviewScreen from "./src/components/teams/PreviewScreen";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -138,10 +139,15 @@ function App() {
           name="HowToPlay"
           component={HowToPlayScreen}
           options={{ headerShown: false }}
-         />
+        />
         <Stack.Screen
           name="PlayerSelection"
           component={PlayerSelection}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeamPreview"
+          component={PreviewScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
