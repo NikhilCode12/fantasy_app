@@ -6,7 +6,7 @@ import {
   Image,
   ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,7 +23,10 @@ const PlayerSelection = ({ route }) => {
   const [totalPlayers, setTotalPlayers] = useState(0);
   const [teamABCPlayers, setTeamABCPlayers] = useState(0);
   const [teamDEFPlayers, setTeamDEFPlayers] = useState(0);
-
+  const [wkCount, setWkCount] = useState(0);
+  const [batsmenCount, setbatsmenCount] = useState(0);
+  const [bowlerCount, setbowlerCount] = useState(0);
+  const [allRounderCount, setallRounderCount] = useState(0);
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -58,9 +61,9 @@ const PlayerSelection = ({ route }) => {
     setSelectedPlayers(newSelectedPlayers);
   };
 
-  const handlePlayerSelectionPress = (player, selectionStatus) => {
+  const handlePlayerSelectionPress = (player, selectionStatus, tab) => {
     const index = selectedPlayers.indexOf(player);
-
+    // console.log(index);
     if (selectionStatus && totalPlayers < 11 && index === -1) {
       // If the player is selected and the total number of players is less than 11 and the player is not already selected
       const newSelectedPlayers = [...selectedPlayers];
@@ -68,6 +71,11 @@ const PlayerSelection = ({ route }) => {
       newSelectedPlayers[emptyIndex] = player;
       setSelectedPlayers(newSelectedPlayers);
       setTotalPlayers(totalPlayers + 1);
+      if (tab === "WK") setWkCount((wkCount) => wkCount + 1);
+      else if (tab === "BAT")
+        setbatsmenCount((batsmenCount) => batsmenCount + 1);
+      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount + 1);
+      else setallRounderCount((allRounderCount) => allRounderCount + 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers + 1);
       } else {
@@ -79,19 +87,32 @@ const PlayerSelection = ({ route }) => {
       newSelectedPlayers[index] = false;
       setSelectedPlayers(newSelectedPlayers);
       setTotalPlayers(totalPlayers - 1);
+
+      console.log(activeTab, totalPlayers);
+      if (tab === "WK") setWkCount((wkCount) => wkCount - 1);
+      else if (tab === "BAT")
+        setbatsmenCount((batsmenCount) => batsmenCount - 1);
+      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount - 1);
+      else setallRounderCount((allRounderCount) => allRounderCount - 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers - 1);
       } else {
         setTeamDEFPlayers(teamDEFPlayers - 1);
       }
     }
+    // console.log(totalPlayers);
   };
 
   const handleUpdateCredits = (credits) => {
     setTotalCredits(100 - credits);
   };
 
-  const handleUpdateTotalPlayers = (count) => {
+  const handleUpdateTotalPlayers = (count, tab) => {
+    // if (tab === "WK") setWkCount((wkCount) => wkCount + 1);
+    // else if (tab === "BAT") setbatsmenCount((batsmenCount) => batsmenCount + 1);
+    // else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount + 1);
+    // else setallRounderCount((allRounderCount) => allRounderCount + 1);
+    // if (tab === "WK") console.log("cb");
     setTotalPlayers(count);
   };
 
@@ -109,6 +130,10 @@ const PlayerSelection = ({ route }) => {
     setTeamABCPlayers(0);
     setTeamDEFPlayers(0);
     setTotalCredits(100);
+    setWkCount(0);
+    setbatsmenCount(0);
+    setbowlerCount(0);
+    setallRounderCount(0);
     ToastAndroid.showWithGravity(
       "Team Reset Successfully.",
       ToastAndroid.SHORT,
@@ -120,6 +145,30 @@ const PlayerSelection = ({ route }) => {
     if (totalPlayers < 11) {
       ToastAndroid.showWithGravity(
         "Team must have 11 players.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (wkCount < 1) {
+      ToastAndroid.showWithGravity(
+        "Team must have 1 Wicket keeper.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (batsmenCount < 3) {
+      ToastAndroid.showWithGravity(
+        "Team must have 3 batsmen.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (bowlerCount < 3) {
+      ToastAndroid.showWithGravity(
+        "Team must have 3 bowler.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (allRounderCount < 1) {
+      ToastAndroid.showWithGravity(
+        "Team must have 1 all rounder.",
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
@@ -147,7 +196,20 @@ const PlayerSelection = ({ route }) => {
       );
     }
   };
-
+  const CheckMaxLimit = (tab) => {
+    if (tab === "WK") return wkCount;
+    else if (tab === "BAT") return batsmenCount;
+    else if (tab === "BOWL") return bowlerCount;
+    return allRounderCount;
+  };
+  useEffect(() => {
+    // console.log("---------------");
+    // console.log("WK : ", wkCount);
+    // console.log("BAT : ", batsmenCount);
+    // console.log("BOWL : ", bowlerCount);
+    // console.log("AR : ", allRounderCount);
+    // console.log("Total : ", totalPlayers);
+  }, [totalPlayers]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -229,7 +291,10 @@ const PlayerSelection = ({ route }) => {
                 key={index}
                 style={[
                   styles2.block,
-                  isSelected ? styles2.selectedPlayerProgressBlock : null,
+                  totalPlayers > index
+                    ? styles2.selectedPlayerProgressBlock
+                    : null,
+                  // isSelected ? styles2.selectedPlayerProgressBlock : null,
                 ]}
               >
                 {index == 10 ? (
@@ -330,14 +395,15 @@ const PlayerSelection = ({ route }) => {
         <PlayerListComponent
           activePlayerTab={activeTab}
           onAddPlayerPress={() => handleAddPlayer(0)}
-          onPlayerSelectionPress={(player, selectionStatus) =>
-            handlePlayerSelectionPress(player, selectionStatus)
+          onPlayerSelectionPress={(player, selectionStatus, tab) =>
+            handlePlayerSelectionPress(player, selectionStatus, tab)
           }
           onUpdateCredits={(credits) => handleUpdateCredits(credits)}
           onUpdateTotalPlayers={handleUpdateTotalPlayers}
           onUpdateTeamABCPlayers={handleUpdateTeamABCPlayers}
           onUpdateTeamDEFPlayers={handleUpdateTeamDEFPlayers}
           tabConditions={tabText}
+          CheckMaxLimit={CheckMaxLimit}
           // on reset button clicked
         />
       </View>
