@@ -20,6 +20,7 @@ const PlayersList = ({
   onUpdateTeamABCPlayers,
   onUpdateTeamDEFPlayers,
   tabConditions,
+  CheckMaxLimit,
 }) => {
   const [playersData, setPlayersData] = useState(allPlayersData);
   const [pointsToggle, setPointsToggle] = useState(false);
@@ -74,7 +75,54 @@ const PlayersList = ({
   const handlePlayerPress = (player) => {
     const index = selectedPlayers.findIndex((p) => p === player);
     const isAddingPlayer = index === -1;
-
+    if (
+      activePlayerTab === "WK" &&
+      isAddingPlayer &&
+      CheckMaxLimit(activePlayerTab) >= 4
+    ) {
+      ToastAndroid.showWithGravity(
+        "Max limit exceed for Wicket keeper",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
+    if (
+      activePlayerTab === "BOWL" &&
+      isAddingPlayer &&
+      CheckMaxLimit(activePlayerTab) >= 6
+    ) {
+      ToastAndroid.showWithGravity(
+        "Max limit exceed for BOWL",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
+    if (
+      activePlayerTab === "BAT" &&
+      isAddingPlayer &&
+      CheckMaxLimit(activePlayerTab) >= 6
+    ) {
+      ToastAndroid.showWithGravity(
+        "Max limit exceed for BATSMEN",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
+    if (
+      activePlayerTab === "AR" &&
+      isAddingPlayer &&
+      CheckMaxLimit(activePlayerTab) >= 4
+    ) {
+      ToastAndroid.showWithGravity(
+        "Max limit exceed for ALL ROUNDER",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      return;
+    }
     if (isAddingPlayer) {
       if (totalCreditsSelected + parseFloat(player.credits) <= 100) {
         if (selectedPlayers.length < 11) {
@@ -88,7 +136,7 @@ const PlayersList = ({
           } else if (player.team === "DEF") {
             onUpdateTeamDEFPlayers((prev) => prev + 1);
           }
-          onPlayerSelectionPress(player, true);
+          onPlayerSelectionPress(player, true, activePlayerTab);
         } else {
           ToastAndroid.show(
             "You can select a maximum of 11 players",
@@ -107,6 +155,7 @@ const PlayersList = ({
         totalCreditsSelected - parseFloat(player.credits)
       );
       onUpdateTotalPlayers((prev) => Math.max(prev - 1, 0));
+      onPlayerSelectionPress(player, false, activePlayerTab);
       if (player.team === "ABC") {
         onUpdateTeamABCPlayers((prev) => Math.max(prev - 1, 0));
       } else if (player.team === "DEF") {
@@ -246,9 +295,13 @@ const PlayersList = ({
                   : item.credits.toFixed(1)}
               </Text>
               {/* Add Player button */}
-              <TouchableOpacity onPress={onAddPlayerPress}>
+              <TouchableOpacity onPress={() => handlePlayerPress(item)}>
                 <Ionicons
-                  name="ios-add-circle-outline"
+                  name={
+                    selectedPlayers.includes(item)
+                      ? "remove-circle-outline"
+                      : "ios-add-circle-outline"
+                  }
                   size={24}
                   color={
                     selectedPlayers.includes(item)
