@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PlayerListComponent from "./PlayersList.jsx";
+import { onPress } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes.js";
 
 const PlayerSelection = ({ route }) => {
   const { data, amount, variation } = route.params;
@@ -154,6 +155,18 @@ const PlayerSelection = ({ route }) => {
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
+    } else if (teamABCPlayers < 1) {
+      ToastAndroid.showWithGravity(
+        "Select atleast 1 from Team ABC.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (teamDEFPlayers < 1) {
+      ToastAndroid.showWithGravity(
+        "Select atleast 1 from Team DEF.",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
     } else if (batsmenCount < 3) {
       ToastAndroid.showWithGravity(
         "Team must have 3 batsmen.",
@@ -172,6 +185,22 @@ const PlayerSelection = ({ route }) => {
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
+    } else if (
+      totalPlayers === 11 &&
+      teamABCPlayers <= 10 &&
+      teamDEFPlayers <= 10
+    ) {
+      navigation.navigate("CaptainAndViceSelection", {
+        data: data,
+        amount: amount,
+        variation: variation,
+        details: {
+          totalPlayers,
+          teamABCPlayers,
+          teamDEFPlayers,
+          totalCredits,
+        },
+      });
     }
   };
 
@@ -413,6 +442,7 @@ const PlayerSelection = ({ route }) => {
           style={styles2.button}
           onPress={handlePreviewButtonPress}
         >
+          <Ionicons name="eye" size={16} color={COLORS.light} />
           <Text style={styles2.buttonText}>{"Preview"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -420,7 +450,7 @@ const PlayerSelection = ({ route }) => {
             styles2.button,
             {
               backgroundColor:
-                totalPlayers === 11 ? COLORS.primary : COLORS.lightGray,
+                totalPlayers === 11 ? COLORS.secondary : COLORS.lightGray,
               borderWidth: 0,
             },
           ]}
@@ -461,6 +491,8 @@ const styles2 = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "48%",
+    flexDirection: "row",
+    gap: 6,
     borderRadius: 5,
   },
   buttonText: {
