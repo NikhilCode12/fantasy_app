@@ -89,7 +89,7 @@ const PlayerSelection = ({ route }) => {
       setSelectedPlayers(newSelectedPlayers);
       setTotalPlayers(totalPlayers - 1);
 
-      console.log(activeTab, totalPlayers);
+      // console.log(activeTab, totalPlayers);
       if (tab === "WK") setWkCount((wkCount) => wkCount - 1);
       else if (tab === "BAT")
         setbatsmenCount((batsmenCount) => batsmenCount - 1);
