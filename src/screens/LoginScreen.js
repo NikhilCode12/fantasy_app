@@ -58,7 +58,7 @@ export default function LoginScreen({ navigation }) {
             <TextInput
               style={{
                 ...styles.numberSize,
-                width: "80%",
+                width: "80%", // Adjusted width
                 marginLeft: 4,
                 color: COLORS.primary,
                 fontWeight: "bold",
@@ -95,7 +95,12 @@ export default function LoginScreen({ navigation }) {
                 setisChecked(!isChecked);
               }}
             />
-            <Text style={{ marginLeft: 8, fontSize: 12, ...styles.textColor }}>
+            <Text
+              style={{ marginLeft: 8, fontSize: 12, ...styles.textColor }}
+              onPress={() => {
+                setisChecked(!isChecked);
+              }}
+            >
               I certify that I am above 18 years
             </Text>
           </View>
@@ -151,7 +156,7 @@ export default function LoginScreen({ navigation }) {
               style={{
                 borderBottomWidth: 1,
                 borderBottomColor: "lightgrey",
-                borderStyle: "dotted",
+                borderStyle: "solid",
                 width: "26.5%",
               }}
             ></View>
@@ -164,7 +169,6 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   heading: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -174,16 +178,17 @@ const styles = StyleSheet.create({
     color: COLORS.light,
     fontSize: 22,
     fontWeight: "bold",
-    marginVertical: 4,
+    marginVertical: 6,
   },
   headingSubTitle: {
     color: COLORS.primary,
     fontSize: 14,
     fontWeight: "800",
+    marginVertical: 6,
   },
   ending: {
-    flex: 5,
-    backgroundColor: COLORS.teflon,
+    flex: 1,
+    backgroundColor: COLORS.bgMateBlack,
     paddingHorizontal: 22,
     paddingVertical: 30,
     borderTopLeftRadius: 30,

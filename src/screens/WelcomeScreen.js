@@ -1,80 +1,97 @@
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import COLORS from "../constants/colors";
-import Button from "../components/common/Button";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function WelcomeScreen({ navigation }) {
+const WelcomeScreen = ({ navigation }) => {
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={["skyblue", COLORS.btn, "#063970"]}
-    >
-      <View>
+    <View style={styles.container}>
+      <View style={styles.header}>
         <Image
-          source={require("../../assets/icon.png")}
-          style={{
-            width: 200,
-            height: 200,
-            borderRadius: 20,
-            position: "absolute",
-            borderWidth: 6,
-            borderColor: COLORS.dark,
-            top: 125,
-            left: 75,
-          }}
+          source={require("../../assets/splash.png")}
+          style={styles.logo}
         />
       </View>
-      <View
-        style={{
-          paddingHorizontal: 20,
-          position: "absolute",
-          top: 400,
-          width: "100%",
-        }}
-      >
-        <Text style={{ fontSize: 42, fontWeight: 900, color: COLORS.light }}>
-          Welcome,
+      <View style={styles.content}>
+        <Text style={styles.title}>Welcome to</Text>
+        <Text style={styles.subtitle}>Fanverse</Text>
+        <Text style={styles.description}>
+          Unleash your fantasy sports journey on this platform.
         </Text>
-        <Text
-          style={{
-            fontSize: 48,
-            fontWeight: "bold",
-            color: COLORS.light,
-          }}
+        <Text style={styles.description}>
+          Click on Get Started to Play and Enjoy!
+        </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Login")}
         >
-          To Fanverse
-        </Text>
-        <View style={{ marginVertical: 24 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLORS.primary,
-              fontWeight: "bold",
-              marginVertical: 6,
-            }}
-          >
-            Unleash Your Fantasy Sports Journey on this platform...
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLORS.light,
-              fontWeight: "bold",
-              marginVertical: 6,
-            }}
-          >
-            Click on Get Started to Play and Enjoy!
-          </Text>
-          <Button
-            title="GET STARTED"
-            style={{ marginVertical: 30, width: "100%" }}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          />
-        </View>
+          <Text style={styles.buttonText}>GET STARTED</Text>
+          <AntDesign name="rightcircle" size={24} color={COLORS.dark} />
+        </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.bgMateBlack,
+  },
+  header: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    borderWidth: 4,
+    borderColor: COLORS.primary,
+    borderRadius: 100,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: COLORS.light,
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: COLORS.primary,
+    marginBottom: 20,
+  },
+  description: {
+    fontSize: 14,
+    textAlign: "center",
+    color: COLORS.light,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.primary,
+    borderRadius: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginTop: 20,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLORS.dark,
+    marginRight: 10,
+  },
+});
+
+export default WelcomeScreen;

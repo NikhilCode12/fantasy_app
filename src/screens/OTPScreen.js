@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   SafeAreaView,
   KeyboardAvoidingView,
@@ -21,6 +21,10 @@ export default function OtpScreen({ navigation }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const refs = useRef([]);
+
+  useEffect(() => {
+    refs.current[0].focus();
+  }, []);
 
   // Debounce the handleChange function to improve performance
   const debouncedHandleChange = useRef(_.debounce(handleChange, 300)).current;
@@ -57,7 +61,7 @@ export default function OtpScreen({ navigation }) {
         keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
       >
         <LinearGradient
-          colors={["#063970", COLORS.primary]}
+          colors={["#063970", COLORS.secondary]}
           style={{ flex: 1 }}
         >
           <View style={{ paddingTop: 16, paddingHorizontal: 12 }}>
@@ -160,6 +164,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLORS.dark,
     fontWeight: "bold",
+    borderWidth: 1,
+    borderColor: COLORS.primary,
   },
   resendText: {
     color: COLORS.light,
