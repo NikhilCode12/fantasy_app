@@ -21,12 +21,17 @@ const PlayersList = ({
   onUpdateTeamDEFPlayers,
   tabConditions,
   CheckMaxLimit,
+  // onSelectedPlayersChange,
 }) => {
   const [playersData, setPlayersData] = useState(allPlayersData);
   const [pointsToggle, setPointsToggle] = useState(false);
   const [creditsToggle, setCreditsToggle] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [totalCreditsSelected, setTotalCreditsSelected] = useState(0);
+
+  // useEffect(() => {
+  //   onSelectedPlayersChange(selectedPlayers);
+  // }, [selectedPlayers, onSelectedPlayersChange]);
 
   useEffect(() => {
     const filteredPlayers = allPlayersData.filter(

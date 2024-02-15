@@ -5,6 +5,7 @@ import {
   View,
   Image,
   ToastAndroid,
+  FlatList,
 } from "react-native";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,11 +14,18 @@ import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { fonts } from "react-native-elements/dist/config/index.js";
+import PlayerCardsComponent from "./PlayerCardsComponent.jsx";
+import PlayersData from "../../constants/dummyPlayers.json";
 
 const CaptainAndViceSelection = ({ route }) => {
   const { data, details } = route.params;
   const navigation = useNavigation();
+
+  const filterWK = PlayersData.filter((player) => player.skill === "WK");
+  const filterBAT = PlayersData.filter((player) => player.skill === "BAT");
+  const filterAR = PlayersData.filter((player) => player.skill === "AR");
+  const filterBOWL = PlayersData.filter((player) => player.skill === "BOWL");
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Container */}
@@ -92,49 +100,66 @@ const CaptainAndViceSelection = ({ route }) => {
       </View>
       {/* Sorting Container */}
       <View style={styles2.topContainer}>
-        <Text style={styles2.topTitle}>SELECTED BY</Text>
+        <Text style={styles2.topTitle}>SORT BY</Text>
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles2.topTitle}>POINTS</Text>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            gap: 32,
+            gap: 36,
           }}
         >
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles2.topTitle}>
-              POINTS
-              {false ? (
-                <Ionicons name="ios-arrow-up" size={12} color={COLORS.silver} />
+              BY %C
+              {/* {false ? (
+                <Ionicons name="ios-arrow-up" size={13} color={COLORS.dark} />
               ) : (
-                <Ionicons
-                  name="ios-arrow-down"
-                  size={12}
-                  color={COLORS.silver}
-                />
-              )}
+                <Ionicons name="ios-arrow-down" size={13} color={COLORS.dark} />
+              )} */}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles2.topTitle}>
-              CREDITS
-              {false ? (
-                <Ionicons name="ios-arrow-up" size={12} color={COLORS.silver} />
+              BY %VC
+              {/* {false ? (
+                <Ionicons name="ios-arrow-up" size={13} color={COLORS.dark} />
               ) : (
-                <Ionicons
-                  name="ios-arrow-down"
-                  size={12}
-                  color={COLORS.silver}
-                />
-              )}
+                <Ionicons name="ios-arrow-down" size={13} color={COLORS.dark} />
+              )} */}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
       {/* 3 Containers to have different Flatlists rendering */}
-      {/* 1. Wicket keepers Container */}
-      {/* 2. Batsmen container*/}
-      {/* 3. All Rounders container */}
-      {/* 4. Bowlers container */}
+      <View style={styles2.playersComponentContainer}>
+        {/* Wicket Keepers list */}
+        <FlatList
+          data={filterWK}
+          keyExtractor={(item) => item.name.toString()}
+          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+        />
+        {/* Batters list */}
+        <FlatList
+          data={filterBAT}
+          keyExtractor={(item) => item.name.toString()}
+          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+        />
+        {/* All rounders list */}
+        <FlatList
+          data={filterAR}
+          keyExtractor={(item) => item.name.toString()}
+          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+        />
+        {/* Bowlers list */}
+        <FlatList
+          data={filterBOWL}
+          keyExtractor={(item) => item.name.toString()}
+          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -142,25 +167,90 @@ const CaptainAndViceSelection = ({ route }) => {
 export default CaptainAndViceSelection;
 
 const styles2 = StyleSheet.create({
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: COLORS.dark,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+  playerPoints: {
+    flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 30,
   },
-  topTitle: {
-    color: COLORS.silver,
-    fontSize: 11,
+  playerPointsText: {
+    color: COLORS.light,
+    fontSize: 13,
     fontWeight: "bold",
   },
-  playerComponentContainer: {
-    height: "48.25%",
-    width: "100%",
+  playerCreditsText: {
+    color: COLORS.light,
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+  playerCredits: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+    marginLeft: 22,
+  },
+  playerDetails: {
+    flexDirection: "column",
+    marginLeft: 10,
+    gap: 1,
+    marginRight: 22,
+    alignItems: "flex-start",
+  },
+  playerLogo: {
+    width: 40,
+    height: 40,
+    borderRadius: 5,
+    marginRight: 2,
+    backgroundColor: COLORS.silver,
+    marginTop: 10,
+  },
+  playerName: {
+    color: COLORS.light,
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  playerStatus: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+  },
+  playerStatusText: {
+    color: COLORS.secondary,
+    fontSize: 10,
+  },
+  playerLogoContainer: {
+    position: "relative",
+  },
+  playerContainer: {
+    flexDirection: "row",
+    backgroundColor: COLORS.transparentBg,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    alignItems: "center",
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: COLORS.transparentBg,
+  },
+  playersComponentContainer: {
+    flexDirection: "column",
+    flex: 1,
+    gap: 12,
+    marginTop: 16,
+  },
+  topContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: COLORS.silver,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginTop: 16,
+    alignItems: "center",
+  },
+  topTitle: {
+    color: COLORS.dark,
+    fontSize: 12,
+    fontWeight: "bold",
   },
   buttonsContainer: {
     position: "absolute",
