@@ -26,6 +26,7 @@ import DrawerNavigation from "./src/navigation/DrawerNavigation";
 import VariationsScreen from "./src/components/variations/VariationsScreen";
 import PlayerSelection from "./src/components/teams/PlayerSelection";
 import PreviewScreen from "./src/components/teams/PreviewScreen";
+import CaptainAndViceSelection from "./src/components/teams/CaptainAndViceSelection";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -148,6 +149,11 @@ function App() {
         <Stack.Screen
           name="TeamPreview"
           component={PreviewScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CaptainAndViceSelection"
+          component={CaptainAndViceSelection}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

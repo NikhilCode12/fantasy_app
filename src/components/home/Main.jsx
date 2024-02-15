@@ -78,6 +78,7 @@ const Main = ({ onMatchCardPress }) => {
             flexDirection: "row",
             height: 57,
           }}
+          style={{ flexGrow: 0 }}
         >
           {Object.keys(games).map((game, index) => (
             <TouchableOpacity

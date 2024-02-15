@@ -104,7 +104,12 @@ export default function EmailAuthentication({ navigation }) {
                   setisChecked(!isChecked);
                 }}
               />
-              <Text style={{ marginLeft: 8, fontSize: 12, color: "white" }}>
+              <Text
+                style={{ marginLeft: 8, fontSize: 12, color: "white" }}
+                onPress={() => {
+                  setisChecked(!isChecked);
+                }}
+              >
                 I certify that I am above 18 years
               </Text>
             </View>
@@ -162,7 +167,7 @@ export default function EmailAuthentication({ navigation }) {
                 style={{
                   borderBottomWidth: 1,
                   borderBottomColor: "lightgrey",
-                  borderStyle: "dotted",
+                  borderStyle: "solid",
                   width: "33%",
                 }}
               ></View>
@@ -257,7 +262,6 @@ export default function EmailAuthentication({ navigation }) {
 
 const styles = StyleSheet.create({
   heading: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -267,16 +271,17 @@ const styles = StyleSheet.create({
     color: COLORS.light,
     fontSize: 22,
     fontWeight: "bold",
-    marginVertical: 4,
+    marginVertical: 6,
   },
   headingSubTitle: {
     color: COLORS.primary,
     fontSize: 14,
     fontWeight: "800",
+    marginVertical: 6,
   },
   ending: {
-    flex: 5,
-    backgroundColor: COLORS.teflon,
+    flex: 1,
+    backgroundColor: COLORS.bgMateBlack,
     paddingHorizontal: 22,
     paddingVertical: 30,
     borderTopLeftRadius: 30,
@@ -289,7 +294,7 @@ const styles = StyleSheet.create({
   smallCircle: {
     borderRadius: 100,
     marginHorizontal: 2,
-    backgroundColor: "grey",
+    backgroundColor: COLORS.light_grey,
     width: 2,
     height: 2,
     justifyContent: "center",
@@ -311,7 +316,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 52,
     borderWidth: 1,
-    borderColor: "grey",
+    borderColor: COLORS.lightGray,
     borderRadius: 5,
   },
 });

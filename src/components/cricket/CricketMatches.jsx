@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import styles from "../../styles/cricket.matches.style";
 import COLORS from "../../constants/colors";
 import MatchesScreen from "./MatchesScreen";
@@ -27,9 +27,7 @@ const CricketMatches = ({ onMatchCardPress }) => {
           />
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <MatchesScreen onMatchCardPress={onMatchCardPress} />
-        </ScrollView>
+        <MatchesScreen onMatchCardPress={onMatchCardPress} />
       )}
     </SafeAreaView>
   );
