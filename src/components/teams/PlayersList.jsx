@@ -161,11 +161,11 @@ const PlayersList = ({
       );
       onUpdateTotalPlayers((prev) => Math.max(prev - 1, 0));
       onPlayerSelectionPress(player, false, activePlayerTab);
-      if (player.team === "ABC") {
-        onUpdateTeamABCPlayers((prev) => Math.max(prev - 1, 0));
-      } else if (player.team === "DEF") {
-        onUpdateTeamDEFPlayers((prev) => Math.max(prev - 1, 0));
-      }
+      // if (player.team === "ABC") {
+      //   onUpdateTeamABCPlayers((prev) => Math.max(prev - 1, 0));
+      // } else if (player.team === "DEF") {
+      //   onUpdateTeamDEFPlayers((prev) => Math.max(prev - 1, 0));
+      // }
     }
   };
 
