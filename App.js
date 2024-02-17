@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomNavigation from "./src/navigation/BottomNavigation";
 import VariationStackNavigator from "./src/navigation/VariationStackNavigator";
 import ContestsScreen from "./src/components/variations/ContestsScreen";
+import BeforeContestDetailsScreen from "./src/components/variations/BeforeContestDetailsScreen";
 
 import {
   LoginScreen,
@@ -154,6 +155,11 @@ function App() {
         <Stack.Screen
           name="CaptainAndViceSelection"
           component={CaptainAndViceSelection}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BeforeContestDetails"
+          component={BeforeContestDetailsScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

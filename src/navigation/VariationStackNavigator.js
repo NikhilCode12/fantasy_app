@@ -4,6 +4,7 @@ import ContestsScreen from "../components/variations/ContestsScreen";
 import PlayerSelection from "../components/teams/PlayerSelection";
 import PreviewScreen from "../components/teams/PreviewScreen";
 import CaptainAndViceSelection from "../components/teams/CaptainAndViceSelection";
+import BeforeContestDetailsScreen from "../components/variations/BeforeContestDetailsScreen";
 
 const VariationsStack = createStackNavigator();
 
@@ -37,6 +38,11 @@ const VariationStackNavigator = () => {
       <Stack.Screen
         name="CaptainAndViceSelection"
         component={CaptainAndViceSelection}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BeforeContestDetails"
+        component={BeforeContestDetailsScreen}
         options={{ headerShown: false }}
       />
     </VariationsStack.Navigator>

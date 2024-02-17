@@ -3,7 +3,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
-const ContestCard = ({ contest, variationSelected }) => {
+const ContestCard = ({
+  contest,
+  variationSelected,
+  handleContestCardPress,
+}) => {
   const {
     winners,
     prizePool,
@@ -29,7 +33,7 @@ const ContestCard = ({ contest, variationSelected }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleContestCardPress}>
       <View style={styles.winnersInfoContainer}>
         <View style={styles.topLeftContainer}>
           <Ionicons name="medal" size={14} color={COLORS.bgMateBlack} />
