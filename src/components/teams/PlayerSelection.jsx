@@ -28,6 +28,7 @@ const PlayerSelection = ({ route }) => {
   const [batsmenCount, setbatsmenCount] = useState(0);
   const [bowlerCount, setbowlerCount] = useState(0);
   const [allRounderCount, setallRounderCount] = useState(0);
+  const [selectedPlayersData, setselectedPlayersData] = useState([]);
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -82,6 +83,7 @@ const PlayerSelection = ({ route }) => {
       } else {
         setTeamDEFPlayers(teamDEFPlayers + 1);
       }
+      setselectedPlayersData([...selectedPlayersData, player]);
     } else if (!selectionStatus && totalPlayers > 0 && index !== -1) {
       // If the player is deselected and the player is already selected
       const newSelectedPlayers = [...selectedPlayers];
@@ -100,6 +102,9 @@ const PlayerSelection = ({ route }) => {
       } else {
         setTeamDEFPlayers(teamDEFPlayers - 1);
       }
+      setselectedPlayersData(
+        selectedPlayersData.filter((p) => p.name !== selectedPlayersData.name)
+      );
     }
     // console.log(totalPlayers);
   };
@@ -194,6 +199,7 @@ const PlayerSelection = ({ route }) => {
         data: data,
         amount: amount,
         variation: variation,
+        PlayersData: selectedPlayersData,
         details: {
           totalPlayers,
           teamABCPlayers,
