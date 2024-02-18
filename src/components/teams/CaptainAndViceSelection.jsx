@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -6,6 +6,7 @@ import {
   Image,
   ToastAndroid,
   FlatList,
+  ScrollView,
 } from "react-native";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,17 +16,45 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PlayerCardsComponent from "./PlayerCardsComponent.jsx";
-import PlayersData from "../../constants/dummyPlayers.json";
+// import PlayersData from "../../constants/dummyPlayers.json";
 
 const CaptainAndViceSelection = ({ route }) => {
-  const { data, details } = route.params;
+  const { data, details, PlayersData, amount, variation } = route.params;
   const navigation = useNavigation();
-
   const filterWK = PlayersData.filter((player) => player.skill === "WK");
   const filterBAT = PlayersData.filter((player) => player.skill === "BAT");
   const filterAR = PlayersData.filter((player) => player.skill === "AR");
   const filterBOWL = PlayersData.filter((player) => player.skill === "BOWL");
+  const combinedData = [...filterWK, ...filterBAT, ...filterAR, ...filterBOWL];
+  const [captainName, setcaptainName] = useState("");
+  const [viceCaptainName, setViceCaptainName] = useState("");
 
+  function updateCaptain(pname, set) {
+    if (set == true) {
+      setcaptainName(pname);
+    } else {
+      setcaptainName("");
+    }
+  }
+  function updateViceCaptain(pname, set) {
+    if (set == true) {
+      setViceCaptainName(pname);
+    } else {
+      setViceCaptainName("");
+    }
+  }
+  const renderPlayerCardsList = (data) => {
+    return data.map((item) => (
+      <PlayerCardsComponent
+        key={item.name.toString()}
+        data={item}
+        captainName={captainName}
+        viceCaptainName={viceCaptainName}
+        updateCaptain={updateCaptain}
+        updateViceCaptain={updateViceCaptain}
+      />
+    ));
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Container */}
@@ -133,33 +162,138 @@ const CaptainAndViceSelection = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 30 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Wicketkeepers list */}
+        <View style={{ marginVertical: 4 }}>
+          {renderPlayerCardsList(filterWK)}
+        </View>
+
+        {/* Batters list */}
+        <View style={{ marginVertical: 4 }}>
+          {renderPlayerCardsList(filterBAT)}
+        </View>
+
+        {/* All rounders list */}
+        <View style={{ marginVertical: 4 }}>
+          {renderPlayerCardsList(filterAR)}
+        </View>
+
+        {/* Bowlers list */}
+        <View style={{ marginVertical: 4 }}>
+          {renderPlayerCardsList(filterBOWL)}
+        </View>
+      </ScrollView>
+      <TouchableOpacity
+        style={{
+          height: 40,
+          backgroundColor: COLORS.dark,
+          marginVertical: 25,
+          marginHorizontal: 30,
+          alignItems: "center",
+          paddingVertical: 10,
+          borderRadius: 4,
+          borderWidth: 1,
+          borderColor: COLORS.primary,
+        }}
+        onPress={() => {
+          if (captainName === "" && viceCaptainName === "") {
+            ToastAndroid.show(
+              "Please Select Captain and Vice captain",
+              ToastAndroid.SHORT
+            );
+          } else if (captainName === "") {
+            ToastAndroid.show("Please Select Captain ", ToastAndroid.SHORT);
+          } else if (viceCaptainName === "") {
+            ToastAndroid.show(
+              "Please Select Vice Captain ",
+              ToastAndroid.SHORT
+            );
+          } else {
+            navigation.navigate("Contests", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          }
+        }}
+      >
+        <Text style={{ color: COLORS.light, fontSize: 14 }}>Confirm Team</Text>
+      </TouchableOpacity>
       {/* 3 Containers to have different Flatlists rendering */}
-      <View style={styles2.playersComponentContainer}>
-        {/* Wicket Keepers list */}
-        <FlatList
+      {/* <View style={styles2.playersComponentContainer}> */}
+      {/* <FlatList
+          data={combinedData}
+          keyExtractor={(item) => item.name.toString()}
+          renderItem={({ item }) => (
+            <PlayerCardsComponent
+              data={item}
+              captainName={captainName}
+              viceCaptainName={viceCaptainName}
+              updateCaptain={updateCaptain}
+              updateViceCaptain={updateViceCaptain}
+            />
+          )}
+        /> */}
+
+      {/* <FlatList
           data={filterWK}
           keyExtractor={(item) => item.name.toString()}
-          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+          renderItem={({ item }) => (
+            <PlayerCardsComponent
+              data={item}
+              captainName={captainName}
+              viceCaptainName={viceCaptainName}
+              updateCaptain={updateCaptain}
+              updateViceCaptain={updateViceCaptain}
+            />
+          )}
         />
-        {/* Batters list */}
+        
         <FlatList
           data={filterBAT}
           keyExtractor={(item) => item.name.toString()}
-          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+          renderItem={({ item }) => (
+            <PlayerCardsComponent
+              data={item}
+              captainName={captainName}
+              viceCaptainName={viceCaptainName}
+              updateCaptain={updateCaptain}
+              updateViceCaptain={updateViceCaptain}
+            />
+          )}
         />
-        {/* All rounders list */}
+        
         <FlatList
           data={filterAR}
           keyExtractor={(item) => item.name.toString()}
-          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+          renderItem={({ item }) => (
+            <PlayerCardsComponent
+              data={item}
+              captainName={captainName}
+              viceCaptainName={viceCaptainName}
+              updateCaptain={updateCaptain}
+              updateViceCaptain={updateViceCaptain}
+            />
+          )}
         />
-        {/* Bowlers list */}
+        
         <FlatList
           data={filterBOWL}
           keyExtractor={(item) => item.name.toString()}
-          renderItem={({ item }) => <PlayerCardsComponent data={item} />}
+          renderItem={({ item }) => (
+            <PlayerCardsComponent
+              data={item}
+              captainName={captainName}
+              viceCaptainName={viceCaptainName}
+              updateCaptain={updateCaptain}
+              updateViceCaptain={updateViceCaptain}
+            />
+          )}
         />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };

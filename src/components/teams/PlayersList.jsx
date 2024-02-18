@@ -136,11 +136,11 @@ const PlayersList = ({
             totalCreditsSelected + parseFloat(player.credits)
           );
           onUpdateTotalPlayers((prev) => prev + 1);
-          if (player.team === "ABC") {
-            onUpdateTeamABCPlayers((prev) => prev + 1);
-          } else if (player.team === "DEF") {
-            onUpdateTeamDEFPlayers((prev) => prev + 1);
-          }
+          // if (player.team === "ABC") {
+          //   onUpdateTeamABCPlayers((prev) => prev + 1);
+          // } else if (player.team === "DEF") {
+          //   onUpdateTeamDEFPlayers((prev) => prev + 1);
+          // }
           onPlayerSelectionPress(player, true, activePlayerTab);
         } else {
           ToastAndroid.show(
