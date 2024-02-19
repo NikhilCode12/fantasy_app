@@ -164,7 +164,7 @@ const CaptainAndViceSelection = ({ route }) => {
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginVertical: 12 }}
+        style={{ marginTop: 12 }}
       >
         {/* Wicketkeepers list */}
         <View style={{ marginBottom: 12 }}>
@@ -187,11 +187,11 @@ const CaptainAndViceSelection = ({ route }) => {
       <TouchableOpacity
         style={{
           backgroundColor: COLORS.dark,
-          marginVertical: 12,
+          marginVertical: 20,
           marginHorizontal: 20,
           alignItems: "center",
           paddingVertical: 12,
-          borderRadius: 4,
+          borderRadius: 10,
           borderWidth: 1,
           borderColor: COLORS.primary,
         }}
@@ -217,7 +217,7 @@ const CaptainAndViceSelection = ({ route }) => {
           }
         }}
       >
-        <Text style={{ color: COLORS.light, fontSize: 14, fontWeight: "500" }}>
+        <Text style={{ color: COLORS.light, fontSize: 16, fontWeight: "500" }}>
           Confirm Team
         </Text>
       </TouchableOpacity>
@@ -374,14 +374,14 @@ const styles2 = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.transparentBg,
     paddingVertical: 12,
     paddingHorizontal: 16,
     marginTop: 16,
     alignItems: "center",
   },
   topTitle: {
-    color: COLORS.dark,
+    color: COLORS.light_grey,
     fontSize: 12,
     fontWeight: "bold",
   },
@@ -521,7 +521,7 @@ const styles2 = StyleSheet.create({
   },
   playersText: {
     fontSize: 11,
-    color: COLORS.silver,
+    color: COLORS.light_grey,
   },
   playersSelectedContainer: {
     flexDirection: "column",
@@ -541,6 +541,6 @@ const styles2 = StyleSheet.create({
   displayText: {
     fontSize: 12,
     fontWeight: "bold",
-    color: COLORS.light_grey,
+    color: COLORS.light,
   },
 });

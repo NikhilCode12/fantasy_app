@@ -62,16 +62,12 @@ const PlayerCardsComponent = ({
   return (
     <View style={styles.playerContainer}>
       <View style={styles.playerLogoContainer}>
-        <View
-          style={[
-            styles.playerTeamName,
-            { alignItems: "center", justifyContent: "space-between" },
-          ]}
-        >
+        <View style={[styles.playerTeamName, { alignItems: "center" }]}>
           <Text
             style={{
-              color: COLORS.light,
-              backgroundColor: COLORS.dark,
+              color: data.team === "DEF" ? COLORS.dark : COLORS.light,
+              backgroundColor:
+                data.team === "DEF" ? COLORS.secondary : COLORS.dark,
               fontSize: 10,
               fontWeight: "500",
               textAlign: "center",
@@ -83,8 +79,8 @@ const PlayerCardsComponent = ({
           </Text>
           <Text
             style={{
-              color: COLORS.dark,
-              backgroundColor: COLORS.silver,
+              color: COLORS.light,
+              backgroundColor: COLORS.lightGray,
               fontSize: 10,
               fontWeight: "500",
               textAlign: "center",
@@ -100,7 +96,7 @@ const PlayerCardsComponent = ({
       <View
         style={{
           flexDirection: "column",
-          marginLeft: 65,
+          marginLeft: 60,
           minWidth: 90,
         }}
       >
@@ -181,7 +177,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: COLORS.wheat,
+    backgroundColor: COLORS.light_grey,
     marginLeft: 34,
     alignItems: "center",
     justifyContent: "center",

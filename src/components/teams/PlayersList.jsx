@@ -226,11 +226,23 @@ const PlayersList = ({
             {/* Player logo */}
             <View style={styles.playerLogoContainer}>
               <Text
-                style={[
-                  styles.playerTeamName,
-                  selectedPlayers.includes(item) &&
-                    styles.selectedPlayerTeamName,
-                ]}
+                style={
+                  ([
+                    styles.playerTeamName,
+                    selectedPlayers.includes(item) && styles.selectedPlayerName,
+                  ],
+                  item.team === "DEF"
+                    ? {
+                        ...styles.playerTeamName,
+                        backgroundColor: COLORS.secondary,
+                        color: COLORS.dark,
+                      }
+                    : {
+                        ...styles.playerTeamName,
+                        backgroundColor: COLORS.dark,
+                        color: COLORS.light,
+                      })
+                }
               >
                 {item.team}
               </Text>
