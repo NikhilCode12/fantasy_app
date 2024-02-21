@@ -40,6 +40,15 @@ const ContestsScreen = ({ route }) => {
     }, 100);
   }, []);
 
+  const handleCardPress = (entryFee) => {
+    navigation.navigate("BeforeContestDetails", {
+      data: data,
+      amount: amount,
+      variation: variation,
+      entryFee: entryFee,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -116,7 +125,11 @@ const ContestsScreen = ({ route }) => {
           <FlatList
             data={contests}
             renderItem={({ item }) => (
-              <ContestCard contest={item} variationSelected={variation} />
+              <ContestCard
+                contest={item}
+                variationSelected={variation}
+                handleContestCardPress={() => handleCardPress(item.entryFee)}
+              />
             )}
             keyExtractor={(item, index) => index.toString()}
           />

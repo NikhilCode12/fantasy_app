@@ -163,38 +163,35 @@ const CaptainAndViceSelection = ({ route }) => {
         </View>
       </View>
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 30 }}
         showsVerticalScrollIndicator={false}
+        style={{ marginTop: 12 }}
       >
         {/* Wicketkeepers list */}
-        <View style={{ marginVertical: 4 }}>
+        <View style={{ marginBottom: 12 }}>
           {renderPlayerCardsList(filterWK)}
         </View>
 
         {/* Batters list */}
-        <View style={{ marginVertical: 4 }}>
+        <View style={{ marginBottom: 12 }}>
           {renderPlayerCardsList(filterBAT)}
         </View>
 
         {/* All rounders list */}
-        <View style={{ marginVertical: 4 }}>
+        <View style={{ marginBottom: 12 }}>
           {renderPlayerCardsList(filterAR)}
         </View>
 
         {/* Bowlers list */}
-        <View style={{ marginVertical: 4 }}>
-          {renderPlayerCardsList(filterBOWL)}
-        </View>
+        <View>{renderPlayerCardsList(filterBOWL)}</View>
       </ScrollView>
       <TouchableOpacity
         style={{
-          height: 40,
           backgroundColor: COLORS.dark,
-          marginVertical: 25,
-          marginHorizontal: 30,
+          marginVertical: 20,
+          marginHorizontal: 20,
           alignItems: "center",
-          paddingVertical: 10,
-          borderRadius: 4,
+          paddingVertical: 12,
+          borderRadius: 10,
           borderWidth: 1,
           borderColor: COLORS.primary,
         }}
@@ -234,7 +231,9 @@ const CaptainAndViceSelection = ({ route }) => {
           }
         }}
       >
-        <Text style={{ color: COLORS.light, fontSize: 14 }}>Confirm Team</Text>
+        <Text style={{ color: COLORS.light, fontSize: 16, fontWeight: "500" }}>
+          Confirm Team
+        </Text>
       </TouchableOpacity>
       {/* 3 Containers to have different Flatlists rendering */}
       {/* <View style={styles2.playersComponentContainer}> */}
@@ -389,14 +388,14 @@ const styles2 = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.transparentBg,
     paddingVertical: 12,
     paddingHorizontal: 16,
     marginTop: 16,
     alignItems: "center",
   },
   topTitle: {
-    color: COLORS.dark,
+    color: COLORS.light_grey,
     fontSize: 12,
     fontWeight: "bold",
   },
@@ -536,7 +535,7 @@ const styles2 = StyleSheet.create({
   },
   playersText: {
     fontSize: 11,
-    color: COLORS.silver,
+    color: COLORS.light_grey,
   },
   playersSelectedContainer: {
     flexDirection: "column",
@@ -556,6 +555,6 @@ const styles2 = StyleSheet.create({
   displayText: {
     fontSize: 12,
     fontWeight: "bold",
-    color: COLORS.light_grey,
+    color: COLORS.light,
   },
 });

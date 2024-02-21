@@ -62,22 +62,48 @@ const PlayerCardsComponent = ({
   return (
     <View style={styles.playerContainer}>
       <View style={styles.playerLogoContainer}>
-        <Text style={[styles.playerTeamName]}>
-          {data.team} {data.skill}
-        </Text>
+        <View style={[styles.playerTeamName, { alignItems: "center" }]}>
+          <Text
+            style={{
+              color: data.team === "DEF" ? COLORS.dark : COLORS.light,
+              backgroundColor:
+                data.team === "DEF" ? COLORS.secondary : COLORS.dark,
+              fontSize: 10,
+              fontWeight: "500",
+              textAlign: "center",
+              borderBottomLeftRadius: 5,
+              paddingHorizontal: 6,
+            }}
+          >
+            {data.team}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.light,
+              backgroundColor: COLORS.lightGray,
+              fontSize: 10,
+              fontWeight: "500",
+              textAlign: "center",
+              borderBottomRightRadius: 5,
+              paddingHorizontal: 6,
+            }}
+          >
+            {data.skill}
+          </Text>
+        </View>
         <View style={styles.playerLogo} />
       </View>
       <View
         style={{
           flexDirection: "column",
-          marginLeft: 65,
+          marginLeft: 60,
           minWidth: 90,
         }}
       >
-        <Text style={{ color: COLORS.light, fontSize: 12, fontWeight: "bold" }}>
+        <Text style={{ color: COLORS.light, fontSize: 13, fontWeight: "500" }}>
           {data.name}
         </Text>
-        <Text style={{ color: COLORS.silver, fontSize: 12, fontWeight: "600" }}>
+        <Text style={{ color: COLORS.silver, fontSize: 12, fontWeight: "500" }}>
           {data.points} pts
         </Text>
       </View>
@@ -120,17 +146,18 @@ const PlayerCardsComponent = ({
 export default PlayerCardsComponent;
 const styles = StyleSheet.create({
   selectedText: {
-    fontSize: 14,
-    color: COLORS.silver,
+    fontSize: 12,
+    color: COLORS.light,
   },
   unselectedText: {
-    fontSize: 18,
+    fontSize: 14,
+    fontWeight: "bold",
   },
   Captaincicle: {
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.secondary,
     marginLeft: 12,
     alignItems: "center",
     justifyContent: "center",
@@ -138,6 +165,7 @@ const styles = StyleSheet.create({
   selectedCaptainCircle: {
     backgroundColor: COLORS.dark,
     color: COLORS.light,
+    fontWeight: "bold",
     height: 40,
     width: 40,
     borderRadius: 20,
@@ -149,7 +177,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.light_grey,
     marginLeft: 34,
     alignItems: "center",
     justifyContent: "center",
@@ -166,7 +194,7 @@ const styles = StyleSheet.create({
   },
   playerContainer: {
     flexDirection: "row",
-    backgroundColor: COLORS.transparentBg,
+    backgroundColor: COLORS.bgLightBlack,
     paddingVertical: 10,
     paddingHorizontal: 16,
     alignItems: "center",
@@ -176,21 +204,18 @@ const styles = StyleSheet.create({
   },
   playerLogoContainer: {
     position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   playerTeamName: {
-    color: COLORS.light,
-    fontSize: 10,
-    fontWeight: "bold",
     position: "absolute",
     top: -12,
-    backgroundColor: COLORS.dark,
-    paddingHorizontal: 2,
-    paddingVertical: 2,
     borderWidth: 1,
     borderColor: COLORS.transparentBg,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    textAlign: "center",
+    flexDirection: "row",
     borderTopWidth: 0,
     width: 60,
   },

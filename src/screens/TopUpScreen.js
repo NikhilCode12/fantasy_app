@@ -101,15 +101,13 @@ const TopUpScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backArrow}  onPress={() => {
-              navigation.goBack();
-            }}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-           
-            color={COLORS.primary}
-          />
+        <TouchableOpacity
+          style={styles.backArrow}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Add Balance</Text>
       </View>
@@ -227,7 +225,7 @@ const TopUpScreen = ({ navigation }) => {
             <Toast ref={toastRef} />
             <Button
               title={`Pay \u20B9${addedAmount}`}
-              color={"teal"}
+              color={COLORS.btn}
               onPress={onPressPay}
             />
           </View>
