@@ -44,7 +44,7 @@ const WalletScreen = ({ navigation }) => {
           </Text>
           <Button
             title="ADD BALANCE"
-            color={"teal"}
+            color={COLORS.btn}
             onPress={() => {
               navigation.navigate("addBalance");
             }}
