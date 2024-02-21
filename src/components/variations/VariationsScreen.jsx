@@ -61,7 +61,7 @@ const VariationsScreen = ({ route }) => {
           <TouchableOpacity
             style={styles.variationCard}
             onPress={() => {
-              navigation.navigate("Contests", {
+              navigation.navigate("ContestBottomNavigation", {
                 data: data,
                 amount: amount,
                 variation: item.title,
