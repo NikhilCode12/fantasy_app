@@ -93,6 +93,19 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontWeight: "700",
   },
+  joinContestButton: {
+    backgroundColor: COLORS.primary,
+    padding: 12,
+    borderRadius: 5,
+    margin: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  joinContestButtonText: {
+    color: COLORS.dark,
+    fontSize: 16,
+    fontWeight: "500",
+  },
 });
 
 export default styles;

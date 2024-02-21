@@ -101,6 +101,21 @@ const BeforeContestDetailsScreen = ({ route }) => {
         <Tab.Screen name="Rules" component={RulesScreen} />
         <Tab.Screen name="Teams" component={TeamsScreen} />
       </Tab.Navigator>
+      {/* Join Contest Button */}
+      <TouchableOpacity
+        style={styles.joinContestButton}
+        onPress={() => {
+          navigation.navigate("PlayerSelection", {
+            data,
+            amount,
+            variation,
+          });
+        }}
+      >
+        <Text style={styles.joinContestButtonText}>
+          Join Contest for {entryFee}
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
