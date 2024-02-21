@@ -18,7 +18,7 @@ import PlayerListComponent from "./PlayersList.jsx";
 import { onPress } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes.js";
 
 const PlayerSelection = ({ route }) => {
-  const { data, amount, variation } = route.params;
+  const { data, amount, variation, newTeam } = route.params;
   const navigation = useNavigation();
   const [totalCredits, setTotalCredits] = useState(100);
   const [totalPlayers, setTotalPlayers] = useState(0);
@@ -29,6 +29,8 @@ const PlayerSelection = ({ route }) => {
   const [bowlerCount, setbowlerCount] = useState(0);
   const [allRounderCount, setallRounderCount] = useState(0);
   const [selectedPlayersData, setselectedPlayersData] = useState([]);
+  const [selectedPlayers, setSelectedPlayers] = useState(Array(11).fill(false));
+  const [activeTab, setActiveTab] = useState("WK");
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -37,12 +39,21 @@ const PlayerSelection = ({ route }) => {
         return true;
       }
     );
-
+    if (newTeam && newTeam == true) {
+      setTeamABCPlayers(0);
+      setTeamDEFPlayers(0);
+      setTotalCredits(100);
+      setTotalPlayers(0);
+      setselectedPlayersData([]);
+      setWkCount(0);
+      setbatsmenCount(0);
+      setbowlerCount(0);
+      setallRounderCount(0);
+      setSelectedPlayers(Array(11).fill(false));
+      setActiveTab("WK");
+    }
     return () => backHandler.remove();
   }, []);
-
-  const [selectedPlayers, setSelectedPlayers] = useState(Array(11).fill(false));
-  const [activeTab, setActiveTab] = useState("WK");
 
   const tabText = {
     WK: "Pick 1-4 Wicket-Keepers",

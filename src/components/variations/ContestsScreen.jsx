@@ -122,7 +122,7 @@ const ContestsScreen = ({ route }) => {
           />
         )}
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           navigation.navigate("PlayerSelection", {
             data: data,
@@ -133,7 +133,7 @@ const ContestsScreen = ({ route }) => {
         style={cStyles.createTeamButton}
       >
         <Text style={cStyles.buttonText}>Create New Team</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 };
