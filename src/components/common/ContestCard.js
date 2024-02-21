@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   winnersText: {
     color: COLORS.dark,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "500",
   },
   contestDetailsContainer: {
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     paddingVertical: 1,
-    backgroundColor: COLORS.silver,
+    backgroundColor: COLORS.secondary,
     borderRadius: 5,
     fontWeight: "500",
   },
