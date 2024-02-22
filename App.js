@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { BackHandler } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomNavigation from "./src/navigation/BottomNavigation";
@@ -34,6 +35,17 @@ import MyTeamsScreen from "./src/components/variations/MyTeamsScreen";
 const Stack = createNativeStackNavigator();
 
 function App() {
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        navigation.goBack();
+        return true;
+      }
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">

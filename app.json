@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "fantasy_app",
-    "slug": "fantasy_app",
+    "name": "fanverse",
+    "slug": "fanverse-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/cricket_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -27,8 +27,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "156c7482-62c4-4c8b-ab72-9811faf50343"
+        "projectId": "ed3a5384-321c-49c3-a6e0-adcec0abb687"
       }
-    }
+    },
+    "owner": "nikhil12n"
   }
 }
