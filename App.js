@@ -29,6 +29,9 @@ import VariationsScreen from "./src/components/variations/VariationsScreen";
 import PlayerSelection from "./src/components/teams/PlayerSelection";
 import PreviewScreen from "./src/components/teams/PreviewScreen";
 import CaptainAndViceSelection from "./src/components/teams/CaptainAndViceSelection";
+import ContestBottomNavigation from "./src/components/variations/BottomNavigation";
+import MyContestsScreen from "./src/components/variations/MyContestsScreen";
+import MyTeamsScreen from "./src/components/variations/MyTeamsScreen";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -46,6 +49,21 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
+           <Stack.Screen
+          name="ContestBottomNavigation"
+          component={ContestBottomNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyContestsScreen"
+          component={MyContestsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyTeamsScreen"
+          component={MyTeamsScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}
