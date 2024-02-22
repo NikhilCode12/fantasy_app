@@ -30,9 +30,10 @@ export default function TeamCard({
         style={{
           backgroundColor: COLORS.bgMateBlack,
           paddingHorizontal: 20,
+          marginHorizontal: 8,
           paddingVertical: 12,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10,
         }}
       >
         <Text style={{ color: COLORS.light, fontSize: 18 }}>
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.primary,
     paddingVertical: 2,
-    // paddingHorizontal: 20,
+    // paddingHorizontal: 2
+    marginBottom: 20,
     marginHorizontal: 20,
     backgroundColor: COLORS.transparentBg,
     borderRadius: 10,

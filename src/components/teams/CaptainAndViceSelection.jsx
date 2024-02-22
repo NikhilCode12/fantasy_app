@@ -209,25 +209,25 @@ const CaptainAndViceSelection = ({ route }) => {
               ToastAndroid.SHORT
             );
           } else {
-            // navigation.navigate("ContestBottomNavigation", {
-            //   screen: "My Teams",
-            //   params: {
-            //     data: data,
-            //     amount: amount,
-            //     variation: variation,
-            //     PlayersData: PlayersData,
-            //     captainName: captainName,
-            //     viceCaptainName: viceCaptainName,
-            //   },
-            // });
-            navigation.navigate("MyTeamsScreen", {
-              data: data,
-              amount: amount,
-              variation: variation,
-              PlayersData: PlayersData,
-              captainName: captainName,
-              viceCaptainName: viceCaptainName,
+            navigation.navigate("ContestBottomNavigation", {
+              screen: "My Teams",
+              params: {
+                data: data,
+                amount: amount,
+                variation: variation,
+                PlayersData: PlayersData,
+                captainName: captainName,
+                viceCaptainName: viceCaptainName,
+              },
             });
+            // navigation.navigate("MyTeamsScreen", {
+            //   data: data,
+            //   amount: amount,
+            //   variation: variation,
+            //   PlayersData: PlayersData,
+            //   captainName: captainName,
+            //   viceCaptainName: viceCaptainName,
+            // });
           }
         }}
       >

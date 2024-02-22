@@ -39,19 +39,19 @@ const PlayerSelection = ({ route }) => {
         return true;
       }
     );
-    if (newTeam && newTeam == true) {
-      setTeamABCPlayers(0);
-      setTeamDEFPlayers(0);
-      setTotalCredits(100);
-      setTotalPlayers(0);
-      setselectedPlayersData([]);
-      setWkCount(0);
-      setbatsmenCount(0);
-      setbowlerCount(0);
-      setallRounderCount(0);
-      setSelectedPlayers(Array(11).fill(false));
-      setActiveTab("WK");
-    }
+    // if (newTeam && newTeam == true) {
+    //   setTeamABCPlayers(0);
+    //   setTeamDEFPlayers(0);
+    //   setTotalCredits(100);
+    //   setTotalPlayers(0);
+    //   setselectedPlayersData([]);
+    //   setWkCount(0);
+    //   setbatsmenCount(0);
+    //   setbowlerCount(0);
+    //   setallRounderCount(0);
+    //   setSelectedPlayers(Array(11).fill(false));
+    //   setActiveTab("WK");
+    // }
     return () => backHandler.remove();
   }, []);
 

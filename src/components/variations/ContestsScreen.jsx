@@ -91,7 +91,7 @@ const ContestsScreen = ({ route }) => {
           {variation === "7 + 4" ? " players" : ""}
         </Text>
       </View>
-      <View style={{ flex: 1, marginBottom: 75 }}>
+      <View style={{ flex: 1, marginBottom: 130 }}>
         <View style={cStyles.sortContainer}>
           <Text style={cStyles.sortText}>{"Sort by:"}</Text>
           <TouchableOpacity style={cStyles.sortButton}>
@@ -135,7 +135,7 @@ const ContestsScreen = ({ route }) => {
           />
         )}
       </View>
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={() => {
           navigation.navigate("PlayerSelection", {
             data: data,
@@ -146,7 +146,7 @@ const ContestsScreen = ({ route }) => {
         style={cStyles.createTeamButton}
       >
         <Text style={cStyles.buttonText}>Create New Team</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
