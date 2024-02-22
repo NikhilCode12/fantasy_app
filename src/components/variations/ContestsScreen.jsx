@@ -40,12 +40,12 @@ const ContestsScreen = ({ route }) => {
     }, 100);
   }, []);
 
-  const handleCardPress = (entryFee) => {
+  const handleCardPress = (fee) => {
     navigation.navigate("BeforeContestDetails", {
       data: data,
       amount: amount,
       variation: variation,
-      entryFee: entryFee,
+      entryFee: fee,
     });
   };
 
