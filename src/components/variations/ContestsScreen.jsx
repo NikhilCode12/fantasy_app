@@ -37,7 +37,7 @@ const ContestsScreen = ({ route }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 100);
+    }, 200);
   }, []);
 
   const handleCardPress = (fee) => {
@@ -105,7 +105,7 @@ const ContestsScreen = ({ route }) => {
               name="filter"
               size={16}
               style={{ marginVertical: 4 }}
-              color={COLORS.primary}
+              color={COLORS.light_grey}
             />
             <Text style={cStyles.matchText2}>{"Filter"}</Text>
           </TouchableOpacity>
@@ -132,6 +132,7 @@ const ContestsScreen = ({ route }) => {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
           />
         )}
       </View>

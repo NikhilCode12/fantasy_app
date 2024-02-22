@@ -36,7 +36,7 @@ const ContestCard = ({
     <TouchableOpacity style={styles.container} onPress={handleContestCardPress}>
       <View style={styles.winnersInfoContainer}>
         <View style={styles.topLeftContainer}>
-          <Ionicons name="medal" size={14} color={COLORS.bgMateBlack} />
+          <Ionicons name="medal" size={12} color={COLORS.bgMateBlack} />
           <Text style={styles.winnersText}>Winners: {winners}</Text>
         </View>
       </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.transparentBg,
     borderRadius: 10,
     marginVertical: 10,
-    marginHorizontal: 12,
+    marginHorizontal: 16,
     flexDirection: "column",
     justifyContent: "space-between",
   },

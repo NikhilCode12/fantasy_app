@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginHorizontal: 20,
-    marginVertical: 10,
+    marginBottom: 10,
   },
   variationsTitleContainer: {
     borderBottomWidth: 1,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.btn,
     padding: 10,
     borderRadius: 5,
-    // margin: 16,
+    margin: 16,
     marginTop: 4,
     marginBottom: 20,
     justifyContent: "center",
