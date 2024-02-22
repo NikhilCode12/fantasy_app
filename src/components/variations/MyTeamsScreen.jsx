@@ -18,6 +18,7 @@ export default function MyTeamsScreen({ route }) {
     route.params;
   useEffect(() => {
     if (PlayersData) {
+      // console.log("PLAYERS DATA");
       setallTeamsData((prevTeamsData) => [
         ...prevTeamsData,
         {
@@ -27,7 +28,7 @@ export default function MyTeamsScreen({ route }) {
         },
       ]);
     }
-  }, []);
+  }, [PlayersData, captainName, viceCaptainName]);
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.bgMateBlack, flex: 1 }}>
       <View style={styles.headerContainer}>
@@ -59,7 +60,6 @@ export default function MyTeamsScreen({ route }) {
             data: data,
             amount: amount,
             variation: variation,
-            newTeam: true,
           });
         }}
         style={styles.createTeamButton}

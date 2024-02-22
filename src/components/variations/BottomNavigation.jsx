@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   HomeScreen,
@@ -12,6 +12,7 @@ import COLORS from "../../constants/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import MyContestsScreen from "./MyContestsScreen";
 import MyTeamsScreen from "./MyTeamsScreen";
+import { NavigationContainer } from "@react-navigation/native";
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: true,
@@ -40,7 +41,14 @@ const screenOptions = {
 const tabBarSize = 24;
 
 const BottomNavigation = ({ route }) => {
-  const { data, amount, variation } = route.params;
+  const { data, amount, variation, PlayersData, captainName, viceCaptainName } =
+    route.params;
+  // useEffect(() => {
+  //   if (PlayersData) console.log("Have players data");
+  //   else {
+  //     console.log("NO PLAYERS DATA");
+  //   }
+  // }, []);
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
@@ -82,7 +90,14 @@ const BottomNavigation = ({ route }) => {
       <Tab.Screen
         name="My Teams"
         component={MyTeamsScreen}
-        initialParams={{ data, amount, variation }}
+        initialParams={{
+          data,
+          amount,
+          variation,
+          PlayersData,
+          captainName,
+          viceCaptainName,
+        }}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
