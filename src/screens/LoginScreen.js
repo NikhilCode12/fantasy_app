@@ -14,14 +14,39 @@ import {
 } from "react-native";
 import CheckBox from "../components/common/Checkbox";
 import BackArrow from "../components/common/BackArrow";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const navigation = useNavigation();
   const [phoneNum, setPhoneNum] = useState("");
   const [isFocused, setisFocused] = useState(false);
   const [isChecked, setisChecked] = useState(false);
 
   const onChangePhone = (number) => {
     setPhoneNum(number);
+  };
+
+  const sendMobileOtp = async (phoneNum) => {
+    try {
+      await axios.post(
+        "https://fanverse-backend.onrender.com/api/send-sms-otp",
+        {
+          mobileNumber: "+91" + phoneNum,
+        }
+      );
+
+      ToastAndroid.show(
+        "OTP sent successfully. Please check your SMS",
+        ToastAndroid.BOTTOM
+      );
+    } catch (err) {
+      console.log("Failed to send OTP via SMS", err);
+      ToastAndroid.show(
+        "Failed to send OTP via SMS. Please try again later",
+        ToastAndroid.BOTTOM
+      );
+    }
   };
 
   return (
@@ -109,6 +134,7 @@ export default function LoginScreen({ navigation }) {
             color={isChecked && phoneNum.length === 10 ? COLORS.btn : "grey"}
             onPress={() => {
               if (isChecked && phoneNum.length === 10) {
+                sendMobileOtp(phoneNum);
                 navigation.navigate("Otp", { phoneNum });
               } else {
                 ToastAndroid.show(
