@@ -14,11 +14,11 @@ import {
 } from "react-native";
 import CheckBox from "../components/common/Checkbox";
 import BackArrow from "../components/common/BackArrow";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function LoginScreen() {
-  const navigation = useNavigation();
+export default function LoginScreen({ navigation }) {
+  // const navigation = useNavigation();
   const [phoneNum, setPhoneNum] = useState("");
   const [isFocused, setisFocused] = useState(false);
   const [isChecked, setisChecked] = useState(false);
@@ -27,19 +27,21 @@ export default function LoginScreen() {
     setPhoneNum(number);
   };
 
-  const sendMobileOtp = async (phoneNum) => {
+  const handleMobileVerification = async (phoneNum) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         "https://fanverse-backend.onrender.com/api/send-sms-otp",
         {
           mobileNumber: "+91" + phoneNum,
         }
       );
 
-      ToastAndroid.show(
-        "OTP sent successfully. Please check your SMS",
-        ToastAndroid.BOTTOM
-      );
+      if (response.status === 200) {
+        navigation.navigate("Otp", {
+          mobileOTP: response.data.otp,
+          emailOTP: "",
+        });
+      }
     } catch (err) {
       console.log("Failed to send OTP via SMS", err);
       ToastAndroid.show(
@@ -134,8 +136,7 @@ export default function LoginScreen() {
             color={isChecked && phoneNum.length === 10 ? COLORS.btn : "grey"}
             onPress={() => {
               if (isChecked && phoneNum.length === 10) {
-                sendMobileOtp(phoneNum);
-                navigation.navigate("Otp", { phoneNum });
+                handleMobileVerification(phoneNum);
               } else {
                 ToastAndroid.show(
                   "Please certify if you are above 18 and enter a valid 10-digit mobile number",
