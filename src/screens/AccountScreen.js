@@ -20,12 +20,6 @@ export default function AccountScreen({ navigation }) {
       mobile: "unknown",
       email: "unknown",
     },
-    basicInfo: {
-      dob: "12/12/2007",
-      gender: "Unknown",
-      country: "India",
-      state: "Unknown",
-    },
   });
 
   const getToken = async () => {
@@ -183,13 +177,13 @@ export default function AccountScreen({ navigation }) {
               <View style={{ width: "35%" }}>
                 <Text style={[styles.colorslight_grey]}>Date of birth</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  {data.basicInfo.dob}
+                  {"unknown"}
                 </Text>
               </View>
               <View style={{ width: "38%" }}>
                 <Text style={[styles.colorslight_grey]}>Gender</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  {data.basicInfo.gender}
+                  {"unknown"}
                 </Text>
               </View>
             </View>
@@ -197,13 +191,13 @@ export default function AccountScreen({ navigation }) {
               <View style={{ width: "35%" }}>
                 <Text style={[styles.colorslight_grey]}>Country</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  {data.basicInfo.country}
+                  {"unknown"}
                 </Text>
               </View>
               <View style={{ width: "38%" }}>
                 <Text style={[styles.colorslight_grey]}>State</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  {data.basicInfo.state}
+                  {"unknown"}
                 </Text>
               </View>
             </View>
