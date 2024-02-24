@@ -21,6 +21,7 @@ import axios from "axios";
 
 export default function OtpScreen({ navigation, route }) {
   const { mobileOTP, emailOTP, phoneNum, email } = route.params;
+  const [actualOtp, setActualOtp]=useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
@@ -31,8 +32,13 @@ export default function OtpScreen({ navigation, route }) {
   const randomName = Math.random().toString(36).substring(7);
 
   useEffect(() => {
+    setOtpResentTime(new Date());
     refs.current[0].focus();
     startResendTimer();
+    if(emailOTP==="")
+    setActualOtp(mobileOTP);
+    else
+    setActualOtp(emailOTP);
   }, []);
 
   const startResendTimer = () => {
@@ -88,6 +94,7 @@ export default function OtpScreen({ navigation, route }) {
             "Resent OTP Valid for 1 minute!",
             ToastAndroid.SHORT
           );
+          setActualOtp(response.data.otp);
           setOtpResentTime(new Date()); // Record the time when OTP was resent
         }
       } else if (email) {
@@ -96,15 +103,16 @@ export default function OtpScreen({ navigation, route }) {
           {
             email: email,
           }
-        );
-
-        if (response.status === 200) {
-          console.log("Email OTP Resent!");
-          ToastAndroid.show(
-            "Resent OTP Valid for 1 minute!",
-            ToastAndroid.SHORT
           );
-          setOtpResentTime(new Date()); // Record the time when OTP was resent
+          
+          if (response.status === 200) {
+            console.log("Email OTP Resent!");
+            ToastAndroid.show(
+              "Resent OTP Valid for 1 minute!",
+              ToastAndroid.SHORT
+              );
+                setActualOtp(response.data.otp);
+              setOtpResentTime(new Date()); // Record the time when OTP was resent
         }
       }
 
@@ -118,10 +126,13 @@ export default function OtpScreen({ navigation, route }) {
   };
 
   const isOtpExpired = () => {
-    if (!otpResentTime) return false; // If OTP was never resent, consider it as not expired
+    // console.log("INSIDE IS OTP EXPIRED");
     const currentTime = new Date();
+    
     const difference = (currentTime - otpResentTime) / 1000; // Difference in seconds
-    return difference > 600; // If difference exceeds 10 minutes (600 seconds), OTP is expired
+    if (!otpResentTime) return false; // If OTP was never resent, consider it as not expired
+    // console.log("prev time: ",otpResentTime,"Current Time: ",currentTime);
+    return difference > 60; // If difference exceeds 10 minutes (600 seconds), OTP is expired
   };
 
   return (
@@ -186,7 +197,7 @@ export default function OtpScreen({ navigation, route }) {
                 setTimeout(async () => {
                   setIsLoading(false);
 
-                  if (enteredOtp == mobileOTP || enteredOtp == emailOTP) {
+                  if (enteredOtp == actualOtp) {
                     if (!isOtpExpired()) {
                       const user = await axios.post(
                         "https://fanverse-backend.onrender.com/api/user/create",
