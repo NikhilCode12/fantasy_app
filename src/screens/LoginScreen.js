@@ -40,6 +40,8 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate("Otp", {
           mobileOTP: response.data.otp,
           emailOTP: "",
+          phoneNum: phoneNum,
+          email: "",
         });
       }
     } catch (err) {

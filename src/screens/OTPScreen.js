@@ -16,18 +16,37 @@ import COLORS from "../constants/colors";
 import Button from "../components/common/Button";
 import BackArrow from "../components/common/BackArrow";
 import _ from "lodash";
-// import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 export default function OtpScreen({ navigation, route }) {
-  // const navigation = useNavigation();
-  const { mobileOTP, emailOTP } = route.params;
+  const { mobileOTP, emailOTP, phoneNum, email } = route.params;
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
+  const [resendDisabled, setResendDisabled] = useState(false);
+  const [resendTimer, setResendTimer] = useState(60);
+  const [otpResentTime, setOtpResentTime] = useState(null); // Track the time when OTP was resent
   const refs = useRef([]);
+
+  const randomName = Math.random().toString(36).substring(7);
 
   useEffect(() => {
     refs.current[0].focus();
+    startResendTimer();
   }, []);
+
+  const startResendTimer = () => {
+    const timerInterval = setInterval(() => {
+      setResendTimer((prevTimer) => {
+        if (prevTimer > 0) {
+          return prevTimer - 1;
+        } else {
+          clearInterval(timerInterval);
+          setResendDisabled(false);
+          return 60;
+        }
+      });
+    }, 1000);
+  };
 
   // Debounce the handleChange function to improve performance
   const debouncedHandleChange = useRef(_.debounce(handleChange, 300)).current;
@@ -50,10 +69,58 @@ export default function OtpScreen({ navigation, route }) {
     }
   }
 
-  const handleResendCode = () => {
-    // Implement logic to resend the code
-    console.log("Resend code functionality");
-    ToastAndroid.show("OTP Resent!", ToastAndroid.SHORT);
+  const handleResendCode = async (phoneNum, email) => {
+    try {
+      console.log("Resend code pressed!");
+
+      if (phoneNum) {
+        const response = await axios.post(
+          "https://fanverse-backend.onrender.com/api/send-sms-otp",
+          {
+            mobileNumber: "+91" + phoneNum,
+          }
+        );
+
+        if (response.status === 200) {
+          console.log("SMS OTP Resent!");
+          ToastAndroid.show(
+            "Resent OTP Valid for 1 minute!",
+            ToastAndroid.SHORT
+          );
+          setOtpResentTime(new Date()); // Record the time when OTP was resent
+        }
+      } else if (email) {
+        const response = await axios.post(
+          "https://fanverse-backend.onrender.com/api/send-email-otp",
+          {
+            email: email,
+          }
+        );
+
+        if (response.status === 200) {
+          console.log("Email OTP Resent!");
+          ToastAndroid.show(
+            "Resent OTP Valid for 1 minute!",
+            ToastAndroid.SHORT
+          );
+          setOtpResentTime(new Date()); // Record the time when OTP was resent
+        }
+      }
+
+      ToastAndroid.show("OTP Resent!", ToastAndroid.SHORT);
+      setResendDisabled(true);
+      setResendTimer(60);
+      startResendTimer();
+    } catch (error) {
+      console.log("Error in handleResendCode", error);
+    }
+  };
+
+  const isOtpExpired = () => {
+    if (!otpResentTime) return false; // If OTP was never resent, consider it as not expired
+    const currentTime = new Date();
+    const difference = (currentTime - otpResentTime) / 1000; // Difference in seconds
+    return difference > 600; // If difference exceeds 10 minutes (600 seconds), OTP is expired
   };
 
   return (
@@ -95,25 +162,54 @@ export default function OtpScreen({ navigation, route }) {
               <Text style={styles.resendText}>Didn't receive code?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleResendCode}>
-              <Text style={styles.resendCode}>Resend Code</Text>
+            <TouchableOpacity
+              onPress={() => handleResendCode(phoneNum, email)}
+              disabled={resendDisabled} // Disable resend button when timer is active
+            >
+              <Text
+                style={[
+                  styles.resendCode,
+                  resendDisabled && { color: COLORS.light_grey },
+                ]}
+              >
+                {resendDisabled
+                  ? `Resend Code in ${resendTimer}s`
+                  : "Resend Code"}
+              </Text>
             </TouchableOpacity>
             <Button
               title="Verify OTP"
-              onPress={() => {
+              onPress={async () => {
                 const enteredOtp = otp.join("");
                 setIsLoading(true);
-                setTimeout(() => {
+                setTimeout(async () => {
                   setIsLoading(false);
 
                   if (enteredOtp == mobileOTP || enteredOtp == emailOTP) {
-                    ToastAndroid.show(
-                      "OTP Verified. Redirecting to Home...",
-                      ToastAndroid.SHORT
-                    );
-                    setTimeout(() => {
-                      navigation.navigate("BottomNavigation");
-                    }, 1000);
+                    if (!isOtpExpired()) {
+                      await axios.post(
+                        "https://fanverse-backend.onrender.com/api/user/create",
+                        {
+                          username: randomName,
+                          primaryInfo: {
+                            email: email,
+                            phone: phoneNum,
+                          },
+                        }
+                      );
+                      ToastAndroid.show(
+                        "OTP Verified. Redirecting to Home...",
+                        ToastAndroid.SHORT
+                      );
+                      setTimeout(() => {
+                        navigation.navigate("BottomNavigation");
+                      }, 1000);
+                    } else {
+                      ToastAndroid.show(
+                        "Expired OTP. Please resend the code.",
+                        ToastAndroid.SHORT
+                      );
+                    }
                   } else {
                     ToastAndroid.show(
                       "Invalid OTP. Please try again.",
