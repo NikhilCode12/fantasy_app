@@ -8,7 +8,6 @@ import {
   Button,
   TextInput,
   ScrollView,
-  AsyncStorage,
   Image,
 } from "react-native";
 import COLORS from "../constants/colors";
@@ -21,36 +20,6 @@ import axios from "axios";
 
 export default function AccountScreen({ navigation }) {
   const [isVerified, SetisVerified] = useState(false);
-
-  // get user token from async storage
-  useEffect(() => {
-    async function getUserToken() {
-      try {
-        const value = await AsyncStorage.getItem("userToken");
-        if (value !== null) {
-          // value previously stored
-          console.log("userToken", value);
-        }
-      } catch (e) {
-        // error reading value
-        console.log("error reading userToken", e);
-      }
-    }
-    getUserToken();
-  }, []);
-
-  // get user data from api using token
-  const getUserData = async () => {
-    try {
-      const userToken = await AsyncStorage.getItem("userToken");
-      const response = await axios.get(
-        `https://fanverse-backend.onrender.com/api/user/${userToken}`
-      );
-      console.log("user data", response.data);
-    } catch (e) {
-      console.log("error getting user data", e);
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>

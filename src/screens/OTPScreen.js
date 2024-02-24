@@ -10,7 +10,6 @@ import {
   StyleSheet,
   ToastAndroid,
   ActivityIndicator,
-  AsyncStorage,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
@@ -21,7 +20,7 @@ import axios from "axios";
 
 export default function OtpScreen({ navigation, route }) {
   const { mobileOTP, emailOTP, phoneNum, email } = route.params;
-  const [actualOtp, setActualOtp]=useState("");
+  const [actualOtp, setActualOtp] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
@@ -35,10 +34,8 @@ export default function OtpScreen({ navigation, route }) {
     setOtpResentTime(new Date());
     refs.current[0].focus();
     startResendTimer();
-    if(emailOTP==="")
-    setActualOtp(mobileOTP);
-    else
-    setActualOtp(emailOTP);
+    if (emailOTP === "") setActualOtp(mobileOTP);
+    else setActualOtp(emailOTP);
   }, []);
 
   const startResendTimer = () => {
@@ -103,16 +100,16 @@ export default function OtpScreen({ navigation, route }) {
           {
             email: email,
           }
+        );
+
+        if (response.status === 200) {
+          console.log("Email OTP Resent!");
+          ToastAndroid.show(
+            "Resent OTP Valid for 1 minute!",
+            ToastAndroid.SHORT
           );
-          
-          if (response.status === 200) {
-            console.log("Email OTP Resent!");
-            ToastAndroid.show(
-              "Resent OTP Valid for 1 minute!",
-              ToastAndroid.SHORT
-              );
-                setActualOtp(response.data.otp);
-              setOtpResentTime(new Date()); // Record the time when OTP was resent
+          setActualOtp(response.data.otp);
+          setOtpResentTime(new Date()); // Record the time when OTP was resent
         }
       }
 
@@ -128,7 +125,7 @@ export default function OtpScreen({ navigation, route }) {
   const isOtpExpired = () => {
     // console.log("INSIDE IS OTP EXPIRED");
     const currentTime = new Date();
-    
+
     const difference = (currentTime - otpResentTime) / 1000; // Difference in seconds
     if (!otpResentTime) return false; // If OTP was never resent, consider it as not expired
     // console.log("prev time: ",otpResentTime,"Current Time: ",currentTime);
@@ -205,13 +202,10 @@ export default function OtpScreen({ navigation, route }) {
                           username: randomName,
                           primaryInfo: {
                             email: email,
-                            phone: phoneNum,
+                            mobile: phoneNum,
                           },
                         }
                       );
-                      // store that user token in async storage
-                      const token = user.data.authToken;
-                      await AsyncStorage.setItem("userToken", token);
 
                       ToastAndroid.show(
                         "OTP Verified. Redirecting to Home...",
