@@ -1,25 +1,63 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  Button,
-  TextInput,
-  ScrollView,
-  Image,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/AccountScreen.style.js";
 import { Ionicons } from "@expo/vector-icons";
-import DeleteIcon from "../components/common/DeleteIcon.js";
-import Toast from "react-native-toast-message";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AccountScreen({ navigation }) {
-  const [isVerified, SetisVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+
+  const [data, setData] = useState({
+    username: "dummy",
+    contestsWon: 0,
+    totalContests: 0,
+    matches: [],
+    series: 0,
+    primaryInfo: {
+      mobile: "unknown",
+      email: "unknown",
+    },
+    basicInfo: {
+      dob: "12/12/2007",
+      gender: "Unknown",
+      country: "India",
+      state: "Unknown",
+    },
+  });
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      return token != null ? JSON.parse(token) : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getToken().then(async (token) => {
+      try {
+        const userData = await axios.get(
+          "https://fanverse-backend.onrender.com/api/user/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (userData) {
+          console.log("User data: ", userData.data);
+          setData(userData.data);
+        }
+      } catch (error) {
+        console.log("Error in getting user data: ", error);
+      }
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,13 +85,19 @@ export default function AccountScreen({ navigation }) {
             />
           </View>
           <View style={styles.top_profile_left}>
-            <Text style={styles.colorslight}>ARYAN KOHLI</Text>
-            <Text style={styles.colorslight_grey}>mymail@gmail.com</Text>
+            <Text style={styles.colorslight}>{data.username}</Text>
+            <Text style={styles.colorslight_grey}>
+              {data.primaryInfo.email}
+            </Text>
             {isVerified == false && (
               <View style={styles.verfied_container}>
-                <Ionicons name="warning" size={25} color={"#ad7736"} />
+                <Ionicons
+                  name={isVerified ? "shield-checkmark" : "warning"}
+                  size={25}
+                  color={isVerified ? COLORS.darkGreen : "#ad7736"}
+                />
                 <Text style={[styles.colorslight_grey, { marginLeft: 10 }]}>
-                  Not Verified
+                  {isVerified ? "Verified" : "Not Verified"}
                 </Text>
               </View>
             )}
@@ -76,21 +120,27 @@ export default function AccountScreen({ navigation }) {
           </View>
           <View style={styles.contestRecordContainer}>
             <View style={styles.contestRecordBox}>
-              <Text style={styles.contestRecordBoxPoints}>10</Text>
+              <Text style={styles.contestRecordBoxPoints}>
+                {data.contestsWon}
+              </Text>
               <Text style={styles.contestRecordBoxPointsDesc}>Contest Won</Text>
             </View>
             <View style={styles.contestRecordBox}>
-              <Text style={styles.contestRecordBoxPoints}>49</Text>
+              <Text style={styles.contestRecordBoxPoints}>
+                {data.totalContests}
+              </Text>
               <Text style={styles.contestRecordBoxPointsDesc}>
-                Total Contest
+                Total Contests
               </Text>
             </View>
             <View style={styles.contestRecordBox}>
-              <Text style={styles.contestRecordBoxPoints}>40</Text>
+              <Text style={styles.contestRecordBoxPoints}>
+                {data.matches.length}
+              </Text>
               <Text style={styles.contestRecordBoxPointsDesc}>Matches</Text>
             </View>
             <View style={styles.contestRecordBox}>
-              <Text style={styles.contestRecordBoxPoints}>35</Text>
+              <Text style={styles.contestRecordBoxPoints}>{data.series}</Text>
               <Text style={styles.contestRecordBoxPointsDesc}>Series</Text>
             </View>
           </View>
@@ -104,7 +154,9 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.primaryInfoBoxRow}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Mobile No.</Text>
-                <Text style={styles.primaryItem}>+91 9876543210 </Text>
+                <Text style={styles.primaryItem}>
+                  +91 {data.primaryInfo.mobile}
+                </Text>
               </View>
               <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>
@@ -113,7 +165,7 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.primaryInfoBoxRow}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Email Id</Text>
-                <Text style={styles.primaryItem}>mymailid@gmail.com</Text>
+                <Text style={styles.primaryItem}>{data.primaryInfo.email}</Text>
               </View>
               <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>
@@ -131,13 +183,13 @@ export default function AccountScreen({ navigation }) {
               <View style={{ width: "35%" }}>
                 <Text style={[styles.colorslight_grey]}>Date of birth</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  12/12/2007
+                  {data.basicInfo.dob}
                 </Text>
               </View>
               <View style={{ width: "38%" }}>
                 <Text style={[styles.colorslight_grey]}>Gender</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  Male
+                  {data.basicInfo.gender}
                 </Text>
               </View>
             </View>
@@ -145,13 +197,13 @@ export default function AccountScreen({ navigation }) {
               <View style={{ width: "35%" }}>
                 <Text style={[styles.colorslight_grey]}>Country</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  India
+                  {data.basicInfo.country}
                 </Text>
               </View>
               <View style={{ width: "38%" }}>
                 <Text style={[styles.colorslight_grey]}>State</Text>
                 <Text style={[styles.colorslight_grey, { fontSize: 12 }]}>
-                  Arunachal Pradesh
+                  {data.basicInfo.state}
                 </Text>
               </View>
             </View>

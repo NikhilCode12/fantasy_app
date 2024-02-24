@@ -14,6 +14,7 @@ import COLORS from "../constants/colors";
 import styles from "../styles/profileOverlay.style";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   const navigation = useNavigation();
@@ -24,9 +25,14 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
     onClose();
   };
 
-  const renderLink = (iconName, text, onPress, isSolid = false) => (
-  
+  const handleLogout = async () => {
+    // Clear user token from AsyncStorage
+    await AsyncStorage.removeItem("userToken");
+    // Redirect to Welcome Screen
+    navigateToPage("Welcome");
+  };
 
+  const renderLink = (iconName, text, onPress, isSolid = false) => (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.linkItem, isSolid && styles.solidLink]}
@@ -39,16 +45,21 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
             color={isSolid ? COLORS.light : COLORS.primary}
           />
         </View>
-        {isSolid ?  <View style={{flexDirection:"column"}}>
-        <View style={styles.accountTextContainer}><Text style={[ isSolid && styles.solidLinkText]}>{text}</Text></View>
-        <View style={styles.pointsTextContainer}><Text style={styles.pointsText}>Points: 320</Text></View>
-       
-      </View>
-      :  <Text style={[styles.linkText, isSolid && styles.solidLinkText]}>
-          {text}
-        
-        </Text>}
-       
+        {isSolid ? (
+          <View style={{ flexDirection: "column" }}>
+            <View style={styles.accountTextContainer}>
+              <Text style={[isSolid && styles.solidLinkText]}>{text}</Text>
+            </View>
+            <View style={styles.pointsTextContainer}>
+              <Text style={styles.pointsText}>Points: 320</Text>
+            </View>
+          </View>
+        ) : (
+          <Text style={[styles.linkText, isSolid && styles.solidLinkText]}>
+            {text}
+          </Text>
+        )}
+
         {isSolid == false && (
           <View style={styles.arrowIcon}>
             <Ionicons name="ios-arrow-forward" size={18} color={COLORS.light} />
@@ -56,7 +67,6 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         )}
       </View>
     </TouchableOpacity>
-    
   );
 
   return (
@@ -72,31 +82,36 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Ionicons name="close-outline" size={24} color={COLORS.primary} />
         </TouchableOpacity>
-        {renderLink("person-outline", "Account", () => {
-          navigateToPage("AccountScreen")
-        }, true)}
+        {renderLink(
+          "person-outline",
+          "Account",
+          () => {
+            navigateToPage("AccountScreen");
+          },
+          true
+        )}
         {renderLink("md-trophy-outline", "Join Contest", () => {
           /* navigateToPage("JoinContest") */
         })}
         {renderLink("wallet-outline", "My Wallet", () => {
-           navigateToPage("Wallet") 
+          navigateToPage("Wallet");
         })}
         {renderLink("play-circle-outline", "How to Play", () => {
-           navigateToPage("HowToPlay") 
+          navigateToPage("HowToPlay");
         })}
         {renderLink("gift-outline", "Refer & Earn", () => {
-          navigateToPage("InviteFriends") 
+          navigateToPage("InviteFriends");
         })}
         {renderLink("game-controller", "Private Contest", () => {
-           navigateToPage("PrivateContestJoin") 
+          navigateToPage("PrivateContestJoin");
         })}
         {/* {renderLink("megaphone-outline", "Offers & Programs", () =>
           navigateToPage("OffersAndPrograms")
         )} */}
         {renderLink("help-circle-outline", "Help & Support", () => {
-         navigateToPage("HelpAndSupport") 
+          navigateToPage("HelpAndSupport");
         })}
-        <TouchableOpacity style={styles.button} onPress={()=>navigateToPage("Welcome")}>
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Text style={styles.text}>Logout</Text>
         </TouchableOpacity>
         {/* Toggle Switch for Dark Mode */}
@@ -121,10 +136,10 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         <View style={styles.followuscontainer}>
           <Text style={styles.followustext}>Follow us</Text>
           <View style={styles.iconscontainer}>
-            <Ionicons name={"logo-facebook"} size={30} color="#ffffff" />
-            <Ionicons name={"logo-instagram"} size={30} color="#ffffff" />
-            <Ionicons name={"logo-twitter"} size={30} color="#ffffff" />
-            <Ionicons name={"logo-youtube"} size={30} color="#ffffff" />
+            <Ionicons name={"logo-facebook"} size={22} color="lightgrey" />
+            <Ionicons name={"logo-instagram"} size={22} color="lightgrey" />
+            <Ionicons name={"logo-twitter"} size={22} color="lightgrey" />
+            <Ionicons name={"logo-youtube"} size={22} color="lightgrey" />
           </View>
         </View>
       </Animated.View>

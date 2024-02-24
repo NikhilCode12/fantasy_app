@@ -2,8 +2,25 @@ import React from "react";
 import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import COLORS from "../constants/colors";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = () => {
+  const navigation = useNavigation();
+
+  const handleGetStarted = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem("userToken");
+
+      if (userToken) {
+        navigation.navigate("BottomNavigation");
+      } else {
+        navigation.navigate("Login");
+      }
+    } catch (err) {
+      console.log("Error checking if user is logged in: ", err);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -21,10 +38,7 @@ const WelcomeScreen = ({ navigation }) => {
         <Text style={styles.description}>
           Click on Get Started to Play and Enjoy!
         </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("Login")}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
           <Text style={styles.buttonText}>GET STARTED</Text>
           <AntDesign name="rightcircle" size={24} color={COLORS.dark} />
         </TouchableOpacity>
