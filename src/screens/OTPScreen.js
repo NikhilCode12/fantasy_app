@@ -10,6 +10,7 @@ import {
   StyleSheet,
   ToastAndroid,
   ActivityIndicator,
+  AsyncStorage,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
@@ -187,7 +188,7 @@ export default function OtpScreen({ navigation, route }) {
 
                   if (enteredOtp == mobileOTP || enteredOtp == emailOTP) {
                     if (!isOtpExpired()) {
-                      await axios.post(
+                      const user = await axios.post(
                         "https://fanverse-backend.onrender.com/api/user/create",
                         {
                           username: randomName,
@@ -197,6 +198,10 @@ export default function OtpScreen({ navigation, route }) {
                           },
                         }
                       );
+                      // store that user token in async storage
+                      const token = user.data.authToken;
+                      await AsyncStorage.setItem("userToken", token);
+
                       ToastAndroid.show(
                         "OTP Verified. Redirecting to Home...",
                         ToastAndroid.SHORT
