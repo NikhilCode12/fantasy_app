@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View, BackHandler } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -78,6 +78,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.lightGray,
         }}
+        initialRouteName="Details"
       >
         <Tab.Screen name="Details" component={DetailsScreen} />
         <Tab.Screen name="Rules" component={RulesScreen} />

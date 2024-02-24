@@ -41,6 +41,8 @@ export default function EmailAuthentication({ navigation }) {
         navigation.navigate("Otp", {
           mobileOTP: "",
           emailOTP: response.data.otp,
+          phoneNum: "",
+          email: email,
         });
       }
     } catch (error) {
