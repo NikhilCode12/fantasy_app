@@ -62,6 +62,14 @@ const PlayerSelection = ({ route }) => {
     BOWL: "Pick 3-6 Bowlers",
   };
 
+  const variationType = {
+    "7 + 4": "Maximum 7 players from one team",
+    "10 player fantasy": "Maximum 10 players from one team",
+    Powerplay: "Select 1-4 players in powerplay",
+    "Fanverse original": "SuperSmash players included",
+    Playgrounds: "Create your own contests and play",
+  };
+
   const handleAddPlayer = (index) => {
     const newSelectedPlayers = [...selectedPlayers];
     newSelectedPlayers[index] = true;
@@ -286,7 +294,7 @@ const PlayerSelection = ({ route }) => {
       </View>
       <View style={styles2.displayContainer}>
         <Text style={styles2.displayText}>
-          {"Maximum of 10 players from one team"}
+          {variationType[variation] ? variationType[variation] : variation}
         </Text>
         {/* Bottom Container to show players selected, team logos and their respective players and credits left */}
         <View style={styles2.displayMiddleContainer}>

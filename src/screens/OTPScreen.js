@@ -16,8 +16,11 @@ import COLORS from "../constants/colors";
 import Button from "../components/common/Button";
 import BackArrow from "../components/common/BackArrow";
 import _ from "lodash";
+// import { useNavigation } from "@react-navigation/native";
 
-export default function OtpScreen({ navigation }) {
+export default function OtpScreen({ navigation, route }) {
+  // const navigation = useNavigation();
+  const { mobileOTP, emailOTP } = route.params;
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const refs = useRef([]);
@@ -103,7 +106,7 @@ export default function OtpScreen({ navigation }) {
                 setTimeout(() => {
                   setIsLoading(false);
 
-                  if (enteredOtp === "123456") {
+                  if (enteredOtp == mobileOTP || enteredOtp == emailOTP) {
                     ToastAndroid.show(
                       "OTP Verified. Redirecting to Home...",
                       ToastAndroid.SHORT

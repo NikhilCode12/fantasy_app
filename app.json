@@ -7,7 +7,7 @@
     "icon": "./assets/cricket_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/cricket_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/cricket_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.nikhil12n.fantasy_app"

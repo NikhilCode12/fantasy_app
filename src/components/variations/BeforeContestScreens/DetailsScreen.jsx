@@ -4,12 +4,29 @@ import {
   StyleSheet,
   Text,
   View,
+  Share,
 } from "react-native";
 import React from "react";
 import COLORS from "../../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 
 const DetailsScreen = () => {
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "Share this contest with your friends.",
+      });
+
+      if (result.action === Share.sharedAction) {
+        console.log("Contest shared successfully");
+      } else if (result.action === Share.dismissedAction) {
+        console.log("Share was dismissed");
+      }
+    } catch (error) {
+      console.error("Error sharing:", error.message);
+    }
+  };
+
   const prizeBreakdown = [
     { rank: "1", prize: "5 Lakhs" },
     { rank: "2", prize: "3 Lakhs" },
@@ -34,7 +51,10 @@ const DetailsScreen = () => {
     <View style={styles.container}>
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {/* Share contest with friends link and details */}
-        <TouchableOpacity style={styles.shareContestContainer}>
+        <TouchableOpacity
+          style={styles.shareContestContainer}
+          onPress={handleShare}
+        >
           <Text style={styles.shareContestText}>
             Share this contest with your friends
           </Text>
@@ -87,11 +107,7 @@ const DetailsScreen = () => {
               <Text style={styles.teamText}>
                 {winners.toLocaleString("en-IN")}
               </Text>
-              <Ionicons
-                name="trophy-outline"
-                size={14}
-                color={COLORS.primary}
-              />
+              <Ionicons name="medal" size={14} color={COLORS.primary} />
             </View>
           </View>
           <View

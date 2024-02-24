@@ -78,7 +78,7 @@ const BottomNavigation = ({ route }) => {
             return (
               <>
                 <MaterialCommunityIcons
-                  name={focused ? "stadium" : "stadium-variant"}
+                  name={focused ? "trophy-variant" : "trophy-variant-outline"}
                   size={tabBarSize}
                   color={focused ? COLORS.primary : COLORS.light_grey}
                 />

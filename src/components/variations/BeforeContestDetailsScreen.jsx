@@ -1,11 +1,4 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-  BackHandler,
-} from "react-native";
+import { Text, TouchableOpacity, View, BackHandler } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,9 +15,8 @@ import {
 const Tab = createMaterialTopTabNavigator();
 
 const BeforeContestDetailsScreen = ({ route }) => {
-  const { data, amount, variation, entryFee } = route.params;
+  const { data, amount, variation } = route.params;
   const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -36,12 +28,6 @@ const BeforeContestDetailsScreen = ({ route }) => {
     );
 
     return () => backHandler.remove();
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 100);
   }, []);
 
   return (
@@ -93,11 +79,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
           tabBarInactiveTintColor: COLORS.lightGray,
         }}
       >
-        <Tab.Screen
-          name="Details"
-          component={DetailsScreen}
-          initialParams={entryFee}
-        />
+        <Tab.Screen name="Details" component={DetailsScreen} />
         <Tab.Screen name="Rules" component={RulesScreen} />
         <Tab.Screen name="Teams" component={TeamsScreen} />
       </Tab.Navigator>
@@ -113,7 +95,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
         }}
       >
         <Text style={styles.joinContestButtonText}>
-          Join Contest for {entryFee}
+          {"Join Contest at \u20B950"}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

@@ -16,13 +16,40 @@ import {
 } from "react-native";
 import CheckBox from "../components/common/Checkbox";
 import BackArrow from "../components/common/BackArrow";
+// import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 export default function EmailAuthentication({ navigation }) {
+  // const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [isFocused, setisFocused] = useState(false);
   const [isChecked, setisChecked] = useState(false);
   const onChangeEmail = (email) => {
     setEmail(email);
+  };
+
+  const handleEmailVerification = async (email) => {
+    try {
+      const response = await axios.post(
+        "https://fanverse-backend.onrender.com/api/send-email-otp",
+        {
+          email: email,
+        }
+      );
+
+      if (response.status === 200) {
+        navigation.navigate("Otp", {
+          mobileOTP: "",
+          emailOTP: response.data.otp,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show(
+        "Email not verified, please try again",
+        ToastAndroid.BOTTOM
+      );
+    }
   };
 
   return (
@@ -118,7 +145,7 @@ export default function EmailAuthentication({ navigation }) {
               color={isChecked ? COLORS.btn : "grey"}
               onPress={() => {
                 if (isChecked) {
-                  navigation.navigate("Otp");
+                  handleEmailVerification(email);
                 } else {
                   ToastAndroid.show(
                     "Please certify if you are above 18",
@@ -243,15 +270,6 @@ export default function EmailAuthentication({ navigation }) {
                 />
                 <Text style={styles.socialLogoText}>Google</Text>
               </TouchableOpacity>
-            </View>
-            <View style={{ marginTop: 22 }}>
-              <Button
-                title="Enter home screen"
-                color={COLORS.btn}
-                onPress={() => {
-                  navigation.navigate("BottomNavigation");
-                }}
-              />
             </View>
           </View>
         </LinearGradient>
