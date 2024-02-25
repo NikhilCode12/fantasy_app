@@ -36,7 +36,7 @@ useEffect(() => {
   };
 
   getUser();
-}, [user]);
+}, []);
 
   const handleLogout = async () => {
     // Clear user token from AsyncStorage

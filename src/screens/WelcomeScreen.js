@@ -9,21 +9,20 @@ const WelcomeScreen = () => {
   const navigation = useNavigation();
   
   const handleGetStarted = async () => {
-    AsyncStorage.clear();
-    navigation.navigate("Login");
-    // try {
-    //   const userToken = await AsyncStorage.getItem("userToken");
-    //   console.log("USER TOKEN IS: ", userToken);
-    //   console.log("USER DATA IS : ", await AsyncStorage.getItem("user"));
-    //   navigation.navigate("Login");
-    //   if (userToken) {
-    //     navigation.navigate("BottomNavigation");
-    //   } else {
-    //     navigation.navigate("Login");
-    //   }
-    // } catch (err) {
-    //   console.log("Error checking if user is logged in: ", err);
-    // }
+    // AsyncStorage.clear();
+    // navigation.navigate("Login");
+    try {
+      const userToken = await AsyncStorage.getItem("userToken");
+      // console.log("USER TOKEN IS: ", userToken);
+      // console.log("USER DATA IS : ", await AsyncStorage.getItem("user"));
+      if (userToken) {
+        navigation.navigate("BottomNavigation");
+      } else {
+        navigation.navigate("Login");
+      }
+    } catch (err) {
+      console.log("Error checking if user is logged in: ", err);
+    }
   };
   return (
     <View style={styles.container}>

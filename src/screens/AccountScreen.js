@@ -22,14 +22,14 @@ export default function AccountScreen({ navigation }) {
     },
   });
 
-  // const getToken = async () => {
-  //   try {
-  //     const token = await AsyncStorage.getItem("userToken");
-  //     return token != null ? JSON.parse(token) : null;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      return token != null ? JSON.parse(token) : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // useEffect(() => {
   //   getToken().then(async (token) => {
