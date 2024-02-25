@@ -44,7 +44,6 @@ export default function AccountScreen({ navigation }) {
         );
 
         if (userData) {
-          console.log("User data: ", userData.data);
           setData(userData.data);
         }
       } catch (error) {
@@ -80,9 +79,7 @@ export default function AccountScreen({ navigation }) {
           </View>
           <View style={styles.top_profile_left}>
             <Text style={styles.colorslight}>{data.username}</Text>
-            <Text style={styles.colorslight_grey}>
-              {data.email}
-            </Text>
+            <Text style={styles.colorslight_grey}>{data.email}</Text>
             {isVerified == false && (
               <View style={styles.verfied_container}>
                 <Ionicons
@@ -148,9 +145,7 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.primaryInfoBoxRow}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Mobile No.</Text>
-                <Text style={styles.primaryItem}>
-                  +91 {data.mobile}
-                </Text>
+                <Text style={styles.primaryItem}>+91 {data.mobile}</Text>
               </View>
               <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>

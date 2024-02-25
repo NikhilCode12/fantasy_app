@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  Switch,
-  Linking,
-  Button,
-} from "react-native";
+import { View, Text, TouchableOpacity, Animated, Switch } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import styles from "../styles/profileOverlay.style";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   const navigation = useNavigation();
   const [isDarkMode, setDarkMode] = useState(true);
+  const [user, setUser] = useState({ username: "newuser", points: 0 });
 
   const navigateToPage = (pageName) => {
     navigation.navigate(pageName);
     onClose();
   };
+
+  useEffect(() => {
+    // get user points from async storage
+    const getUser = async () => {
+      try {
+        const user = await AsyncStorage.getItem("user");
+        setUser(JSON.parse(user));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getUser();
+  }, [user]);
 
   const handleLogout = async () => {
     // Clear user token from AsyncStorage
@@ -51,7 +58,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
               <Text style={[isSolid && styles.solidLinkText]}>{text}</Text>
             </View>
             <View style={styles.pointsTextContainer}>
-              <Text style={styles.pointsText}>Points: 320</Text>
+              <Text style={styles.pointsText}>Points: {user.points}</Text>
             </View>
           </View>
         ) : (
@@ -84,7 +91,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         </TouchableOpacity>
         {renderLink(
           "person-outline",
-          "Account",
+          `${user.username}`,
           () => {
             navigateToPage("AccountScreen");
           },
