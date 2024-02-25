@@ -81,7 +81,7 @@ export default function AccountScreen({ navigation }) {
           <View style={styles.top_profile_left}>
             <Text style={styles.colorslight}>{data.username}</Text>
             <Text style={styles.colorslight_grey}>
-              {data.primaryInfo.email}
+              {data.email}
             </Text>
             {isVerified == false && (
               <View style={styles.verfied_container}>
@@ -149,7 +149,7 @@ export default function AccountScreen({ navigation }) {
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Mobile No.</Text>
                 <Text style={styles.primaryItem}>
-                  +91 {data.primaryInfo.mobile}
+                  +91 {data.mobile}
                 </Text>
               </View>
               <View>
@@ -159,7 +159,7 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.primaryInfoBoxRow}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Email Id</Text>
-                <Text style={styles.primaryItem}>{data.primaryInfo.email}</Text>
+                <Text style={styles.primaryItem}>{data.email}</Text>
               </View>
               <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>
