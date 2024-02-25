@@ -1,26 +1,35 @@
-import React from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Button,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Button } from "react-native";
 import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/wallet.screen.style";
 import { Ionicons } from "@expo/vector-icons";
-
-const user = {
-  balance: "0.00",
-  amountUnutilised: "0",
-  winnings: "0",
-  bonus: "50",
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WalletScreen = ({ navigation }) => {
+  const [walletData, setWalletData] = useState({
+    currentBalance: 0,
+    amountUnutilized: 0,
+    winnings: 0,
+    discountBonus: 0,
+  });
+
+  // get user wallet data from async storage
+  useEffect(() => {
+    const fetchUserWallet = async () => {
+      try {
+        const storedWalletData = await AsyncStorage.getItem("userWallet");
+        if (storedWalletData) {
+          setWalletData(JSON.parse(storedWalletData));
+        }
+      } catch (error) {
+        console.log("Error fetching wallet data of user: ", error);
+      }
+    };
+
+    fetchUserWallet();
+  }, []);
+
   const addedAmount = navigation.params?.addedAmount;
   return (
     <SafeAreaView style={styles.container}>
@@ -40,7 +49,9 @@ const WalletScreen = ({ navigation }) => {
           <Text style={styles.balanceHeadingText}>Current Balance</Text>
           <Text style={styles.balanceText}>
             {"\u20B9"}
-            {addedAmount !== undefined ? addedAmount : user.balance}
+            {addedAmount !== undefined
+              ? addedAmount
+              : walletData.currentBalance}
           </Text>
           <Button
             title="ADD BALANCE"
@@ -65,7 +76,7 @@ const WalletScreen = ({ navigation }) => {
           <View style={styles.amountBox}>
             <Text style={styles.amountText}>
               {"\u20B9"}
-              {user.amountUnutilised}
+              {walletData.amountUnutilized}
             </Text>
           </View>
         </View>
@@ -84,7 +95,7 @@ const WalletScreen = ({ navigation }) => {
           <View style={styles.amountBox}>
             <Text style={styles.amountText}>
               {"\u20B9"}
-              {user.winnings}
+              {walletData.winnings}
             </Text>
             <TouchableOpacity
               style={styles.buttonContainer}
@@ -111,7 +122,7 @@ const WalletScreen = ({ navigation }) => {
           <View style={styles.amountBox}>
             <Text style={styles.amountText}>
               {"\u20B9"}
-              {user.bonus}
+              {walletData.discountBonus}
             </Text>
           </View>
         </View>

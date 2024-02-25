@@ -14,11 +14,39 @@ import Main from "../components/home/Main";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({}) => {
   const navigation = useNavigation();
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);
   const [overlayAnimation] = useState(new Animated.Value(-300));
+
+  // creating user wallet on first time login
+  useEffect(() => {
+    const createUserWallet = async () => {
+      try {
+        // get user id from async storage
+        const user = await AsyncStorage.getItem("user");
+
+        const wallet = await axios.post(
+          "https://fanverse-backend.onrender.com/api/wallet/create",
+          {
+            username: user.username,
+            mobile: user.mobile,
+            email: user.email,
+          }
+        );
+
+        const walletData = wallet.data;
+        await AsyncStorage.setItem("userWallet", JSON.stringify(walletData));
+      } catch (err) {
+        console.log("Error creating user wallet: ", err);
+      }
+    };
+
+    createUserWallet();
+  }, []);
 
   const handleMatchCardPress = (data) => {
     navigation.navigate("VariationsScreen", { data: data });
