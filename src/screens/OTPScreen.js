@@ -200,11 +200,9 @@ export default function OtpScreen({ navigation, route }) {
                       const user = await axios.post(
                         "https://fanverse-backend.onrender.com/api/user/create",
                         {
-                          username: randomName,
-                          primaryInfo: {
+                          username: randomName,         
                             email: email,
                             mobile: phoneNum,
-                          },
                         }
                       );
 
