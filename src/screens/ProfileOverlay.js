@@ -18,19 +18,25 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
     onClose();
   };
 
-  useEffect(() => {
-    // get user points from async storage
-    const getUser = async () => {
-      try {
-        const user = await AsyncStorage.getItem("user");
-        setUser(JSON.parse(user));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+useEffect(() => {
+  const getUser = async () => {
+    try {
+      const userr = await AsyncStorage.getItem("user");
+      const parsedUser = JSON.parse(userr);
 
-    getUser();
-  }, [user]);
+      setUser(parsedUser);
+      if (parsedUser && parsedUser.msg === "User Already Registered") {
+        setUser((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
+      } else {
+        setUser((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getUser();
+}, []);
 
   const handleLogout = async () => {
     // Clear user token from AsyncStorage

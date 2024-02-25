@@ -7,11 +7,14 @@ import { useNavigation } from "@react-navigation/native";
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
-
+  
   const handleGetStarted = async () => {
+    // AsyncStorage.clear();
+    // navigation.navigate("Login");
     try {
       const userToken = await AsyncStorage.getItem("userToken");
-
+      // console.log("USER TOKEN IS: ", userToken);
+      // console.log("USER DATA IS : ", await AsyncStorage.getItem("user"));
       if (userToken) {
         navigation.navigate("BottomNavigation");
       } else {
