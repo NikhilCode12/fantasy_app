@@ -16,10 +16,8 @@ export default function AccountScreen({ navigation }) {
     totalContests: 0,
     matches: [],
     series: 0,
-    primaryInfo: {
-      mobile: "unknown",
-      email: "unknown",
-    },
+    email: "",
+    mobile: "",
   });
 
   const getToken = async () => {
@@ -51,26 +49,25 @@ export default function AccountScreen({ navigation }) {
   //     }
   //   });
   // }, []);
-    useEffect(() => {
-  const getUser = async () => {
-    try {
-      const userr = await AsyncStorage.getItem("user");
-      const parsedUser = JSON.parse(userr);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userr = await AsyncStorage.getItem("user");
+        const parsedUser = JSON.parse(userr);
 
-      setData(parsedUser);
-      if (parsedUser && parsedUser.msg === "User Already Registered") {
-        setData((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
-      } else {
-        setData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
+        setData(parsedUser);
+        if (parsedUser && parsedUser.msg === "User Already Registered") {
+          setData((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
+        } else {
+          setData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
+        }
+      } catch (e) {
+        console.log(e);
       }
-
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  getUser();
-  console.log("get user in accout request sent");
-}, []);
+    };
+    getUser();
+    console.log("Account Screen Loaded!");
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -99,18 +96,16 @@ export default function AccountScreen({ navigation }) {
           <View style={styles.top_profile_left}>
             <Text style={styles.colorslight}>{data.username}</Text>
             <Text style={styles.colorslight_grey}>{data.email}</Text>
-            {isVerified == false && (
-              <View style={styles.verfied_container}>
-                <Ionicons
-                  name={isVerified ? "shield-checkmark" : "warning"}
-                  size={25}
-                  color={isVerified ? COLORS.darkGreen : "#ad7736"}
-                />
-                <Text style={[styles.colorslight_grey, { marginLeft: 10 }]}>
-                  {isVerified ? "Verified" : "Not Verified"}
-                </Text>
-              </View>
-            )}
+            <View style={styles.verfied_container}>
+              <Ionicons
+                name={isVerified ? "shield-checkmark" : "warning"}
+                size={25}
+                color={isVerified ? COLORS.darkGreen : "#ad7736"}
+              />
+              <Text style={[styles.colorslight_grey, { marginLeft: 10 }]}>
+                {isVerified ? "Verified" : "Not Verified"}
+              </Text>
+            </View>
           </View>
         </View>
         {/* Finacial history -- all transactions */}
@@ -145,7 +140,7 @@ export default function AccountScreen({ navigation }) {
             </View>
             <View style={styles.contestRecordBox}>
               <Text style={styles.contestRecordBoxPoints}>
-                {data.matches?data.matches.length:"0"}
+                {data.matches ? data.matches.length : "0"}
               </Text>
               <Text style={styles.contestRecordBoxPointsDesc}>Matches</Text>
             </View>

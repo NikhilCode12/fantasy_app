@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   appBarHeading: {
-    fontSize: 20,
+    fontSize: 18,
     marginLeft: "8.5%",
     color: COLORS.light,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   appBarRight: {
     flexDirection: "row",

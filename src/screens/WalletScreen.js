@@ -16,18 +16,26 @@ const WalletScreen = ({ navigation }) => {
 
   // get user wallet data from async storage
   useEffect(() => {
-    const fetchUserWallet = async () => {
+    const getUser = async () => {
       try {
-        const storedWalletData = await AsyncStorage.getItem("userWallet");
-        if (storedWalletData) {
-          setWalletData(JSON.parse(storedWalletData));
+        const userr = await AsyncStorage.getItem("user");
+        const parsedUser = JSON.parse(userr);
+
+        setWalletData(parsedUser);
+        if (parsedUser && parsedUser.msg === "User Already Registered") {
+          setWalletData((prevUser) => ({
+            ...prevUser,
+            ...prevUser.existingUser,
+          }));
+        } else {
+          setWalletData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
         }
-      } catch (error) {
-        console.log("Error fetching wallet data of user: ", error);
+      } catch (e) {
+        console.log(e);
       }
     };
-
-    fetchUserWallet();
+    getUser();
+    console.log("Wallet Screen Loaded!");
   }, []);
 
   const addedAmount = navigation.params?.addedAmount;
