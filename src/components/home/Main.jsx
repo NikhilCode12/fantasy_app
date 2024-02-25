@@ -46,7 +46,7 @@ const Main = ({ onMatchCardPress }) => {
     setSelectedGame(gameName);
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
@@ -122,7 +122,7 @@ const Main = ({ onMatchCardPress }) => {
       ) : (
         <Upcoming />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

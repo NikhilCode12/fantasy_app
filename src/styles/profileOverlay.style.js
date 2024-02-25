@@ -3,6 +3,10 @@ import COLORS from "../constants/colors";
 
 const styles = StyleSheet.create({
   overlayContainer: {
+    // position: "absolute",
+    // top: 20,
+    // left: 0,
+    // bottom: 0,
     position: "absolute",
     top: 0,
     left: 0,
@@ -19,7 +23,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 30,
     right: 20,
-    marginBottom:50
+    marginBottom: 50,
   },
   linkItem: {
     marginBottom: 15,
@@ -34,28 +38,28 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 14,
     color: COLORS.light,
-    marginLeft:"4%",
-    fontWeight:400,
+    marginLeft: "4%",
+    fontWeight: 400,
     flex: 1,
   },
   linkText2: {
     fontSize: 14,
     color: COLORS.light,
-    marginLeft:"4%",
-    fontWeight:400,
+    marginLeft: "4%",
+    fontWeight: 400,
     flex: 1,
   },
 
   arrowIcon: {
     marginLeft: 10,
-    
   },
   solidLink: {
-    backgroundColor:COLORS.transparentBg,
+    backgroundColor: COLORS.transparentBg,
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginBottom: 35, width:"80%"
+    marginBottom: 35,
+    width: "80%",
   },
   solidLinkText: {
     color: COLORS.light,
@@ -63,12 +67,13 @@ const styles = StyleSheet.create({
     // flexDirection:"column",
     // alignItems:"center"
   },
-  accountTextContainer:{
-    paddingLeft:2,paddingTop:2,
+  accountTextContainer: {
+    paddingLeft: 2,
+    paddingTop: 2,
   },
-  pointsTextContainer:{paddingLeft:2,paddingTop:5},
+  pointsTextContainer: { paddingLeft: 2, paddingTop: 5 },
 
-  pointsText:{color:COLORS.light, fontSize: 12,fontWeight:"700"},
+  pointsText: { color: COLORS.light, fontSize: 12, fontWeight: "700" },
   // Dark mode container styles
   darkModeContainer: {
     flexDirection: "row",
@@ -76,20 +81,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 5,
     marginBottom: 10,
-    paddingVertical:18,
-    borderColor:COLORS.delta,
-    borderTopWidth:1,
-    borderBottomWidth:1
+    paddingVertical: 18,
+    borderColor: COLORS.delta,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   darkModeText: {
     color: COLORS.light,
-  fontSize: 14,
-    marginLeft:"6%"
-    
+    fontSize: 14,
+    marginLeft: "6%",
   },
-  darkmodetoggler:{
-    position:"absolute",
-    right:"0%"
+  darkmodetoggler: {
+    position: "absolute",
+    right: "0%",
   },
 
   // Divider styles
@@ -98,35 +102,35 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS,
   },
   // follow us
-  followuscontainer:{
-    marginTop:20, 
-    // top:"30%" 
+  followuscontainer: {
+    marginTop: 20,
+    // top:"30%"
   },
-  followustext:{
-    color:COLORS.light,
+  followustext: {
+    color: COLORS.light,
     fontSize: 14,
-    fontWeight:"700",
+    fontWeight: "700",
   },
-  iconscontainer:{
-    flexDirection:"row",
-    marginTop:"5%",
-    justifyContent:"space-between",
-    maxWidth:"90%"
+  iconscontainer: {
+    flexDirection: "row",
+    marginTop: "5%",
+    justifyContent: "space-between",
+    maxWidth: "90%",
   },
 
   //logout
- button: {
-    backgroundColor:COLORS.bgLightBlack,
+  button: {
+    backgroundColor: COLORS.bgLightBlack,
     padding: 10,
     borderRadius: 5,
     // borderWidth: 2,
     borderColor: COLORS.light,
-    marginBottom:"5%",
+    marginBottom: "5%",
   },
   text: {
     color: COLORS.darkRed,
-    textAlign: 'center',
-    fontWeight:"600",
+    textAlign: "center",
+    fontWeight: "600",
     fontSize: 14,
   },
 });

@@ -17,7 +17,7 @@ const CricketMatches = ({ onMatchCardPress }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {loading ? (
         <View style={styles.container}>
           <ActivityIndicator
@@ -29,7 +29,7 @@ const CricketMatches = ({ onMatchCardPress }) => {
       ) : (
         <MatchesScreen onMatchCardPress={onMatchCardPress} />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
