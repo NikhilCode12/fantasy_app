@@ -17,6 +17,7 @@ import Button from "../components/common/Button";
 import BackArrow from "../components/common/BackArrow";
 import _ from "lodash";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function OtpScreen({ navigation, route }) {
   const { mobileOTP, emailOTP, phoneNum, email } = route.params;
@@ -206,6 +207,17 @@ export default function OtpScreen({ navigation, route }) {
                           },
                         }
                       );
+
+                      if (user) {
+                        try {
+                          await AsyncStorage.setItem(
+                            "userToken",
+                            JSON.stringify(user.data.token)
+                          );
+                        } catch (e) {
+                          console.log(e);
+                        }
+                      }
 
                       ToastAndroid.show(
                         "OTP Verified. Redirecting to Home...",
