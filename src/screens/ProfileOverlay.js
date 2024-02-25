@@ -23,7 +23,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
     const getUser = async () => {
       try {
         const user = await AsyncStorage.getItem("user");
-        setUser(JSON.parse(user));
+        
       } catch (e) {
         console.log(e);
       }
