@@ -31,27 +31,46 @@ export default function AccountScreen({ navigation }) {
     }
   };
 
-  useEffect(() => {
-    getToken().then(async (token) => {
-      try {
-        const userData = await axios.get(
-          "https://fanverse-backend.onrender.com/api/user/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  // useEffect(() => {
+  //   getToken().then(async (token) => {
+  //     try {
+  //       const userData = await axios.get(
+  //         "https://fanverse-backend.onrender.com/api/user/",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
 
-        if (userData) {
-          setData(userData.data);
-        }
-      } catch (error) {
-        console.log("Error in getting user data: ", error);
+  //       if (userData) {
+  //         setData(userData.data);
+  //       }
+  //     } catch (error) {
+  //       console.log("Error in getting user data: ", error);
+  //     }
+  //   });
+  // }, []);
+    useEffect(() => {
+  const getUser = async () => {
+    try {
+      const userr = await AsyncStorage.getItem("user");
+      const parsedUser = JSON.parse(userr);
+
+      setData(parsedUser);
+      if (parsedUser && parsedUser.msg === "User Already Registered") {
+        setData((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
+      } else {
+        setData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
       }
-    });
-  }, []);
 
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  getUser();
+  console.log("get user in accout request sent");
+}, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -126,7 +145,7 @@ export default function AccountScreen({ navigation }) {
             </View>
             <View style={styles.contestRecordBox}>
               <Text style={styles.contestRecordBoxPoints}>
-                {data.matches.length}
+                {data.matches?data.matches.length:"0"}
               </Text>
               <Text style={styles.contestRecordBoxPointsDesc}>Matches</Text>
             </View>
