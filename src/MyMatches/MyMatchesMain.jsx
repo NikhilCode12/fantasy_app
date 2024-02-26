@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   TouchableOpacity,
   ScrollView,
   Text,
@@ -7,7 +6,6 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../constants/colors";
 // import styles from "../../styles/main.style";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -63,7 +61,7 @@ const MyMatchesMain = ({ onMatchCardPress }) => {
     return () => clearTimeout(loadingTimeout);
   }, []);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bgMateBlack }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.bgMateBlack }}>
       <View
         style={{
           flexDirection: "row",
@@ -219,7 +217,7 @@ const MyMatchesMain = ({ onMatchCardPress }) => {
       ) : (
         <Upcoming />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({

@@ -1,36 +1,17 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import LeaderBoard from "../components/leaderboard/LeaderBoard";
 import animationData from "../../assets/comingsoon.json";
 import LottieView from "lottie-react-native";
-import { ActivityIndicator } from "react-native";
 import TypeWriter from "react-native-typewriter";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+const Tab = createMaterialTopTabNavigator();
 
 const LeaderBoardScreen = ({ navigation }) => {
-  const [selectedWidget, setSelectedWidget] = useState("Ranking");
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleWidgetPress = (widgetName) => {
-    setSelectedWidget(widgetName);
-  };
-
-  useEffect(() => {
-    const loadingTimeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(loadingTimeout);
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -47,123 +28,67 @@ const LeaderBoardScreen = ({ navigation }) => {
           <Ionicons name="headset" size={22} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
-      <View style={styles.midContainer}>
-        <TouchableOpacity
-          style={[
-            styles.widgetStyle,
-            {
-              backgroundColor:
-                selectedWidget === "Ranking"
-                  ? COLORS.light
-                  : COLORS.transparentBg,
-            },
-          ]}
-          onPress={() => handleWidgetPress("Ranking")}
-        >
-          <Text
-            style={[
-              styles.widgetText,
-              {
-                color:
-                  selectedWidget === "Ranking"
-                    ? COLORS.bgMateBlack
-                    : COLORS.light,
-              },
-            ]}
-          >
-            Ranking
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.widgetStyle,
-            {
-              backgroundColor:
-                selectedWidget === "Rewards"
-                  ? COLORS.light
-                  : COLORS.transparentBg,
-            },
-          ]}
-          onPress={() => handleWidgetPress("Rewards")}
-        >
-          <Text
-            style={[
-              styles.widgetText,
-              {
-                color:
-                  selectedWidget === "Rewards"
-                    ? COLORS.bgMateBlack
-                    : COLORS.light,
-              },
-            ]}
-          >
-            Rewards
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.widgetStyle,
-            {
-              backgroundColor:
-                selectedWidget === "Rules"
-                  ? COLORS.light
-                  : COLORS.transparentBg,
-            },
-          ]}
-          onPress={() => handleWidgetPress("Rules")}
-        >
-          <Text
-            style={[
-              styles.widgetText,
-              {
-                color:
-                  selectedWidget === "Rules"
-                    ? COLORS.bgMateBlack
-                    : COLORS.light,
-              },
-            ]}
-          >
-            Rules
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {selectedWidget === "Ranking" ? <LeaderBoard /> : null}
-      {selectedWidget === "Rules" || selectedWidget === "Rewards" ? (
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 50,
-          }}
-        >
-          {isLoading ? (
-            <ActivityIndicator size="large" color={COLORS.primary} />
-          ) : (
-            <>
-              <LottieView
-                source={animationData}
-                autoPlay
-                loop
-                style={{ width: 300, height: 300 }}
-              />
-              <TypeWriter
-                typing={1}
-                style={{
-                  color: COLORS.primary,
-                  fontSize: 24,
-                  fontWeight: "bold",
-                  fontStyle: "italic",
-                }}
-              >
-                {"COMING SOON..."}
-              </TypeWriter>
-            </>
-          )}
-        </View>
-      ) : null}
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 12, fontWeight: "bold" },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarStyle: { backgroundColor: COLORS.bgMateBlack },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.lightGray,
+        }}
+        initialRouteName="Ranking"
+      >
+        <Tab.Screen
+          name="Ranking"
+          component={LeaderBoard}
+          options={{ title: "Ranking" }}
+        />
+        <Tab.Screen
+          name="Rewards"
+          component={RulesRewardsScreen}
+          options={{ title: "Rewards" }}
+        />
+        <Tab.Screen
+          name="Rules"
+          component={RulesRewardsScreen}
+          options={{ title: "Rules" }}
+        />
+      </Tab.Navigator>
     </SafeAreaView>
   );
 };
+
+const RulesRewardsScreen = () => (
+  <View
+    style={{
+      justifyContent: "center",
+      alignItems: "center",
+      flex: 1,
+      backgroundColor: COLORS.bgMateBlack,
+      paddingBottom: 150,
+    }}
+  >
+    <>
+      <LottieView
+        source={animationData}
+        autoPlay
+        loop
+        style={{ width: 300, height: 300 }}
+      />
+      <TypeWriter
+        typing={1}
+        style={{
+          color: COLORS.primary,
+          fontSize: 24,
+          fontWeight: "bold",
+          fontStyle: "italic",
+        }}
+      >
+        {"COMING SOON..."}
+      </TypeWriter>
+    </>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -190,28 +115,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
   },
-  midContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 12,
-    marginHorizontal: 16,
+  tabBar: {
+    backgroundColor: COLORS.bgMateBlack,
+    borderBottomWidth: 0,
   },
-  widgetStyle: {
-    backgroundColor: COLORS.transparentBg,
-    borderRadius: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 26,
-  },
-  widgetText: {
-    color: COLORS.light,
+  tabLabel: {
+    color: COLORS.primary,
     fontSize: 14,
     fontWeight: "700",
-  },
-  leaderBoardContainer: {
-    flex: 1,
-    marginTop: 12,
-    marginHorizontal: 16,
-    borderRadius: 5,
   },
 });
 

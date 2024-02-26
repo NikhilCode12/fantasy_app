@@ -61,7 +61,7 @@ const MyMatchesScreen = ({}) => {
     return () => backHandler.remove();
   }, []);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
       <View style={styles.appBarContainer}>
         <View style={styles.appBar}>
           <TouchableOpacity
@@ -70,7 +70,7 @@ const MyMatchesScreen = ({}) => {
           >
             <Ionicons name="person-outline" size={22} color={COLORS.primary} />
           </TouchableOpacity>
-          <Text style={styles.appBarHeading}>Fanverse</Text>
+          <Text style={styles.appBarHeading}>Fannverse</Text>
           <View style={styles.appBarRight}>
             <TouchableOpacity
               style={styles.appBarIconsBg}
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   appBarHeading: {
-    fontSize: 20,
+    fontSize: 18,
     marginLeft: "8.5%",
     color: COLORS.light,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   appBarRight: {
     flexDirection: "row",
@@ -140,5 +140,3 @@ const styles = StyleSheet.create({
 });
 
 export default MyMatchesScreen;
-
-

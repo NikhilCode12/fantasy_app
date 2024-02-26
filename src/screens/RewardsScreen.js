@@ -23,7 +23,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import RewardsCard from "../components/common/RewardsCard";
 const RewardsScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View
         style={{
           height: 80,
@@ -54,41 +54,45 @@ const RewardsScreen = ({ navigation }) => {
         >
           Rewards
         </Text> */}
-          </View>
-        <View
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 1,
+          alignItems: "center",
+          justifyContent: "space-around",
+          backgroundColor: COLORS.bgLightBlack,
+          // borderRadius: 20,
+          paddingVertical: 10,
+          marginHorizontal: 20,
+        }}
+      >
+        <Ionicons name="md-star" size={25} color={"#faf25a"} />
+        <View>
+          <Text style={{ fontSize: 18, color: COLORS.light_grey }}>365</Text>
+          <Text style={{ fontSize: 12, color: COLORS.light_grey }}>
+            Available Points
+          </Text>
+        </View>
+        <TouchableOpacity
           style={{
+            backgroundColor: COLORS.bgMateBlack,
+            gap: 3,
             flexDirection: "row",
-            marginTop: 1,
             alignItems: "center",
-            justifyContent: "space-around",
-            backgroundColor: COLORS.bgLightBlack,
-            // borderRadius: 20,
-            paddingVertical: 10,
-            marginHorizontal: 20,
-
+            paddingHorizontal: 12,
+            paddingVertical: 8,
+            borderRadius: 10,
           }}
         >
-          <Ionicons name="md-star" size={25} color={"#faf25a"} />
-          <View>
-            <Text style={{ fontSize: 18, color:COLORS.light_grey }}>365</Text>
-            <Text style={{ fontSize: 12, color:COLORS.light_grey }}>Available Points</Text>
-          </View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLORS.bgMateBlack,
-              gap: 3,
-              flexDirection: "row",
-              alignItems:"center",
-              paddingHorizontal: 12,
-              paddingVertical: 8,
-              borderRadius: 10,
-            }}
-          >
-            <Ionicons name="time-outline" size={19} color={"#4f9c9c"} />
-            <Text style={{ color: "#4f9c9c", fontSize: 16 }}>History</Text>
-          </TouchableOpacity>
-        </View>
-      <ScrollView contentContainerStyle={{paddingBottom:70}}   showsVerticalScrollIndicator={false}>
+          <Ionicons name="time-outline" size={19} color={"#4f9c9c"} />
+          <Text style={{ color: "#4f9c9c", fontSize: 16 }}>History</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 70 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={{ paddingTop: 15 }}>
           <RewardsCard
             name={"starbucks"}
@@ -162,10 +166,9 @@ const RewardsScreen = ({ navigation }) => {
             currentpoints={500}
             totalpoints={2500}
           />
-        
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

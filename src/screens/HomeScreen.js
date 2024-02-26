@@ -61,7 +61,7 @@ const HomeScreen = ({}) => {
     return () => backHandler.remove();
   }, []);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
       <View style={styles.appBarContainer}>
         <View style={styles.appBar}>
           <TouchableOpacity

@@ -22,7 +22,7 @@ const screenOptions = {
     marginTop: -8,
   },
   tabBarStyle: {
-    backgroundColor: COLORS.bgMateBlack,
+    backgroundColor: COLORS.dark,
     position: "absolute",
     bottom: 0,
     right: 0,

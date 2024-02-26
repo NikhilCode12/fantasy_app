@@ -221,7 +221,7 @@ export default function OtpScreen({ navigation, route }) {
                           console.log(e);
                         }
                       }
-                      
+
                       ToastAndroid.show(
                         "OTP Verified. Redirecting to Home...",
                         ToastAndroid.SHORT
