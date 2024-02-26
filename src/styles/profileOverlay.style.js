@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     // left: 0,
     // bottom: 0,
     position: "absolute",
-    top: 0,
+    top: 40,
     left: 0,
     bottom: 0,
     width: "80%",
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   overlayBox: {
     flex: 1,
     padding: 20,
-    backgroundColor: COLORS.bgMateBlack,
+    backgroundColor: COLORS.dark,
   },
   closeButton: {
     position: "absolute",
