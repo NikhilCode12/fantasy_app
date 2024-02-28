@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import COLORS from "../../constants/colors";
 import {
   View,
-  SafeAreaView,
   Text,
   Image,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import TeamCard from "./TeamCard";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 export default function MyTeamsScreen({ route }) {
   const navigation = useNavigation();
@@ -42,18 +43,19 @@ export default function MyTeamsScreen({ route }) {
         </TouchableOpacity>
         <Text style={styles.headerText}>My Teams</Text>
       </View>
-      <View>
+      <ScrollView>
         {allTeamsData.length > 0 &&
           allTeamsData.map((team, index) => (
             <TeamCard
               key={index}
               index={index}
+              matchData={data}
               PlayersData={PlayersData}
               captainName={captainName}
               viceCaptainName={viceCaptainName}
             />
           ))}
-      </View>
+      </ScrollView>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("PlayerSelection", {

@@ -185,7 +185,16 @@ const MatchesScreen = ({ onMatchCardPress }) => {
             return (
               <MatchCard
                 key={match.name}
-                onMatchCardPress={onMatchCardPress}
+                onMatchCardPress={() =>
+                  onMatchCardPress({
+                    teamAName: match.teamInfo[0]["shortname"],
+                    teamBName: match.teamInfo[1]["shortname"],
+                    timeRemaining: remainingTime,
+                    timeVenue: matchDay,
+                    teamAImage: match.teamInfo[0].img,
+                    teamBImage: match.teamInfo[1].img,
+                  })
+                }
                 league={match.name}
                 teamAImage={match.teamInfo[0].img}
                 teamAName={match.teamInfo[0]["shortname"]}

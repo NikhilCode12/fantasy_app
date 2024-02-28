@@ -6,7 +6,7 @@ import {
   Image,
   ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,7 +15,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PlayerListComponent from "./PlayersList.jsx";
-import { onPress } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes.js";
 
 const PlayerSelection = ({ route }) => {
   const { data, amount, variation, newTeam } = route.params;
@@ -310,9 +309,9 @@ const PlayerSelection = ({ route }) => {
           <View style={styles2.teamContainer}>
             {/* Team 1 logo,title and players */}
             <View style={styles2.logoContainer}>
-              <View style={styles2.teamLogo} />
+              <Image src={data.teamAImage} style={styles2.teamLogo} />
               <View style={styles2.teamDataContainer}>
-                <Text style={styles2.playersText}>{"ABC"}</Text>
+                <Text style={styles2.playersText}>{data.teamAName}</Text>
                 <Text style={styles2.playersSelectedText}>
                   {teamABCPlayers}
                 </Text>
@@ -321,14 +320,14 @@ const PlayerSelection = ({ route }) => {
             {/* Team 2 logo,title and players */}
             <View style={styles2.logoContainer}>
               <View style={styles2.teamDataContainer}>
-                <Text style={styles2.playersText}>{"DEF"}</Text>
+                <Text style={styles2.playersText}>{data.teamBName}</Text>
                 <Text
                   style={[styles2.playersSelectedText, { textAlign: "right" }]}
                 >
                   {teamDEFPlayers}
                 </Text>
               </View>
-              <View style={styles2.teamLogo} />
+              <Image src={data.teamBImage} style={styles2.teamLogo} />
             </View>
           </View>
           {/* Credit Left Container */}
@@ -447,6 +446,7 @@ const PlayerSelection = ({ route }) => {
       {/* Component rendering on basis of above tab selection */}
       <View style={styles2.playerComponentContainer}>
         <PlayerListComponent
+          data={data}
           activePlayerTab={activeTab}
           onAddPlayerPress={() => handleAddPlayer(0)}
           onPlayerSelectionPress={(player, selectionStatus, tab) =>
@@ -618,7 +618,8 @@ const styles2 = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 20,
-    backgroundColor: COLORS.light_grey,
+    borderWidth: 1,
+    borderColor: COLORS.transparentBg,
   },
   logoContainer: {
     flexDirection: "row",

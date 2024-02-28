@@ -69,7 +69,9 @@ const CaptainAndViceSelection = ({ route }) => {
             <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
           <View style={styles.matchDetails}>
-            <Text style={styles.matchTeamText}>{"ABC vs DEF"}</Text>
+            <Text style={styles.matchTeamText}>
+              {data.teamAName} vs {data.teamBName}
+            </Text>
             <Text style={styles.matchTimeText}>
               {data.timeRemaining}
               {" left"}

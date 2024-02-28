@@ -3,7 +3,6 @@ import { View, ActivityIndicator } from "react-native";
 import styles from "../../styles/cricket.matches.style";
 import COLORS from "../../constants/colors";
 import MatchesScreen from "./MatchesScreen";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const CricketMatches = ({ onMatchCardPress }) => {
   const [loading, setLoading] = useState(true);

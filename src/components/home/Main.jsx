@@ -1,12 +1,5 @@
-import {
-  ActivityIndicator,
-  TouchableOpacity,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { TouchableOpacity, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
 import COLORS from "../../constants/colors";
 import styles from "../../styles/main.style";
 import { MaterialIcons } from "@expo/vector-icons";

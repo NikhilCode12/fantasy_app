@@ -20,6 +20,7 @@ const HomeScreen = ({}) => {
   const [overlayAnimation] = useState(new Animated.Value(-300));
 
   const handleMatchCardPress = (data) => {
+    console.log(data);
     navigation.navigate("VariationsScreen", { data: data });
   };
 
