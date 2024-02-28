@@ -42,6 +42,7 @@ const LeaderBoard = () => {
         if (currentUserData) {
           setCurrentUser(JSON.parse(currentUserData));
         }
+        console.log(currentUserData);
 
         setUsers(data);
         setLoading(false);

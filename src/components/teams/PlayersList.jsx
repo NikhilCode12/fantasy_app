@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import allPlayersData from "../../constants/dummyPlayers.json";
 
 const PlayersList = ({
+  data,
   activePlayerTab,
   onAddPlayerPress,
   onPlayerSelectionPress,

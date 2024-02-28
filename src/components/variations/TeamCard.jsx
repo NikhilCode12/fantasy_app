@@ -11,8 +11,10 @@ import {
 import ContestsScreen from "./ContestsScreen";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { DataTable } from "react-native-paper";
 export default function TeamCard({
   index,
+  matchData,
   PlayersData,
   captainName,
   viceCaptainName,
@@ -60,12 +62,12 @@ export default function TeamCard({
             <Text
               style={{ color: COLORS.silver, fontWeight: "bold", fontSize: 16 }}
             >
-              ABC
+              {matchData.teamAName}
             </Text>
             <Text
               style={{ color: COLORS.silver, fontWeight: "bold", fontSize: 16 }}
             >
-              DEF
+              {matchData.teamBName}
             </Text>
           </View>
           <View

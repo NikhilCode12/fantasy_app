@@ -44,7 +44,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
           </TouchableOpacity>
           <View style={styles.matchDetails}>
             <Text style={styles.matchTeamText}>
-              {"Team A"} vs {"Team B"}
+              {data.teamAName} vs {data.teamBName}
             </Text>
             <Text style={styles.matchTimeText}>
               {data.timeRemaining}

@@ -14,7 +14,6 @@ import Main from "../components/home/Main";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
 import { useNavigation } from "@react-navigation/native";
-
 const HomeScreen = ({}) => {
   const navigation = useNavigation();
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);

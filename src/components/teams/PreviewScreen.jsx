@@ -31,7 +31,9 @@ const PreviewScreen = ({ route }) => {
             <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
           <View style={styles.matchDetails}>
-            <Text style={styles.matchTeamText}>{"ABC vs DEF"}</Text>
+            <Text style={styles.matchTeamText}>
+              {data.teamAName} vs {data.teamBName}
+            </Text>
             <Text style={styles.matchTimeText}>
               {data.timeRemaining}
               {" left"}
@@ -62,9 +64,9 @@ const PreviewScreen = ({ route }) => {
           <View style={styles2.teamContainer}>
             {/* Team 1 logo,title and players */}
             <View style={styles2.logoContainer}>
-              <View style={styles2.teamLogo} />
+              <Image src={data.teamAImage} style={styles2.teamLogo} />
               <View style={styles2.teamDataContainer}>
-                <Text style={styles2.playersText}>{"ABC"}</Text>
+                <Text style={styles2.playersText}>{data.teamAName}</Text>
                 <Text style={styles2.playersSelectedText}>
                   {details.teamABCPlayers}
                 </Text>
@@ -73,14 +75,14 @@ const PreviewScreen = ({ route }) => {
             {/* Team 2 logo,title and players */}
             <View style={styles2.logoContainer}>
               <View style={styles2.teamDataContainer}>
-                <Text style={styles2.playersText}>{"DEF"}</Text>
+                <Text style={styles2.playersText}>{data.teamBName}</Text>
                 <Text
                   style={[styles2.playersSelectedText, { textAlign: "right" }]}
                 >
                   {details.teamDEFPlayers}
                 </Text>
               </View>
-              <View style={styles2.teamLogo} />
+              <Image src={data.teamBImage} style={styles2.teamLogo} />
             </View>
           </View>
           {/* Credit Left Container */}

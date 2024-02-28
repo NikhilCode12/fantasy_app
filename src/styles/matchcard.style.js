@@ -16,17 +16,17 @@ const styles = StyleSheet.create({
   },
 
   leagueText: {
-    color: COLORS.silver,
-    fontWeight: "700",
-    marginBottom: 8,
+    color: COLORS.light_grey,
+    fontWeight: "500",
+    marginBottom: 10,
     fontSize: 11,
   },
 
   teamNameText: {
     color: COLORS.silver,
-    fontWeight: "700",
-    textAlign: "center",
+    fontWeight: "500",
     fontSize: 13,
+    width: 42,
   },
 
   teamContainer: {
@@ -39,14 +39,19 @@ const styles = StyleSheet.create({
   teamLogoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    justifyContent: "space-between",
+    gap: 6,
     flexWrap: "wrap",
+    width: 90,
   },
 
   teamLogos: {
-    borderRadius: 50,
-    width: 36,
-    height: 36,
+    borderRadius: 25,
+    width: 38,
+    height: 38,
+    borderWidth: 1,
+    borderColor: COLORS.transparentBg,
+    resizeMode: "contain",
   },
 
   timeContainer: {
@@ -55,28 +60,30 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: COLORS.transparentBg,
     backgroundColor: COLORS.bgLightBlack,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     borderRadius: 10,
+    width: 100,
   },
 
   dateTimeText: {
-    color: COLORS.light_grey,
+    color: COLORS.light,
     fontSize: 9,
     fontWeight: "400",
+    textAlign: "center",
   },
 
   remainTimeText: {
-    color: COLORS.primary,
-    fontSize: 12,
-    fontWeight: "500",
+    color: COLORS.secondary,
+    fontSize: 11,
+    fontWeight: "700",
   },
 
   divider: {
     width: "100%",
     height: 1,
     backgroundColor: "gray",
-    marginVertical: 8,
+    marginVertical: 10,
   },
 
   winningsCard: {
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 6,
     paddingVertical: 4,
-    borderColor: COLORS.silver,
+    borderColor: COLORS.secondary,
     alignItems: "center",
   },
 

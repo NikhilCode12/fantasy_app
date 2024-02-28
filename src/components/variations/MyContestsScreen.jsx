@@ -1,15 +1,8 @@
 import React from "react";
 import COLORS from "../../constants/colors";
-import {
-  View,
-  SafeAreaView,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import ContestsScreen from "./ContestsScreen";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import picc from "../../../assets/batsmenPic.jpg";
 export default function MyContestsScreen({ route }) {
