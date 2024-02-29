@@ -29,8 +29,6 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         let matchesData = await AsyncStorage.getItem("matchesData");
         let seriesObj = await AsyncStorage.getItem("seriesObj");
 
-        console.log("Data from AsyncStorage", JSON.parse(seriesObj));
-
         if (!seriesValue || !matchesData || !seriesObj) {
           const response = await axios.get(
             "https://api.cricapi.com/v1/series_info?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&id=c6f823d3-0b54-4a2f-bb09-6a6c6b6481cc"
@@ -58,7 +56,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           }
 
           if (!seriesObj) {
-            seriesObj = response.data.data;
+            seriesObj = response.data;
             await AsyncStorage.setItem("seriesObj", JSON.stringify(seriesObj));
           } else {
             seriesObj = JSON.parse(seriesObj);
@@ -93,8 +91,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
   }, []);
 
   const formatRemainingTime = (dateTimeGMT) => {
-    const matchTime = new Date(dateTimeGMT).getTime();
-    const ISTOffset = 330 * 60 * 1000;
+    const matchTime = new Date(dateTimeGMT).getTime() + 5.5 * 60 * 60 * 1000;
     const currentTime = new Date().getTime();
     let timeDifference = matchTime - currentTime;
 
@@ -126,20 +123,19 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     }
   };
 
-  const formatTimeVenue = (date) => {
-    const matchDate = new Date(date);
-    const ISTOffset = 330 * 60 * 1000;
-    matchDate.setTime(matchDate.getTime() + ISTOffset);
+  const formatTimeVenue = (dateTimeGMT) => {
+    const matchDate = new Date(dateTimeGMT);
+    matchDate.setTime(matchDate.getTime() + 330 * 60 * 1000);
 
     const currentDate = new Date();
-    const options = { hour: "numeric", minute: "numeric" };
+    const options = { hour: "numeric", minute: "numeric", hour12: true };
 
     if (
       matchDate.getDate() === currentDate.getDate() &&
       matchDate.getMonth() === currentDate.getMonth() &&
       matchDate.getFullYear() === currentDate.getFullYear()
     ) {
-      return `Today, ${matchDate.toLocaleTimeString("en-US", options)}`;
+      return `Today, ${matchDate.toLocaleTimeString("en-IN", options)}`;
     }
 
     const tomorrow = new Date(currentDate);
@@ -149,15 +145,15 @@ const MatchesScreen = ({ onMatchCardPress }) => {
       matchDate.getMonth() === tomorrow.getMonth() &&
       matchDate.getFullYear() === tomorrow.getFullYear()
     ) {
-      return `Tomorrow, ${matchDate.toLocaleTimeString("en-US", options)}`;
+      return `Tomorrow, ${matchDate.toLocaleTimeString("en-IN", options)}`;
     }
 
-    const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    const dateFormatter = new Intl.DateTimeFormat("en-IN", {
       month: "short",
       day: "numeric",
     });
     const dateString = dateFormatter.format(matchDate);
-    return `${dateString}, ${matchDate.toLocaleTimeString("en-US", options)}`;
+    return `${dateString}, ${matchDate.toLocaleTimeString("en-IN", options)}`;
   };
 
   const onRefresh = () => {
@@ -246,7 +242,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 teamBName={match.teamInfo[1]["shortname"]}
                 teamBImage={match.teamInfo[1].img}
                 timeRemaining={remainingTime}
-                timeVenue={formatTimeVenue(match.date)}
+                timeVenue={formatTimeVenue(match.dateTimeGMT)}
                 winnings={"15"}
               />
             );
