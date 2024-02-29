@@ -7,19 +7,19 @@ import {
   ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/variations.style.js";
+import styles from "../../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors.js";
+import COLORS from "../../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import PlayerListComponent from "./PlayersList.jsx";
+import PlayerListComponent from "./PlayerList3.jsx";
 
-const PlayerSelection = ({ route }) => {
+const PlayerSelection3 = ({ route }) => {
   const { data, amount, variation, newTeam } = route.params;
   const navigation = useNavigation();
-  const [totalCredits, setTotalCredits] = useState(100);
+  const [totalCredits, setTotalCredits] = useState(30);
   const [totalPlayers, setTotalPlayers] = useState(0);
   const [teamABCPlayers, setTeamABCPlayers] = useState(0);
   const [teamDEFPlayers, setTeamDEFPlayers] = useState(0);
@@ -28,18 +28,8 @@ const PlayerSelection = ({ route }) => {
   const [bowlerCount, setbowlerCount] = useState(0);
   const [allRounderCount, setallRounderCount] = useState(0);
   const [selectedPlayersData, setselectedPlayersData] = useState([]);
-  const [selectedPlayers, setSelectedPlayers] = useState(Array(11).fill(false));
+  const [selectedPlayers, setSelectedPlayers] = useState(Array(3).fill(false));
   const [activeTab, setActiveTab] = useState("WK");
-  // useEffect(() => {
-  //   if (variation === "7 + 4" || variation === "10 + 1") {
-  //   } else {
-  //     navigation.navigate("PlayerSelection2", {
-  //       data: data,
-  //       amount: amount,
-  //       variation: variation,
-  //     });
-  //   }
-  // }, []);
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -51,51 +41,32 @@ const PlayerSelection = ({ route }) => {
     // if (newTeam && newTeam == true) {
     //   setTeamABCPlayers(0);
     //   setTeamDEFPlayers(0);
-    //   setTotalCredits(100);
+    //   setTotalCredits(30);
     //   setTotalPlayers(0);
     //   setselectedPlayersData([]);
     //   setWkCount(0);
     //   setbatsmenCount(0);
     //   setbowlerCount(0);
     //   setallRounderCount(0);
-    //   setSelectedPlayers(Array(11).fill(false));
+    //   setSelectedPlayers(Array(3).fill(false));
     //   setActiveTab("WK");
     // }
+    // console.log("WE ARE INSIDE 2");
     return () => backHandler.remove();
   }, []);
 
   const tabText = {
-    WK:
-      variation === "7 + 4"
-        ? "Pick 1-4 Wicket-Keepers"
-        : variation == "10 + 1"
-        ? "Pick 1-8 Wicket-Keepers"
-        : "Pick 1-5 Wicket Keepers",
-    BAT:
-      variation === "7 + 4"
-        ? "Pick 3-6 Batsmen"
-        : variation === "10 + 1"
-        ? "Pick 1-8 Batsmen"
-        : "Pick 1-5 Batsmen",
-    AR:
-      variation === "7 + 4"
-        ? "Pick 1-4 All-Rounders"
-        : variation === "10 + 1"
-        ? "Pick 1-8 All-Rounders"
-        : "Pick 1-5 All-Rounders",
-    BOWL:
-      variation === "7 + 4"
-        ? "Pick 3-6 Bowlers"
-        : variation === "10 + 1"
-        ? "Pick 1-8 Bowlers"
-        : "Pick 1-5 Bowlers",
+    WK: "Pick 0-3 Wicket Keepers",
+    BAT: "Pick 0-3 Batsmen",
+    AR: "Pick 0-3 All-Rounders",
+    BOWL: "Pick 0-3 Bowlers",
   };
 
   const variationType = {
     "7 + 4": "Maximum 7 players from one team",
     "10 + 1": "Maximum 10 players from one team",
     "Fantastic 5": "Maximum 4 players from one team",
-    "Top 3": "Maximum 4 players from one team",
+    "Top 3": "Maximum 2 players from one team",
     Powerplay: "Select 1-4 players in powerplay",
     "Fanverse original": "SuperSmash players included",
     Playgrounds: "Create your own contests and play",
@@ -116,7 +87,7 @@ const PlayerSelection = ({ route }) => {
   const handlePlayerSelectionPress = (player, selectionStatus, tab) => {
     const index = selectedPlayers.indexOf(player);
     // console.log(index);
-    if (selectionStatus && totalPlayers < 11 && index === -1) {
+    if (selectionStatus && totalPlayers < 3 && index === -1) {
       const newSelectedPlayers = [...selectedPlayers];
       const emptyIndex = newSelectedPlayers.indexOf(false);
       newSelectedPlayers[emptyIndex] = player;
@@ -161,7 +132,7 @@ const PlayerSelection = ({ route }) => {
   //   console.log(selectedPlayersData.length);
   // }, [selectedPlayersData]);
   const handleUpdateCredits = (credits) => {
-    setTotalCredits(100 - credits);
+    setTotalCredits(30 - credits);
   };
 
   const handleUpdateTotalPlayers = (count, tab) => {
@@ -182,11 +153,11 @@ const PlayerSelection = ({ route }) => {
   };
 
   const handleResetButton = () => {
-    setSelectedPlayers(Array(11).fill(false));
+    setSelectedPlayers(Array(3).fill(false));
     setTotalPlayers(0);
     setTeamABCPlayers(0);
     setTeamDEFPlayers(0);
-    setTotalCredits(100);
+    setTotalCredits(30);
     setWkCount(0);
     setbatsmenCount(0);
     setbowlerCount(0);
@@ -199,15 +170,9 @@ const PlayerSelection = ({ route }) => {
   };
 
   const handleContinueButtonPress = () => {
-    if (totalPlayers < 11) {
+    if (totalPlayers < 3) {
       ToastAndroid.showWithGravity(
-        "Team must have 11 players.",
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );
-    } else if (wkCount < 1) {
-      ToastAndroid.showWithGravity(
-        "Team must have 1 Wicket keeper.",
+        "Team must have 3 players.",
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
@@ -223,31 +188,12 @@ const PlayerSelection = ({ route }) => {
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
-    } else if (batsmenCount < (variation === "7 + 4" ? 3 : 1)) {
-      ToastAndroid.showWithGravity(
-        `Team must have ${variation === "7 + 4" ? 3 : 1} batsmen.`,
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );
-    } else if (bowlerCount < (variation === "7 + 4" ? 3 : 1)) {
-      // console.log(variation);
-      ToastAndroid.showWithGravity(
-        `Team must have ${variation === "7 + 4" ? 3 : 1} bowler.`,
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );
-    } else if (allRounderCount < 1) {
-      ToastAndroid.showWithGravity(
-        "Team must have 1 all rounder.",
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );
     } else if (
-      totalPlayers === 11 &&
-      teamABCPlayers <= (variation === "7 + 4" ? 7 : 10) &&
-      teamDEFPlayers <= (variation === "7 + 4" ? 7 : 10)
+      totalPlayers === 3 &&
+      teamABCPlayers <= 2 &&
+      teamDEFPlayers <= 2
     ) {
-      navigation.navigate("CaptainAndViceSelection", {
+      navigation.navigate("MvpSelection", {
         data: data,
         amount: amount,
         variation: variation,
@@ -260,19 +206,11 @@ const PlayerSelection = ({ route }) => {
         },
       });
     } else {
-      if (variation === "7 + 4") {
-        ToastAndroid.showWithGravity(
-          "Each Team must have min 4 Player ",
-          ToastAndroid.SHORT,
-          ToastAndroid.CENTER
-        );
-      } else {
-        ToastAndroid.showWithGravity(
-          "Each Team must have min 1 Player ",
-          ToastAndroid.SHORT,
-          ToastAndroid.CENTER
-        );
-      }
+      ToastAndroid.showWithGravity(
+        "Each Team must have min 1 Player ",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
     }
   };
 
@@ -350,7 +288,7 @@ const PlayerSelection = ({ route }) => {
             <Text style={styles2.playersText}>{"Players"}</Text>
             <Text style={styles2.playersSelectedText}>
               {totalPlayers}
-              <Text style={styles2.playersText}>{" / 11"}</Text>
+              <Text style={styles2.playersText}>{" / 3"}</Text>
             </Text>
           </View>
           {/* Team logos and their players selected data */}
@@ -398,7 +336,7 @@ const PlayerSelection = ({ route }) => {
                   // isSelected ? styles2.selectedPlayerProgressBlock : null,
                 ]}
               >
-                {index == 10 ? (
+                {index == 2 ? (
                   <Text
                     style={{
                       color: isSelected ? COLORS.dark : COLORS.light,
@@ -406,7 +344,7 @@ const PlayerSelection = ({ route }) => {
                       fontWeight: "500",
                     }}
                   >
-                    11
+                    3
                   </Text>
                 ) : null}
               </View>
@@ -524,7 +462,7 @@ const PlayerSelection = ({ route }) => {
             styles2.button,
             {
               backgroundColor:
-                totalPlayers === 11 ? COLORS.secondary : COLORS.lightGray,
+                totalPlayers === 3 ? COLORS.secondary : COLORS.lightGray,
               borderWidth: 0,
             },
           ]}
@@ -539,7 +477,7 @@ const PlayerSelection = ({ route }) => {
   );
 };
 
-export default PlayerSelection;
+export default PlayerSelection3;
 
 const styles2 = StyleSheet.create({
   playerComponentContainer: {

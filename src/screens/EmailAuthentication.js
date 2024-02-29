@@ -38,6 +38,10 @@ export default function EmailAuthentication({ navigation }) {
       );
 
       if (response.status === 200) {
+         ToastAndroid.show(
+        `Sended an OTP to your email ${email}`,
+        ToastAndroid.BOTTOM
+      );
         navigation.navigate("Otp", {
           mobileOTP: "",
           emailOTP: response.data.otp,

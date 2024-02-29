@@ -37,6 +37,10 @@ export default function LoginScreen({ navigation }) {
       );
 
       if (response.status === 200) {
+            ToastAndroid.show(
+        `Sended an OTP to your mobile number ${phoneNum}`,
+        ToastAndroid.BOTTOM
+      );
         navigation.navigate("Otp", {
           mobileOTP: response.data.otp,
           emailOTP: "",

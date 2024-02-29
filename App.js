@@ -32,9 +32,11 @@ import CaptainAndViceSelection from "./src/components/teams/CaptainAndViceSelect
 import ContestBottomNavigation from "./src/components/variations/BottomNavigation";
 import MyContestsScreen from "./src/components/variations/MyContestsScreen";
 import MyTeamsScreen from "./src/components/variations/MyTeamsScreen";
-import { StripeProvider } from "@stripe/stripe-react-native";
-
+import PlayerSelection2 from "./src/components/teams/FantasticFive/PlayerSelection2";
+import PlayerSelection3 from "./src/components/teams/TopThree/PlayerSelection3";
+import MvpSelection from "./src/components/teams/TopThree/MvpSelection";
 const Stack = createNativeStackNavigator();
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 function App() {
   useEffect(() => {
@@ -149,52 +151,66 @@ function App() {
             component={PrivateContestJoin}
             options={{ headerShown: false }}
           />
-
-          <Stack.Screen
-            name="VariationsScreen"
-            component={VariationsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Contests"
-            component={ContestsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AccountScreen"
-            component={AccountScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HelpAndSupport"
-            component={HelpandSupportScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HowToPlay"
-            component={HowToPlayScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="PlayerSelection"
-            component={PlayerSelection}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="TeamPreview"
-            component={PreviewScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="CaptainAndViceSelection"
-            component={CaptainAndViceSelection}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="BeforeContestDetails"
-            component={BeforeContestDetailsScreen}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name="VariationsScreen"
+          component={VariationsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Contests"
+          component={ContestsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AccountScreen"
+          component={AccountScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HelpAndSupport"
+          component={HelpandSupportScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HowToPlay"
+          component={HowToPlayScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PlayerSelection"
+          component={PlayerSelection}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeamPreview"
+          component={PreviewScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CaptainAndViceSelection"
+          component={CaptainAndViceSelection}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BeforeContestDetails"
+          component={BeforeContestDetailsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="PlayerSelection2"
+        component={PlayerSelection2}
+        options={{headerShown:false}}
+        />
+        <Stack.Screen 
+        name="PlayerSelection3"
+        component={PlayerSelection3}
+        options={{headerShown:false}}
+        />
+        <Stack.Screen 
+        name="MvpSelection"
+        component={MvpSelection}
+        options={{headerShown:false}}
+        />
         </Stack.Navigator>
       </NavigationContainer>
     </StripeProvider>
