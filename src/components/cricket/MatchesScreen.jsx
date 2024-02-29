@@ -17,60 +17,46 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const MatchesScreen = ({ onMatchCardPress }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [matches, setMatches] = useState([]);
-  const [seriesData, setSeries] = useState("");
+  const [seriesData, setSeries] = useState({});
   const [dataLoading, setDataLoading] = useState(true);
   const [fullResponse, setFullResponse] = useState({});
 
   useEffect(() => {
     console.log("MatchesScreen mounted");
+
     const fetchData = async () => {
       try {
-        let seriesValue = await AsyncStorage.getItem("seriesInfo");
-        let matchesData = await AsyncStorage.getItem("matchesData");
-        let seriesObj = await AsyncStorage.getItem("seriesObj");
+        // Fetch series data from AsyncStorage
+        let seriesDataFromStorage = await AsyncStorage.getItem("seriesData");
 
-        if (!seriesValue || !matchesData || !seriesObj) {
-          const response = await axios.get(
-            "https://api.cricapi.com/v1/series_info?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&id=c6f823d3-0b54-4a2f-bb09-6a6c6b6481cc"
+        // If series data not available in AsyncStorage, fetch from API
+        if (!seriesDataFromStorage) {
+          const seriesResponse = await axios.get(
+            "https://api.cricapi.com/v1/series?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
           );
-          if (!seriesValue) {
-            seriesValue = response.data.data.info["name"];
-            await AsyncStorage.setItem(
-              "seriesInfo",
-              JSON.stringify({
-                name: seriesValue,
-              })
-            );
-          } else {
-            seriesValue = JSON.parse(seriesValue).name;
-          }
-
-          if (!matchesData) {
-            matchesData = response.data.data.matchList;
-            await AsyncStorage.setItem(
-              "matchesData",
-              JSON.stringify(matchesData)
-            );
-          } else {
-            matchesData = JSON.parse(matchesData);
-          }
-
-          if (!seriesObj) {
-            seriesObj = response.data;
-            await AsyncStorage.setItem("seriesObj", JSON.stringify(seriesObj));
-          } else {
-            seriesObj = JSON.parse(seriesObj);
-          }
+          await AsyncStorage.setItem(
+            "seriesData",
+            JSON.stringify(seriesResponse.data.data)
+          );
+          seriesDataFromStorage = seriesResponse.data.data;
         } else {
-          seriesValue = JSON.parse(seriesValue).name;
-          matchesData = JSON.parse(matchesData);
-          seriesObj = JSON.parse(seriesObj);
+          seriesDataFromStorage = JSON.parse(seriesDataFromStorage);
         }
-        setSeries(seriesValue);
+
+        // Fetch matches data
+        const matchesResponse = await axios.get(
+          "https://api.cricapi.com/v1/matches?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
+        );
+
+        const matchesData = matchesResponse.data.data;
+
+        // Set state with fetched data
+        setSeries(seriesDataFromStorage);
         setMatches(matchesData);
-        setFullResponse(seriesObj);
+        setFullResponse(matchesResponse.data);
         setDataLoading(false);
-        console.log("MatchesScreen data fetched from AsyncStorage");
+
+        console.log("MatchesScreen data fetched from AsyncStorage or API");
       } catch (error) {
         console.error(error);
       }
@@ -109,9 +95,9 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     };
 
     if (years > 0) {
-      return `${addLeadingZero(years)}y : ${addLeadingZero(months % 12)}m`;
+      return `${addLeadingZero(years)}y : ${addLeadingZero(months % 12)}mm`;
     } else if (months > 0) {
-      return `${addLeadingZero(months)}m : ${addLeadingZero(days % 30)}d`;
+      return `${addLeadingZero(months)}mm : ${addLeadingZero(days % 30)}d`;
     } else if (days > 0) {
       return `${addLeadingZero(days)}d : ${addLeadingZero(hours % 24)}h`;
     } else if (hours > 0 || (days === 0 && minutes >= 60)) {
@@ -222,10 +208,18 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           if (remainingTime.includes("-")) {
             return null;
           }
-          if (matchDay.includes("Today") || matchDay.includes("Tomorrow"))
+          if (
+            matchDay.includes("Today") ||
+            matchDay.includes("Tomorrow") ||
+            matchDay.includes("Mar")
+          ) {
+            const seriesMatch = seriesData.find(
+              (series) => series.id === match.series_id
+            );
+            const leagueName = seriesMatch ? seriesMatch.name : match.name;
             return (
               <MatchCard
-                key={match.name}
+                key={match.id}
                 onMatchCardPress={() =>
                   onMatchCardPress({
                     teamAName: match.teamInfo[0]["shortname"],
@@ -236,7 +230,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                     teamBImage: match.teamInfo[1].img,
                   })
                 }
-                league={seriesData}
+                league={leagueName}
                 teamAImage={match.teamInfo[0].img}
                 teamAName={match.teamInfo[0]["shortname"]}
                 teamBName={match.teamInfo[1]["shortname"]}
@@ -246,6 +240,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 winnings={"15"}
               />
             );
+          }
         })}
     </ScrollView>
   );
