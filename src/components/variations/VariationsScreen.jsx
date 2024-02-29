@@ -1,4 +1,10 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,15 +13,18 @@ import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 
 const VariationsScreen = ({ route }) => {
-  const { data } = route.params;
+  const data = {};
+  // const { data } = route.params;
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
   const variations = [
     { id: "1", title: "7 + 4" },
-    { id: "2", title: "10 player fantasy" },
-    { id: "3", title: "Powerplay" },
-    { id: "4", title: "Fanverse original" },
-    { id: "5", title: "Playgrounds" },
+    { id: "2", title: "10 + 1" },
+    { id: "3", title: "Fantastic 5" },
+    { id: "4", title: "Top 3" },
+    { id: "5", title: "Fanverse Original" },
+    { id: "6", title: "Powerplay" },
+    { id: "7", title: "Playgrounds" },
   ];
   return (
     <SafeAreaView style={styles.container}>
@@ -61,11 +70,20 @@ const VariationsScreen = ({ route }) => {
           <TouchableOpacity
             style={styles.variationCard}
             onPress={() => {
-              navigation.navigate("ContestBottomNavigation", {
-                data: data,
-                amount: amount,
-                variation: item.title,
-              });
+              if (
+                item.id === "1" ||
+                item.id === "2" ||
+                item.id === "3" ||
+                item.id === "4"
+              ) {
+                navigation.navigate("ContestBottomNavigation", {
+                  data: data,
+                  amount: amount,
+                  variation: item.title,
+                });
+              } else {
+                ToastAndroid.show("Coming Soon ......", ToastAndroid.SHORT);
+              }
             }}
           >
             <Text style={styles.variationTitle}>{item.title}</Text>

@@ -32,6 +32,9 @@ import CaptainAndViceSelection from "./src/components/teams/CaptainAndViceSelect
 import ContestBottomNavigation from "./src/components/variations/BottomNavigation";
 import MyContestsScreen from "./src/components/variations/MyContestsScreen";
 import MyTeamsScreen from "./src/components/variations/MyTeamsScreen";
+import PlayerSelection2 from "./src/components/teams/FantasticFive/PlayerSelection2";
+import PlayerSelection3 from "./src/components/teams/TopThree/PlayerSelection3";
+import MvpSelection from "./src/components/teams/TopThree/MvpSelection";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -192,6 +195,22 @@ function App() {
           component={BeforeContestDetailsScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen 
+        name="PlayerSelection2"
+        component={PlayerSelection2}
+        options={{headerShown:false}}
+        />
+        <Stack.Screen 
+        name="PlayerSelection3"
+        component={PlayerSelection3}
+        options={{headerShown:false}}
+        />
+        <Stack.Screen 
+        name="MvpSelection"
+        component={MvpSelection}
+        options={{headerShown:false}}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

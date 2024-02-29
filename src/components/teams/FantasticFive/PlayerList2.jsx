@@ -7,11 +7,11 @@ import {
   ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import COLORS from "../../constants/colors";
+import COLORS from "../../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import allPlayersData from "../../constants/dummyPlayers.json";
+import allPlayersData from "../../../constants/dummyPlayers.json";
 
-const PlayersList = ({
+const PlayersList2 = ({
   data,
   activePlayerTab,
   onAddPlayerPress,
@@ -85,7 +85,7 @@ const PlayersList = ({
     if (
       activePlayerTab === "WK" &&
       isAddingPlayer &&
-      CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 4 : 8)
+      CheckMaxLimit(activePlayerTab) >= 5
     ) {
       ToastAndroid.showWithGravity(
         "Max limit exceed for Wicket keeper",
@@ -97,7 +97,7 @@ const PlayersList = ({
     if (
       activePlayerTab === "BOWL" &&
       isAddingPlayer &&
-      CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 6 : 8)
+      CheckMaxLimit(activePlayerTab) >= 5
     ) {
       ToastAndroid.showWithGravity(
         "Max limit exceed for BOWL",
@@ -109,7 +109,7 @@ const PlayersList = ({
     if (
       activePlayerTab === "BAT" &&
       isAddingPlayer &&
-      CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 6 : 8)
+      CheckMaxLimit(activePlayerTab) >= 5
     ) {
       ToastAndroid.showWithGravity(
         "Max limit exceed for BATSMEN",
@@ -121,7 +121,7 @@ const PlayersList = ({
     if (
       activePlayerTab === "AR" &&
       isAddingPlayer &&
-      CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 4 : 8)
+      CheckMaxLimit(activePlayerTab) >= 5
     ) {
       ToastAndroid.showWithGravity(
         "Max limit exceed for ALL ROUNDER",
@@ -131,8 +131,8 @@ const PlayersList = ({
       return;
     }
     if (isAddingPlayer) {
-      if (totalCreditsSelected + parseFloat(player.credits) <= 100) {
-        if (selectedPlayers.length < 11) {
+      if (totalCreditsSelected + parseFloat(player.credits) <= 50) {
+        if (selectedPlayers.length < 5) {
           setSelectedPlayers([...selectedPlayers, player]);
           setTotalCreditsSelected(
             totalCreditsSelected + parseFloat(player.credits)
@@ -146,15 +146,12 @@ const PlayersList = ({
           onPlayerSelectionPress(player, true, activePlayerTab);
         } else {
           ToastAndroid.show(
-            "You can select a maximum of 11 players",
+            "You can select a maximum of 5 players",
             ToastAndroid.SHORT
           );
         }
       } else {
-        ToastAndroid.show(
-          "Total credits cannot exceed 100",
-          ToastAndroid.SHORT
-        );
+        ToastAndroid.show("Total credits cannot exceed 50", ToastAndroid.SHORT);
       }
     } else {
       setSelectedPlayers(selectedPlayers.filter((p, i) => i !== index));
@@ -337,7 +334,7 @@ const PlayersList = ({
   );
 };
 
-export default PlayersList;
+export default PlayersList2;
 
 const styles = StyleSheet.create({
   playerTeamName: {
