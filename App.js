@@ -36,6 +36,7 @@ import PlayerSelection2 from "./src/components/teams/FantasticFive/PlayerSelecti
 import PlayerSelection3 from "./src/components/teams/TopThree/PlayerSelection3";
 import MvpSelection from "./src/components/teams/TopThree/MvpSelection";
 const Stack = createNativeStackNavigator();
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 function App() {
   useEffect(() => {
@@ -50,106 +51,106 @@ function App() {
     return () => backHandler.remove();
   }, []);
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-           <Stack.Screen
-          name="ContestBottomNavigation"
-          component={ContestBottomNavigation}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MyContestsScreen"
-          component={MyContestsScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MyTeamsScreen"
-          component={MyTeamsScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Welcome"
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="EmailAuthentication"
-          component={EmailAuthenticationScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Otp"
-          component={OTPScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="BottomNavigation"
-          component={BottomNavigation}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="VariationNavigation"
-          component={VariationStackNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="DrawerNavigation"
-          component={DrawerNavigation}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Notification"
-          component={NotificationsScreen}
-          options={{ headerShown: false }}
-        />
+    <StripeProvider publishableKey="pk_test_51OpEm4SAFpF5AQ7zUTbbNQdPJ2Khi6xT1Ygtf1Oz4QPAWkmIwsw5EEMCrV8eWMF8S5DdUX4365oykBnOJY3Jrbv1003wyPtuN6">
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen
+            name="ContestBottomNavigation"
+            component={ContestBottomNavigation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="MyContestsScreen"
+            component={MyContestsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="MyTeamsScreen"
+            component={MyTeamsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EmailAuthentication"
+            component={EmailAuthenticationScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Otp"
+            component={OTPScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BottomNavigation"
+            component={BottomNavigation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="VariationNavigation"
+            component={VariationStackNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DrawerNavigation"
+            component={DrawerNavigation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Notification"
+            component={NotificationsScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="Wallet"
-          component={WalletScreen}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="Wallet"
+            component={WalletScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="addBalance"
-          component={TopUpScreen}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="addBalance"
+            component={TopUpScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="Withdraw"
-          component={WithdrawlScreen}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="Withdraw"
+            component={WithdrawlScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="MyTransactions"
-          component={MyTransactions}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="MyTransactions"
+            component={MyTransactions}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="AddCards"
-          component={AddCardsScreen}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="AddCards"
+            component={AddCardsScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="InviteFriends"
-          component={InviteFriendsScreen}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="InviteFriends"
+            component={InviteFriendsScreen}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="PrivateContestJoin"
-          component={PrivateContestJoin}
-          options={{ headerShown: false }}
-        />
-
+          <Stack.Screen
+            name="PrivateContestJoin"
+            component={PrivateContestJoin}
+            options={{ headerShown: false }}
+          />
         <Stack.Screen
           name="VariationsScreen"
           component={VariationsScreen}
@@ -210,9 +211,9 @@ function App() {
         component={MvpSelection}
         options={{headerShown:false}}
         />
-
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </StripeProvider>
   );
 }
 
