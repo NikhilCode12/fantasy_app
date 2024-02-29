@@ -26,10 +26,23 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "eas": {
+      "sas": {
         "projectId": "ed3a5384-321c-49c3-a6e0-adcec0abb687"
       }
     },
-    "owner": "nikhil12n"
+    "owner": "nikhil12n",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./local/assets/notification-sound.wav",
+            "./local/assets/notification-sound-other.wav"
+          ]
+        }
+      ]
+    ]
   }
 }
