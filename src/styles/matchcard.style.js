@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   teamNameText: {
     color: COLORS.silver,
     fontWeight: "500",
-    fontSize: 13,
-    width: 42,
+    fontSize: 12,
+    width: 44,
   },
 
   teamContainer: {

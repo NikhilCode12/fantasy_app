@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
-  
+
   const handleGetStarted = async () => {
     // AsyncStorage.clear();
     // navigation.navigate("Login");
@@ -28,7 +28,7 @@ const WelcomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require("../../assets/splash.png")}
+          source={require("../../assets/cricket_icon.png")}
           style={styles.logo}
         />
       </View>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: COLORS.primary,
     borderRadius: 100,
+    resizeMode: "contain",
   },
   content: {
     flex: 1,
