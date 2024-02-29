@@ -5,39 +5,80 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import styles from "../../styles/cricket.matches.style";
 import COLORS from "../../constants/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MatchCard from "../common/MatchCard";
 import axios from "axios";
-import { ActivityIndicator } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MatchesScreen = ({ onMatchCardPress }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [matches, setMatches] = useState([]);
-  const [dataFetched, setDataFetched] = useState(false);
+  const [seriesData, setSeries] = useState("");
   const [dataLoading, setDataLoading] = useState(true);
+  const [fullResponse, setFullResponse] = useState({});
 
   useEffect(() => {
     console.log("MatchesScreen mounted");
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://api.cricapi.com/v1/matches?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
-        );
-        setMatches(response.data.data);
-        setDataFetched(true);
+        let seriesValue = await AsyncStorage.getItem("seriesInfo");
+        let matchesData = await AsyncStorage.getItem("matchesData");
+        let seriesObj = await AsyncStorage.getItem("seriesObj");
+
+        console.log("Data from AsyncStorage", JSON.parse(seriesObj));
+
+        if (!seriesValue || !matchesData || !seriesObj) {
+          const response = await axios.get(
+            "https://api.cricapi.com/v1/series_info?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&id=c6f823d3-0b54-4a2f-bb09-6a6c6b6481cc"
+          );
+          if (!seriesValue) {
+            seriesValue = response.data.data.info["name"];
+            await AsyncStorage.setItem(
+              "seriesInfo",
+              JSON.stringify({
+                name: seriesValue,
+              })
+            );
+          } else {
+            seriesValue = JSON.parse(seriesValue).name;
+          }
+
+          if (!matchesData) {
+            matchesData = response.data.data.matchList;
+            await AsyncStorage.setItem(
+              "matchesData",
+              JSON.stringify(matchesData)
+            );
+          } else {
+            matchesData = JSON.parse(matchesData);
+          }
+
+          if (!seriesObj) {
+            seriesObj = response.data.data;
+            await AsyncStorage.setItem("seriesObj", JSON.stringify(seriesObj));
+          } else {
+            seriesObj = JSON.parse(seriesObj);
+          }
+        } else {
+          seriesValue = JSON.parse(seriesValue).name;
+          matchesData = JSON.parse(matchesData);
+          seriesObj = JSON.parse(seriesObj);
+        }
+        setSeries(seriesValue);
+        setMatches(matchesData);
+        setFullResponse(seriesObj);
         setDataLoading(false);
-        console.log("MatchesScreen data fetched");
+        console.log("MatchesScreen data fetched from AsyncStorage");
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (!dataFetched) {
-      fetchData();
-    }
+    fetchData();
 
     const intervalId = setInterval(() => {
       setMatches((prevMatches) =>
@@ -49,10 +90,11 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [dataFetched, refreshing]);
+  }, []);
 
   const formatRemainingTime = (dateTimeGMT) => {
     const matchTime = new Date(dateTimeGMT).getTime();
+    const ISTOffset = 330 * 60 * 1000;
     const currentTime = new Date().getTime();
     let timeDifference = matchTime - currentTime;
 
@@ -86,6 +128,9 @@ const MatchesScreen = ({ onMatchCardPress }) => {
 
   const formatTimeVenue = (date) => {
     const matchDate = new Date(date);
+    const ISTOffset = 330 * 60 * 1000;
+    matchDate.setTime(matchDate.getTime() + ISTOffset);
+
     const currentDate = new Date();
     const options = { hour: "numeric", minute: "numeric" };
 
@@ -195,7 +240,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                     teamBImage: match.teamInfo[1].img,
                   })
                 }
-                league={match.name}
+                league={seriesData}
                 teamAImage={match.teamInfo[0].img}
                 teamAName={match.teamInfo[0]["shortname"]}
                 teamBName={match.teamInfo[1]["shortname"]}

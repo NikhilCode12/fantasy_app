@@ -98,7 +98,7 @@ const MatchCard = ({
               {notified ? "We will remind you!" : "Notify Me"}
             </Text>
             {notified ? null : (
-              <FontAwesome name="bell" size={14} color={COLORS.secondary} />
+              <FontAwesome name="bell-o" size={14} color={COLORS.secondary} />
             )}
           </TouchableOpacity>
         </View>
