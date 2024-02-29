@@ -9,14 +9,22 @@ import {
   ScrollView,
 } from "react-native";
 import TeamCard from "./TeamCard";
+import TeamCard2 from "./TeamCard2";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 export default function MyTeamsScreen({ route }) {
   const navigation = useNavigation();
   const [allTeamsData, setallTeamsData] = useState([]);
-  const { data, amount, variation, PlayersData, captainName, viceCaptainName } =
-    route.params;
+  const {
+    data,
+    amount,
+    variation,
+    PlayersData,
+    captainName,
+    viceCaptainName,
+    mvpName,
+  } = route.params;
   useEffect(() => {
     if (PlayersData) {
       // console.log("PLAYERS DATA");
@@ -45,24 +53,50 @@ export default function MyTeamsScreen({ route }) {
       </View>
       <ScrollView>
         {allTeamsData.length > 0 &&
-          allTeamsData.map((team, index) => (
-            <TeamCard
-              key={index}
-              index={index}
-              matchData={data}
-              PlayersData={PlayersData}
-              captainName={captainName}
-              viceCaptainName={viceCaptainName}
-            />
-          ))}
+          allTeamsData.map((team, index) =>
+            variation === "Top 3" ? (
+              <TeamCard2
+                key={index}
+                index={index}
+                matchData={data}
+                PlayersData={PlayersData}
+                captainName={captainName}
+                viceCaptainName={viceCaptainName}
+                mvpName={mvpName}
+              />
+            ) : (
+              <TeamCard
+                key={index}
+                index={index}
+                matchData={data}
+                PlayersData={PlayersData}
+                captainName={captainName}
+                viceCaptainName={viceCaptainName}
+              />
+            )
+          )}
       </ScrollView>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("PlayerSelection", {
-            data: data,
-            amount: amount,
-            variation: variation,
-          });
+          if (variation === "7 + 4" || variation === "10 + 1") {
+            navigation.navigate("PlayerSelection", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          } else if (variation === "Fantastic 5") {
+            navigation.navigate("PlayerSelection2", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          } else {
+            navigation.navigate("PlayerSelection3", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          }
         }}
         style={styles.createTeamButton}
       >

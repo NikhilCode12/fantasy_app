@@ -138,11 +138,25 @@ const ContestsScreen = ({ route }) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("PlayerSelection", {
-            data: data,
-            amount: amount,
-            variation: variation,
-          });
+          if (variation === "7 + 4" || variation === "10 + 1") {
+            navigation.navigate("PlayerSelection", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          } else if (variation === "Fantastic 5") {
+            navigation.navigate("PlayerSelection2", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          } else {
+            navigation.navigate("PlayerSelection3", {
+              data: data,
+              amount: amount,
+              variation: variation,
+            });
+          }
         }}
         style={cStyles.createTeamButton}
       >
