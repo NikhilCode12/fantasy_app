@@ -381,7 +381,7 @@ const PlayersList = ({
                     styles.selectedPlayerCreditsText,
                 ]}
               >
-                {item.fantasy_player_rating}
+                {item.fantasy_player_rating.toFixed(1)}
               </Text>
               {/* Add Player button */}
               <TouchableOpacity onPress={() => handlePlayerPress(item)}>

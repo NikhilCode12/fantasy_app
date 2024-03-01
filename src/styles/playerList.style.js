@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    width: 40,
+    width: 25,
   },
   playerPointsText: {
     color: COLORS.light,
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: 50,
-    marginLeft: 50,
+    marginLeft: 55,
   },
   playerDetails: {
     flexDirection: "column",
     marginLeft: 10,
     gap: 1,
-    width: 150,
+    width: 135,
     alignItems: "flex-start",
   },
   playerLogo: {
