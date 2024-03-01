@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import axios from "axios";
 
 const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
   const navigation = useNavigation();
@@ -17,26 +18,34 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
     navigation.navigate(pageName);
     onClose();
   };
-
-useEffect(() => {
-  const getUser = async () => {
+  const getToken = async () => {
     try {
-      const userr = await AsyncStorage.getItem("user");
-      const parsedUser = JSON.parse(userr);
-
-      setUser(parsedUser);
-      if (parsedUser && parsedUser.msg === "User Already Registered") {
-        setUser((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
-      } else {
-        setUser((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
-      }
+      const token = await AsyncStorage.getItem("userToken");
+      return token != null ? JSON.parse(token) : null;
     } catch (e) {
       console.log(e);
     }
   };
+  useEffect(() => {
+    getToken().then(async (token) => {
+      try {
+        const userData = await axios.get(
+          "https://fanverse-backend.onrender.com/api/user/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  getUser();
-}, []);
+        if (userData) {
+          setUser(userData.data);
+        }
+      } catch (error) {
+        console.log("Error in getting user data: ", error);
+      }
+    });
+  }, [isVisible]);
 
   const handleLogout = async () => {
     // Clear user token from AsyncStorage
