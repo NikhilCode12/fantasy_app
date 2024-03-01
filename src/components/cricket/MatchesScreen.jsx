@@ -62,7 +62,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
   };
 
   const formatRemainingTime = (dateTimeGMT) => {
-    const matchTime = new Date(dateTimeGMT).getTime() + 5.5 * 60 * 60 * 1000;
+    const matchTime = new Date(dateTimeGMT).getTime();
     const currentTime = new Date().getTime();
     let timeDifference = matchTime - currentTime;
 
@@ -96,7 +96,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
 
   const formatTimeVenue = (dateTimeGMT) => {
     const matchDate = new Date(dateTimeGMT);
-    matchDate.setTime(matchDate.getTime() + 330 * 60 * 1000);
+    matchDate.setTime(matchDate.getTime());
 
     const currentDate = new Date();
     const options = { hour: "numeric", minute: "numeric", hour12: true };
@@ -187,7 +187,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         </View>
       )}
       {matches
-        .slice()
+        .slice(0, 6)
         .sort((a, b) => {
           const timeVenueA = new Date(a.dateTimeGMT).getTime();
           const timeVenueB = new Date(b.dateTimeGMT).getTime();
@@ -207,6 +207,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 key={match.match_id}
                 onMatchCardPress={() =>
                   onMatchCardPress({
+                    competitionId: match.competition.cid,
                     matchId: match.match_id,
                     teamAName: match.teama.short_name,
                     teamBName: match.teamb.short_name,
@@ -216,7 +217,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                     teamBImage: match.teamb.logo_url,
                   })
                 }
-                league={match.competition.abbr}
+                league={match.competition.title}
                 teamAImage={match.teama.logo_url}
                 teamAName={match.teama.short_name}
                 teamBName={match.teamb.short_name}

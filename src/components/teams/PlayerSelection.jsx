@@ -18,6 +18,7 @@ import PlayerListComponent from "./PlayersList.jsx";
 
 const PlayerSelection = ({ route }) => {
   const { data, amount, variation, newTeam } = route.params;
+  console.log(data.competitionId, data.matchId);
   const navigation = useNavigation();
   const [totalCredits, setTotalCredits] = useState(100);
   const [totalPlayers, setTotalPlayers] = useState(0);
