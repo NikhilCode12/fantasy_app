@@ -31,14 +31,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
 
         // If series data not available in AsyncStorage, fetch from API
         if (!seriesDataFromStorage) {
-          const seriesResponse = await axios.get(
-            "https://api.cricapi.com/v1/series?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
-          );
-          await AsyncStorage.setItem(
-            "seriesData",
-            JSON.stringify(seriesResponse.data.data)
-          );
-          seriesDataFromStorage = seriesResponse.data.data;
+          // seriesDataFromStorage = ;
         } else {
           seriesDataFromStorage = JSON.parse(seriesDataFromStorage);
         }
@@ -159,7 +152,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           colors={[COLORS.primary]}
-          progressBackgroundColor={COLORS.bgLightBlack}
+          progressBackgroundColor={COLORS.light}
         />
       }
     >
@@ -190,9 +183,10 @@ const MatchesScreen = ({ onMatchCardPress }) => {
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
+            marginVertical: "50%",
           }}
         >
-          <ActivityIndicator size="small" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       )}
       {matches
@@ -205,14 +199,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         .map((match) => {
           const remainingTime = formatRemainingTime(match.dateTimeGMT);
           const matchDay = formatTimeVenue(match.date);
-          if (remainingTime.includes("-")) {
-            return null;
-          }
-          if (
-            matchDay.includes("Today") ||
-            matchDay.includes("Tomorrow") ||
-            matchDay.includes("Mar")
-          ) {
+          if (matchDay.includes("Today") || matchDay.includes("Tomorrow")) {
             const seriesMatch = seriesData.find(
               (series) => series.id === match.series_id
             );

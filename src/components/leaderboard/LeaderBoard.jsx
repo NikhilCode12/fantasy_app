@@ -126,7 +126,7 @@ const LeaderBoard = () => {
                 <Ionicons
                   name="person-circle"
                   color={COLORS.secondary}
-                  size={40}
+                  size={36}
                 />
                 <View style={{ marginLeft: 8 }}>
                   <Text
@@ -147,7 +147,16 @@ const LeaderBoard = () => {
               <View
                 style={[styles.rankCard, { backgroundColor: COLORS.secondary }]}
               >
-                <Ionicons name="medal" size={13} color={COLORS.bgMateBlack} />
+                {currentUserData.rank > 3 ? (
+                  <Ionicons
+                    name="star"
+                    size={13}
+                    color={COLORS.bgMateBlack}
+                    style={{ opacity: 0.5 }}
+                  />
+                ) : (
+                  <Ionicons name="medal" size={13} color={COLORS.teflon} />
+                )}
                 <Text style={styles.personRankText}>
                   Rank {currentUserData.rank}
                 </Text>
@@ -168,7 +177,7 @@ const LeaderBoard = () => {
                   <Ionicons
                     name="person-circle"
                     color={COLORS.light}
-                    size={40}
+                    size={36}
                   />
                   <View style={{ marginLeft: 8 }}>
                     <Text style={styles.personNameText}>{user.username}</Text>
@@ -183,7 +192,16 @@ const LeaderBoard = () => {
                     { backgroundColor: getColorForRank(user.rank) },
                   ]}
                 >
-                  <Ionicons name="medal" size={13} color={COLORS.bgMateBlack} />
+                  {index > 3 ? (
+                    <Ionicons
+                      name="medal"
+                      size={13}
+                      color={COLORS.bgMateBlack}
+                      style={{ opacity: 0.5 }}
+                    />
+                  ) : (
+                    <Ionicons name="medal" size={13} color={COLORS.teflon} />
+                  )}
                   <Text style={styles.personRankText}>Rank {user.rank}</Text>
                 </View>
               </View>
@@ -230,24 +248,24 @@ const styles = StyleSheet.create({
   },
   personNameText: {
     color: COLORS.light,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "700",
   },
   personPointsText: {
     color: COLORS.light_grey,
-    fontSize: 14,
+    fontSize: 13,
   },
   personRankText: {
-    color: COLORS.bgMateBlack,
-    fontSize: 14,
-    fontWeight: "bold",
+    color: COLORS.teflon,
+    fontSize: 12,
+    fontWeight: "700",
     marginLeft: 4,
   },
   rankCard: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     borderRadius: 5,
   },
 });

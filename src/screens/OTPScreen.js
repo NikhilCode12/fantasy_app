@@ -150,7 +150,9 @@ export default function OtpScreen({ navigation, route }) {
           <View style={styles.container}>
             <Text style={styles.heading}>Enter OTP</Text>
             <Text style={styles.subHeading}>
-              We've sent a 6-digit code to your mobile number.
+              We've sent a 6-digit code to your{" "}
+              {phoneNum ? "mobile " + phoneNum : null}{" "}
+              {email ? "email " + phoneNum : null}.
             </Text>
             <View style={styles.otpContainer}>
               {otp.map((value, index) => (

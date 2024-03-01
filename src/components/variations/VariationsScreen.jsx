@@ -13,8 +13,8 @@ import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 
 const VariationsScreen = ({ route }) => {
-  const data = {};
-  // const { data } = route.params;
+  // const data = {};
+  const { data } = route.params;
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
   const variations = [
