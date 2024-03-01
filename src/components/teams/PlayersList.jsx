@@ -394,7 +394,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 5,
     marginRight: 2,
-    backgroundColor: COLORS.silver,
     marginTop: 10,
   },
   playerName: {

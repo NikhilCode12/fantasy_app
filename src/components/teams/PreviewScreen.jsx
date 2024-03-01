@@ -243,7 +243,6 @@ const styles2 = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 20,
-    backgroundColor: COLORS.light_grey,
   },
   logoContainer: {
     flexDirection: "row",
