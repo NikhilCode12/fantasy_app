@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image, Modal, TextInput ,Button} from "react-native";
 import COLORS from "../constants/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/AccountScreen.style.js";
@@ -9,7 +9,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AccountScreen({ navigation }) {
   const [isVerified, setIsVerified] = useState(false);
+  const [isModalVisible,setModalVisible]=useState(false);
+  const [usernameVerified,setusernameVerified]=useState(false);
+  const [emailVerified,setEmailVerified]=useState(false);
+  const [mobileVerified,setMobileVerified]=useState(false);
 
+  
   const [data, setData] = useState({
     username: "dummy",
     contestsWon: 0,
@@ -19,7 +24,65 @@ export default function AccountScreen({ navigation }) {
     email: "",
     mobile: "",
   });
+  /*These states aare only used for modals  */
+  const [username,setUserName]=useState("");
+  const [mobile,setMobile]=useState("");
+  const[email,setEmail]=useState("");
+  function handleEmail(text)
+  {
+    setEmail(text);
+  }
+  function handleUserName(text)
+  {
+    setUserName(text);
+  }
+  function handleMobile(text)
+  {
+    setMobile(text);
+  }
+  async function updateEmail()
+  { 
+    try{
 
+    const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{email:email,emailVerified:true});
+     setData(userData.data);
+
+        // setData(parsedUser);
+        console.log("NEW DATA IS : ",userData.data);
+      }
+      catch (e)
+      {
+        console.log(e);
+      }
+    }
+  async function updateMobile()
+  { 
+    try{
+
+    const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{mobile:mobile,mobileVerified:true});
+     setData(userData.data);
+        // console.log("NEW DATA IS : ",userData.data);
+      }
+      catch (e)
+  {
+    console.log(e);
+  }
+  }
+  async function updateUserName()
+  { 
+    // console.log(username);
+    try{
+
+    const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{username:username,usernameVerified:true});
+   setData(userData.data);
+        // console.log("NEW DATA IS : ",userData.data);
+      }
+  catch (e)
+  {
+    console.log(e);
+  }
+  }
+  /*---------------- */
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -29,44 +92,62 @@ export default function AccountScreen({ navigation }) {
     }
   };
 
+  function isValidMobileNumber(number) {
+  const mobileNumberPattern = /^\d{10}$/;
+  return mobileNumberPattern.test(number);
+}
+function isValidEmailAddress(email) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
   // useEffect(() => {
-  //   getToken().then(async (token) => {
+  //   const getUser = async () => {
   //     try {
-  //       const userData = await axios.get(
-  //         "https://fanverse-backend.onrender.com/api/user/",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
+  //       const userr = await AsyncStorage.getItem("user");
+  //       const parsedUser = JSON.parse(userr);
 
-  //       if (userData) {
-  //         setData(userData.data);
-  //       }
-  //     } catch (error) {
-  //       console.log("Error in getting user data: ", error);
+  //       setData(parsedUser);
+  //       // if (parsedUser && parsedUser.msg === "User Already Registered") {
+  //       //   setData((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
+  //       // } else {
+  //       //   setData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
+  //       // }
+  //       console.log(data);
+  //     } catch (e) {
+  //       console.log(e);
   //     }
-  //   });
+  //   };
+    
+  //   getUser();
+  //   console.log("Account Screen Loaded!");
   // }, []);
-  useEffect(() => {
-    const getUser = async () => {
+  useEffect(()=>{
+          if(data.mobileVerified)
+        setMobileVerified(true);
+        if(data.usernameVerified)
+        setusernameVerified(true);
+        if(data.emailVerified)
+        setEmailVerified(true);
+  },[data]);
+   useEffect(() => {
+    getToken().then(async (token) => {
       try {
-        const userr = await AsyncStorage.getItem("user");
-        const parsedUser = JSON.parse(userr);
+        const userData = await axios.get(
+          "https://fanverse-backend.onrender.com/api/user/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        setData(parsedUser);
-        if (parsedUser && parsedUser.msg === "User Already Registered") {
-          setData((prevUser) => ({ ...prevUser, ...prevUser.existingUser }));
-        } else {
-          setData((prevUser) => ({ ...prevUser, ...prevUser.newUser }));
+        if (userData) {
+          setData(userData.data);
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log("Error in getting user data: ", error);
       }
-    };
-    getUser();
-    console.log("Account Screen Loaded!");
+    });
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -80,7 +161,9 @@ export default function AccountScreen({ navigation }) {
           <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Account</Text>
+      
       </View>
+    
       <ScrollView
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
@@ -94,7 +177,11 @@ export default function AccountScreen({ navigation }) {
             />
           </View>
           <View style={styles.top_profile_left}>
-            <Text style={styles.colorslight}>{data.username}</Text>
+           <View style={{flexDirection:"row", alignItems:"center"}}>
+
+            <Text style={styles.colorslight}>{data.username}</Text>   
+          <Ionicons name="pencil-sharp" size={14} color={COLORS.light} style={{marginLeft:10}} onPress={()=>{setModalVisible(true)}}/>
+           </View>
             <Text style={styles.colorslight_grey}>{data.email}</Text>
             <View style={styles.verfied_container}>
               <Ionicons
@@ -161,18 +248,18 @@ export default function AccountScreen({ navigation }) {
                 <Text style={styles.colorslight}>Mobile No.</Text>
                 <Text style={styles.primaryItem}>+91 {data.mobile}</Text>
               </View>
-              <View>
+              {/* <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>
-              </View>
+              </View> */}
             </View>
             <View style={styles.primaryInfoBoxRow}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={styles.colorslight}>Email Id</Text>
                 <Text style={styles.primaryItem}>{data.email}</Text>
               </View>
-              <View>
+              {/* <View>
                 <Text style={styles.ChangeText}>CHANGE</Text>
-              </View>
+              </View> */}
             </View>
           </View>
         </View>
@@ -212,6 +299,54 @@ export default function AccountScreen({ navigation }) {
             </View>
           </View>
         </View>
+          <Modal visible={isModalVisible} onRequestClose={()=>setModalVisible(false)}
+        animationType="slide" presentationStyle="" style={{flex:0.5}}>
+          <View style={{flex:1, backgroundColor:COLORS.bgLightBlack, padding:30}}>
+          <View style={{width:30,height:30,position:"relative", top:"2%", left:"90%"}}>
+           <Ionicons name="close" size={24} color={COLORS.primary} onPress={()=>setModalVisible(false)}/>
+          </View>
+          <View>
+            <Text style={{color:COLORS.light,fontSize:20}}>ENTER YOUR DETAILS</Text>
+          </View>
+          <View style={{marginTop:10}}>
+            <Text style={{color:COLORS.light,fontSize:15}}>
+              Enter UserName 
+            </Text>
+            <TextInput  placeholderTextColor={COLORS.lightGray}onChangeText={handleUserName} style={{borderWidth:1, marginTop:10, borderColor:COLORS.light, color:COLORS.light,paddingHorizontal:14, paddingVertical:6}} editable={usernameVerified?false:true} placeholder={data.username} />
+             <View style={{width:150 , marginTop:10, marginLeft:"50%"}}>
+                  {
+                usernameVerified?<Button title="Already Saved"/>:
+                <Button title="SAVE CHANGES" onPress={updateUserName}/>
+              }
+            </View>
+          </View>
+          <View style={{marginTop:10}}>
+            <Text style={{color:COLORS.light,fontSize:15}}>
+              Enter Email 
+            </Text>
+            <TextInput placeholderTextColor={COLORS.lightGray} onChangeText={handleEmail} style={{borderWidth:1, marginTop:10, borderColor:COLORS.light, color:COLORS.light,paddingHorizontal:14, paddingVertical:6}} editable={emailVerified?false:true} placeholder={data.email} />
+            <View style={{width:150 , marginTop:10, marginLeft:"50%"}}>
+                 {
+                emailVerified?<Button title="Already Saved"/>:
+                <Button title="SAVE CHANGES" onPress={updateEmail}/>
+              }
+            </View>
+          </View>
+          <View style={{marginTop:10}}>
+            <Text style={{color:COLORS.light,fontSize:15}}>
+              Enter MobileNo. 
+            </Text>
+            <TextInput placeholderTextColor={COLORS.lightGray} onChangeText={handleMobile}style={{borderWidth:1, marginTop:10, borderColor:COLORS.light, color:COLORS.light,paddingHorizontal:14, paddingVertical:6}} editable={mobileVerified?false:true} placeholder={data.mobile} />
+             <View style={{width:150 , marginTop:10, marginLeft:"50%"}}>
+              {
+                mobileVerified?<Button title="Already Saved"/>:
+                <Button title="SAVE CHANGES" onPress={updateMobile}/>
+              }
+            </View>
+          </View>
+         
+          </View>
+      </Modal>
       </ScrollView>
     </SafeAreaView>
   );

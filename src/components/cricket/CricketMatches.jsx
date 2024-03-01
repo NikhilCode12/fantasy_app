@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Text } from "react-native";
 import styles from "../../styles/cricket.matches.style";
 import COLORS from "../../constants/colors";
 import MatchesScreen from "./MatchesScreen";
