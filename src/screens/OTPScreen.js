@@ -213,12 +213,20 @@ export default function OtpScreen({ navigation, route }) {
                           await AsyncStorage.setItem(
                             "userToken",
                             JSON.stringify(user.data.token)
-                          );
-
-                          await AsyncStorage.setItem(
-                            "user",
-                            JSON.stringify(user.data)
-                          );
+                            );
+                          if(user.data.msg==="User Already Registered"){
+                            
+                            await AsyncStorage.setItem(
+                              "user",
+                              JSON.stringify(user.data.existingUser)
+                              );
+                          }
+                          else{
+                            await AsyncStorage.setItem(
+                              "user",
+                              JSON.stringify(user.data.newUser)
+                              );
+                          }
                         } catch (e) {
                           console.log(e);
                         }
