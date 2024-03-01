@@ -5,29 +5,9 @@ import COLORS from "../../constants/colors";
 import MatchesScreen from "./MatchesScreen";
 
 const CricketMatches = ({ onMatchCardPress }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <View style={{ flex: 1 }}>
-      {loading ? (
-        <View style={styles.container}>
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            style={{ marginTop: "-20%" }}
-          />
-        </View>
-      ) : (
-        <MatchesScreen onMatchCardPress={onMatchCardPress} />
-      )}
+      <MatchesScreen onMatchCardPress={onMatchCardPress} />
     </View>
   );
 };

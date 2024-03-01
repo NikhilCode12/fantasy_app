@@ -1,9 +1,7 @@
+import React, { useEffect } from "react";
 import { Text, TouchableOpacity, View, BackHandler, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
@@ -11,8 +9,10 @@ import {
   RulesScreen,
   TeamsScreen,
 } from "./BeforeContestScreens/index.js";
-import { useStripe } from "@stripe/stripe-react-native";
+import { useStripe, useConfirmPayment } from "@stripe/stripe-react-native";
 import axios from "axios";
+import styles from "../../styles/variations.style.js";
+import COLORS from "../../constants/colors.js";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -33,51 +33,72 @@ const BeforeContestDetailsScreen = ({ route }) => {
   }, []);
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const { confirmPayment, loading } = useConfirmPayment();
 
   const handleJoinContest = async () => {
-    // send request to server to create payment intent
     try {
+      const entryFee = 50;
+      const gst = Math.floor((entryFee * 28) / 100);
+      const totalAmount = entryFee + gst;
+
       const response = await axios.post(
-        "https://localhost:5000/api/payments/intents",
+        "https://fanverse-backend.onrender.com/api/payments/intents",
         {
-          amount: Math.floor(1500),
+          amount: Math.floor(totalAmount * 100),
         }
       );
 
       if (response.error) {
-        Alert.alert("Something went wrong!");
+        Alert.alert("Something went wrong with the payment intent creation!");
         return;
       }
 
-      // initialize payment sheet to place order
       const paymentIntent = response.data.paymentIntent;
 
       const initResponse = await initPaymentSheet({
         merchantDisplayName: "Fannverse",
         paymentIntentClientSecret: paymentIntent,
       });
+
       if (initResponse.error) {
-        Alert.alert("Something went wrong!");
+        Alert.alert("Error initializing payment sheet!");
         return;
       }
 
-      // present payment sheet from stripe
       const paymentResponse = await presentPaymentSheet();
-      if (paymentResponse.error) {
-        Alert.alert(
-          `Error code: ${paymentResponse.error.code}`,
-          paymentResponse.error.message
-        );
+
+      if (paymentResponse.error.code === "Canceled") {
+        Alert.alert("Payment canceled!");
         return;
       }
 
-      // after payment is done, navigate to contest screen
-      navigation.navigate("Contest", {
-        data: data,
-        amount: amount,
-        variation: variation,
-      });
-    } catch (err) {}
+      const confirmResponse = await confirmPayment(paymentIntent);
+
+      if (confirmResponse.error) {
+        if (variation === "7 + 4" || variation === "10 + 1") {
+          navigation.navigate("PlayerSelection", {
+            data: data,
+            amount: amount,
+            variation: variation,
+          });
+        } else if (variation === "Fantastic 5") {
+          navigation.navigate("PlayerSelection2", {
+            data: data,
+            amount: amount,
+            variation: variation,
+          });
+        } else {
+          navigation.navigate("PlayerSelection3", {
+            data: data,
+            amount: amount,
+            variation: variation,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error during payment:", error);
+      Alert.alert("Something went wrong during payment!");
+    }
   };
 
   return (
@@ -137,29 +158,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
       {/* Join Contest Button */}
       <TouchableOpacity
         style={styles.joinContestButton}
-//         onPress={() => {
-//           if (variation === "7 + 4" || variation === "10 + 1") {
-//             navigation.navigate("PlayerSelection", {
-//               data: data,
-//               amount: amount,
-//               variation: variation,
-//             });
-//           } else if (variation === "Fantastic 5") {
-//             navigation.navigate("PlayerSelection2", {
-//               data: data,
-//               amount: amount,
-//               variation: variation,
-//             });
-//           } else {
-//             navigation.navigate("PlayerSelection3", {
-//               data: data,
-//               amount: amount,
-//               variation: variation,
-//             });
-//           }
-//         }}
         onPress={handleJoinContest}
-        // disabled={!loading}
       >
         <Text style={styles.joinContestButtonText}>
           {"Join Contest at \u20B950"}

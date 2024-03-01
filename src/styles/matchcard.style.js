@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     width: 38,
     height: 38,
-    borderWidth: 1,
-    borderColor: COLORS.transparentBg,
     resizeMode: "contain",
   },
 

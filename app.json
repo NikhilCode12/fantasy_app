@@ -7,7 +7,7 @@
     "icon": "./assets/cricket_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/cricket_icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },

@@ -23,47 +23,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
 
   useEffect(() => {
     console.log("MatchesScreen mounted");
-
-    const fetchData = async () => {
-      try {
-        // Fetch series data from AsyncStorage
-        let seriesDataFromStorage = await AsyncStorage.getItem("seriesData");
-
-        // If series data not available in AsyncStorage, fetch from API
-        if (!seriesDataFromStorage) {
-          const seriesResponse = await axios.get(
-            "https://api.cricapi.com/v1/series?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
-          );
-          await AsyncStorage.setItem(
-            "seriesData",
-            JSON.stringify(seriesResponse.data.data)
-          );
-          seriesDataFromStorage = seriesResponse.data.data;
-        } else {
-          seriesDataFromStorage = JSON.parse(seriesDataFromStorage);
-        }
-
-        // Fetch matches data
-        const matchesResponse = await axios.get(
-          "https://api.cricapi.com/v1/matches?apikey=46d49d4f-f77a-49f8-bf70-4c103e14feca&offset=0"
-        );
-
-        const matchesData = matchesResponse.data.data;
-
-        // Set state with fetched data
-        setSeries(seriesDataFromStorage);
-        setMatches(matchesData);
-        setFullResponse(matchesResponse.data);
-        setDataLoading(false);
-
-        console.log("MatchesScreen data fetched from AsyncStorage or API");
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-
+    fetchMatchesData();
     const intervalId = setInterval(() => {
       setMatches((prevMatches) =>
         prevMatches.map((match) => ({
@@ -76,8 +36,33 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const fetchMatchesData = async () => {
+    try {
+      const cachedData = await AsyncStorage.getItem("matchesData");
+      if (cachedData !== null) {
+        const matchesData = JSON.parse(cachedData);
+        setMatches(matchesData);
+        setDataLoading(false);
+      } else {
+        const response = await axios.get(
+          "https://fanverse-backend.onrender.com/api/match/all"
+        );
+        const matchesData = response.data.map((match) => ({
+          ...match,
+          dateTimeGMT: match.date_start_ist,
+        }));
+        setMatches(matchesData);
+        setFullResponse(response.data);
+        setDataLoading(false);
+        await AsyncStorage.setItem("matchesData", JSON.stringify(matchesData));
+      }
+    } catch (err) {
+      console.log("Error while fetching data from server: ", err);
+    }
+  };
+
   const formatRemainingTime = (dateTimeGMT) => {
-    const matchTime = new Date(dateTimeGMT).getTime() + 5.5 * 60 * 60 * 1000;
+    const matchTime = new Date(dateTimeGMT).getTime();
     const currentTime = new Date().getTime();
     let timeDifference = matchTime - currentTime;
 
@@ -111,7 +96,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
 
   const formatTimeVenue = (dateTimeGMT) => {
     const matchDate = new Date(dateTimeGMT);
-    matchDate.setTime(matchDate.getTime() + 330 * 60 * 1000);
+    matchDate.setTime(matchDate.getTime());
 
     const currentDate = new Date();
     const options = { hour: "numeric", minute: "numeric", hour12: true };
@@ -142,11 +127,16 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     return `${dateString}, ${matchDate.toLocaleTimeString("en-IN", options)}`;
   };
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    setTimeout(() => {
+    try {
+      await AsyncStorage.removeItem("matchesData");
+      await fetchMatchesData();
+    } catch (err) {
+      console.log("Error while refreshing data: ", err);
+    } finally {
       setRefreshing(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -159,7 +149,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           colors={[COLORS.primary]}
-          progressBackgroundColor={COLORS.bgLightBlack}
+          progressBackgroundColor={COLORS.bgMateBlack}
         />
       }
     >
@@ -190,54 +180,52 @@ const MatchesScreen = ({ onMatchCardPress }) => {
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
+            marginVertical: "50%",
           }}
         >
-          <ActivityIndicator size="small" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       )}
       {matches
-        .slice()
+        .slice(0, 6)
         .sort((a, b) => {
-          const timeVenueA = new Date(a.date).getTime();
-          const timeVenueB = new Date(b.date).getTime();
+          const timeVenueA = new Date(a.dateTimeGMT).getTime();
+          const timeVenueB = new Date(b.dateTimeGMT).getTime();
           return timeVenueA - timeVenueB;
+        })
+        .filter((match) => {
+          const remainingTime = formatRemainingTime(match.dateTimeGMT);
+          return remainingTime !== "00s";
         })
         .map((match) => {
           const remainingTime = formatRemainingTime(match.dateTimeGMT);
-          const matchDay = formatTimeVenue(match.date);
-          if (remainingTime.includes("-")) {
-            return null;
-          }
-          if (
-            matchDay.includes("Today") ||
-            matchDay.includes("Tomorrow") ||
-            matchDay.includes("Mar")
-          ) {
-            const seriesMatch = seriesData.find(
-              (series) => series.id === match.series_id
-            );
-            const leagueName = seriesMatch ? seriesMatch.name : match.name;
+          const matchDay = formatTimeVenue(match.dateTimeGMT);
+
+          if (matchDay.includes("Today") || matchDay.includes("Tomorrow")) {
             return (
               <MatchCard
-                key={match.id}
+                key={match.match_id}
                 onMatchCardPress={() =>
                   onMatchCardPress({
-                    teamAName: match.teamInfo[0]["shortname"],
-                    teamBName: match.teamInfo[1]["shortname"],
+                    competitionId: match.competition.cid,
+                    matchId: match.match_id,
+                    teamAName: match.teama.short_name,
+                    teamBName: match.teamb.short_name,
                     timeRemaining: remainingTime,
                     timeVenue: matchDay,
-                    teamAImage: match.teamInfo[0].img,
-                    teamBImage: match.teamInfo[1].img,
+                    teamAImage: match.teama.logo_url,
+                    teamBImage: match.teamb.logo_url,
                   })
                 }
-                league={leagueName}
-                teamAImage={match.teamInfo[0].img}
-                teamAName={match.teamInfo[0]["shortname"]}
-                teamBName={match.teamInfo[1]["shortname"]}
-                teamBImage={match.teamInfo[1].img}
+                league={match.competition.title}
+                teamAImage={match.teama.logo_url}
+                teamAName={match.teama.short_name}
+                teamBName={match.teamb.short_name}
+                teamBImage={match.teamb.logo_url}
                 timeRemaining={remainingTime}
-                timeVenue={formatTimeVenue(match.dateTimeGMT)}
-                winnings={"15"}
+                timeVenue={matchDay}
+                format={match.format_str}
+                winnings={"5"}
               />
             );
           }
