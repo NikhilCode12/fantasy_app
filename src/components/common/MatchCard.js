@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import COLORS from "../../constants/colors";
 import styles from "../../styles/matchcard.style.js";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 const MatchCard = ({
   onMatchCardPress,
@@ -13,12 +13,13 @@ const MatchCard = ({
   teamBName,
   timeRemaining,
   timeVenue,
+  format,
   winnings,
 }) => {
   const [notified, setNotified] = useState(false);
 
   const truncatedLeague =
-    league.length > 30 ? league.substring(0, 30) + "..." : league;
+    league.length > 28 ? league.substring(0, 28) + "..." : league;
   const handleMatchCardPress = () => {
     const data = { timeRemaining };
     onMatchCardPress(data);
@@ -30,7 +31,23 @@ const MatchCard = ({
         {/* Top of Match Card */}
         <View style={styles.topContainer}>
           {/* League of Match */}
-          <Text style={styles.leagueText}>{truncatedLeague}</Text>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.leagueText}>{truncatedLeague}</Text>
+            <Text
+              style={[
+                styles.leagueText,
+                { fontSize: 10, color: COLORS.light_grey },
+              ]}
+            >
+              {format}
+            </Text>
+          </View>
           {/* Container for Team Details */}
           <View style={styles.teamContainer}>
             {/* Team A Logo and Name */}

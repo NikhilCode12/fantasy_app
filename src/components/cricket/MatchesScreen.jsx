@@ -207,6 +207,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 key={match.match_id}
                 onMatchCardPress={() =>
                   onMatchCardPress({
+                    matchId: match.match_id,
                     teamAName: match.teama.short_name,
                     teamBName: match.teamb.short_name,
                     timeRemaining: remainingTime,
@@ -222,6 +223,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 teamBImage={match.teamb.logo_url}
                 timeRemaining={remainingTime}
                 timeVenue={matchDay}
+                format={match.format_str}
                 winnings={"5"}
               />
             );
