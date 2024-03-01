@@ -30,7 +30,7 @@ const PlayerSelection = ({ route }) => {
   const [allRounderCount, setallRounderCount] = useState(0);
   const [selectedPlayersData, setselectedPlayersData] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState(Array(11).fill(false));
-  const [activeTab, setActiveTab] = useState("WK");
+  const [activeTab, setActiveTab] = useState("wk");
   // useEffect(() => {
   //   if (variation === "7 + 4" || variation === "10 + 1") {
   //   } else {
@@ -66,25 +66,25 @@ const PlayerSelection = ({ route }) => {
   }, []);
 
   const tabText = {
-    WK:
+    wk:
       variation === "7 + 4"
         ? "Pick 1-4 Wicket-Keepers"
         : variation == "10 + 1"
         ? "Pick 1-8 Wicket-Keepers"
         : "Pick 1-5 Wicket Keepers",
-    BAT:
+    bat:
       variation === "7 + 4"
         ? "Pick 3-6 Batsmen"
         : variation === "10 + 1"
         ? "Pick 1-8 Batsmen"
         : "Pick 1-5 Batsmen",
-    AR:
+    all:
       variation === "7 + 4"
         ? "Pick 1-4 All-Rounders"
         : variation === "10 + 1"
         ? "Pick 1-8 All-Rounders"
         : "Pick 1-5 All-Rounders",
-    BOWL:
+    bowl:
       variation === "7 + 4"
         ? "Pick 3-6 Bowlers"
         : variation === "10 + 1"
@@ -123,10 +123,10 @@ const PlayerSelection = ({ route }) => {
       newSelectedPlayers[emptyIndex] = player;
       setSelectedPlayers(newSelectedPlayers);
       setTotalPlayers(totalPlayers + 1);
-      if (tab === "WK") setWkCount((wkCount) => wkCount + 1);
-      else if (tab === "BAT")
+      if (tab === "wk") setWkCount((wkCount) => wkCount + 1);
+      else if (tab === "bat")
         setbatsmenCount((batsmenCount) => batsmenCount + 1);
-      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount + 1);
+      else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount + 1);
       else setallRounderCount((allRounderCount) => allRounderCount + 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers + 1);
@@ -142,10 +142,10 @@ const PlayerSelection = ({ route }) => {
       setTotalPlayers(totalPlayers - 1);
 
       // console.log(activeTab, totalPlayers);
-      if (tab === "WK") setWkCount((wkCount) => wkCount - 1);
-      else if (tab === "BAT")
+      if (tab === "wk") setWkCount((wkCount) => wkCount - 1);
+      else if (tab === "bat")
         setbatsmenCount((batsmenCount) => batsmenCount - 1);
-      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount - 1);
+      else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount - 1);
       else setallRounderCount((allRounderCount) => allRounderCount - 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers - 1);
@@ -299,9 +299,9 @@ const PlayerSelection = ({ route }) => {
     }
   };
   const CheckMaxLimit = (tab) => {
-    if (tab === "WK") return wkCount;
-    else if (tab === "BAT") return batsmenCount;
-    else if (tab === "BOWL") return bowlerCount;
+    if (tab === "wk") return wkCount;
+    else if (tab === "bat") return batsmenCount;
+    else if (tab === "bowl") return bowlerCount;
     return allRounderCount;
   };
   useEffect(() => {
@@ -424,7 +424,7 @@ const PlayerSelection = ({ route }) => {
       </View>
       {/* Tabs container to select WK(0), BAT(0), AR(0) and BOWL(0) */}
       <View style={styles2.tabsContainer}>
-        {["WK", "BAT", "AR", "BOWL"].map((tab, index) => (
+        {["wk", "bat", "all", "bowl"].map((tab, index) => (
           <TouchableOpacity
             key={index}
             style={[styles2.tab, activeTab === tab ? styles2.activeTab : null]}
@@ -436,7 +436,7 @@ const PlayerSelection = ({ route }) => {
                 activeTab === tab ? styles2.activeTabText : null,
               ]}
             >
-              {tab}
+              {tab === "all" ? "AR" : tab.toUpperCase()}
             </Text>
           </TouchableOpacity>
         ))}
@@ -495,7 +495,7 @@ const PlayerSelection = ({ route }) => {
       {/* Component rendering on basis of above tab selection */}
       <View style={styles2.playerComponentContainer}>
         <PlayerListComponent
-          data={data}
+          dataWithID={data}
           activePlayerTab={activeTab}
           onAddPlayerPress={() => handleAddPlayer(0)}
           onPlayerSelectionPress={(player, selectionStatus, tab) =>

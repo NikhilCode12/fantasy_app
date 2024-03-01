@@ -1,18 +1,20 @@
 import {
-  StyleSheet,
   Text,
   View,
   FlatList,
   TouchableOpacity,
   ToastAndroid,
+  Image,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import COLORS from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
+import styles from "../../styles/playerList.style.js";
 import allPlayersData from "../../constants/dummyPlayers.json";
 
 const PlayersList = ({
-  data,
+  dataWithID,
   activePlayerTab,
   onAddPlayerPress,
   onPlayerSelectionPress,
@@ -25,20 +27,76 @@ const PlayersList = ({
   variation,
   // onSelectedPlayersChange,
 }) => {
-  const [playersData, setPlayersData] = useState(allPlayersData);
+  const [squadsData, setSquadsData] = useState([]);
+  const [playersData, setPlayersData] = useState([]);
   const [pointsToggle, setPointsToggle] = useState(false);
   const [creditsToggle, setCreditsToggle] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [totalCreditsSelected, setTotalCreditsSelected] = useState(0);
+  const { competitionId, matchId } = dataWithID;
+  const [teamA, setTeamA] = useState([]);
+  const [teamB, setTeamB] = useState([]);
 
-  // useEffect(() => {
-  //   onSelectedPlayersChange(selectedPlayers);
-  // }, [selectedPlayers, onSelectedPlayersChange]);
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
 
   useEffect(() => {
-    const filteredPlayers = allPlayersData.filter(
-      (player) => player.skill === activePlayerTab
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://fanverse-backend.onrender.com/api/squads?competitionId=${competitionId}&matchId=${matchId}`
+        );
+        const data = await response.json();
+        setSquadsData(data.squads);
+
+        const teamA = data.squads[0];
+        const teamB = data.squads[1];
+
+        setTeamA(teamA);
+        setTeamB(teamB);
+
+        // find the object from the data.squads array
+
+        setPlayersData(shuffleArray(teamA.players.concat(teamB.players)));
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getTeamName = (player) => {
+    if (teamA.players.includes(player)) {
+      return teamA.team.abbr;
+    }
+    if (teamB.players.includes(player)) {
+      return teamB.team.abbr;
+    }
+  };
+
+  const getLastMatchStatus = (player) => {
+    if (teamA.last_match_played.find((p) => p.title === player.title)) {
+      return "Played last";
+    }
+    if (teamB.last_match_played.find((p) => p.title === player.title)) {
+      return "Played last";
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    const filteredPlayers = playersData.filter(
+      (player) =>
+        player.playing_role.toLowerCase() === activePlayerTab.toLowerCase()
     );
+
+    console.log("filteredPlayers", filteredPlayers);
     if (pointsToggle) {
       sortPlayersByPoints(filteredPlayers, pointsToggle);
     } else {
@@ -83,7 +141,7 @@ const PlayersList = ({
     const index = selectedPlayers.findIndex((p) => p === player);
     const isAddingPlayer = index === -1;
     if (
-      activePlayerTab === "WK" &&
+      activePlayerTab === "wk" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 4 : 8)
     ) {
@@ -95,7 +153,7 @@ const PlayersList = ({
       return;
     }
     if (
-      activePlayerTab === "BOWL" &&
+      activePlayerTab === "bowl" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 6 : 8)
     ) {
@@ -107,7 +165,7 @@ const PlayersList = ({
       return;
     }
     if (
-      activePlayerTab === "BAT" &&
+      activePlayerTab === "bat" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 6 : 8)
     ) {
@@ -119,7 +177,7 @@ const PlayersList = ({
       return;
     }
     if (
-      activePlayerTab === "AR" &&
+      activePlayerTab === "all" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= (variation === "7 + 4" ? 4 : 8)
     ) {
@@ -213,12 +271,10 @@ const PlayersList = ({
         </View>
       </View>
       {/* Players List */}
-      <FlatList
-        data={playersData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        {shuffleArray(playersData).map((item, index) => (
           <TouchableOpacity
+            key={index}
             style={[
               styles.playerContainer,
               selectedPlayers.includes(item) && styles.selectedPlayerContainer,
@@ -233,7 +289,7 @@ const PlayersList = ({
                     styles.playerTeamName,
                     selectedPlayers.includes(item) && styles.selectedPlayerName,
                   ],
-                  item.team === "DEF"
+                  getTeamName(item) === teamA.team.abbr
                     ? {
                         ...styles.playerTeamName,
                         backgroundColor: COLORS.secondary,
@@ -246,9 +302,21 @@ const PlayersList = ({
                       })
                 }
               >
-                {item.team}
+                {getTeamName(item)}
               </Text>
-              <View style={styles.playerLogo} />
+              {item.logo_url === "" ? (
+                <Ionicons
+                  name="person"
+                  size={40}
+                  color={item.team === "ABC" ? COLORS.secondary : COLORS.silver}
+                  style={styles.playerLogo}
+                />
+              ) : (
+                <Image
+                  style={styles.playerLogo}
+                  source={{ uri: item.logo_url }}
+                />
+              )}
             </View>
             {/* Player details like name and their selection percentage */}
             <View style={styles.playerDetails}>
@@ -258,7 +326,7 @@ const PlayersList = ({
                   selectedPlayers.includes(item) && styles.selectedPlayerName,
                 ]}
               >
-                {item.name}
+                {item.short_name}
               </Text>
               <Text
                 style={[
@@ -267,10 +335,10 @@ const PlayersList = ({
                     styles.selectedPlayerSelectionPercentage,
                 ]}
               >
-                Sel by {item.selection_percentage}
+                Sel by {"50%"}
               </Text>
               <View style={[styles.playerStatus, { width: 95 }]}>
-                {item.last_match_status === "" ? null : (
+                {getLastMatchStatus(item) === "" ? null : (
                   <Ionicons
                     name="checkmark-done-circle"
                     size={10}
@@ -284,7 +352,7 @@ const PlayersList = ({
                       styles.selectedPlayerStatusText,
                   ]}
                 >
-                  {item.last_match_status}
+                  {getLastMatchStatus(item)}
                 </Text>
               </View>
             </View>
@@ -297,11 +365,11 @@ const PlayersList = ({
                     styles.selectedPlayerPointsText,
                 ]}
               >
-                {item.points}
+                {Math.floor(Number(item.fantasy_player_rating)) * 15 + 1}
               </Text>
             </View>
             {/* Player credits */}
-            <View style={[styles.playerCredits, { width: 25 }]}>
+            <View style={styles.playerCredits}>
               <Text
                 style={[
                   styles.playerCreditsText,
@@ -309,9 +377,7 @@ const PlayersList = ({
                     styles.selectedPlayerCreditsText,
                 ]}
               >
-                {item.credits < 10
-                  ? item.credits.toFixed(1).concat(" ")
-                  : item.credits.toFixed(1)}
+                {item.fantasy_player_rating}
               </Text>
               {/* Add Player button */}
               <TouchableOpacity onPress={() => handlePlayerPress(item)}>
@@ -331,133 +397,10 @@ const PlayersList = ({
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 export default PlayersList;
-
-const styles = StyleSheet.create({
-  playerTeamName: {
-    color: COLORS.light,
-    fontSize: 10,
-    fontWeight: "bold",
-    position: "absolute",
-    top: -12,
-    backgroundColor: COLORS.dark,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderWidth: 1,
-    borderColor: COLORS.transparentBg,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    textAlign: "center",
-    borderTopWidth: 0,
-  },
-  playerLogoContainer: {
-    position: "relative",
-  },
-  playerPoints: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 30,
-  },
-  playerPointsText: {
-    color: COLORS.light,
-    fontSize: 13,
-    fontWeight: "bold",
-  },
-  playerCreditsText: {
-    color: COLORS.light,
-    fontSize: 13,
-    fontWeight: "bold",
-  },
-  playerCredits: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 10,
-    marginLeft: 22,
-  },
-  playerDetails: {
-    flexDirection: "column",
-    marginLeft: 10,
-    gap: 1,
-    marginRight: 22,
-    alignItems: "flex-start",
-  },
-  playerLogo: {
-    width: 40,
-    height: 40,
-    borderRadius: 5,
-    marginRight: 2,
-    marginTop: 10,
-  },
-  playerName: {
-    color: COLORS.light,
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  playerSelectionPercentage: {
-    color: COLORS.silver,
-    fontSize: 11,
-  },
-  playerStatus: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-  },
-  playerStatusText: {
-    color: COLORS.secondary,
-    fontSize: 10,
-  },
-  playerContainer: {
-    flexDirection: "row",
-    backgroundColor: COLORS.transparentBg,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    alignItems: "center",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: COLORS.transparentBg,
-  },
-  selectedPlayerContainer: {
-    backgroundColor: COLORS.dark,
-    borderColor: COLORS.secondary,
-  },
-  selectedPlayerName: {
-    color: COLORS.secondary,
-  },
-  selectedPlayerSelectionPercentage: {
-    color: COLORS.light_grey,
-  },
-  selectedPlayerStatusText: {
-    color: COLORS.secondary,
-  },
-  selectedPlayerPointsText: {
-    color: COLORS.secondary,
-  },
-  selectedPlayerCreditsText: {
-    color: COLORS.secondary,
-  },
-  playergridContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: COLORS.dark,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    alignItems: "center",
-  },
-  topTitle: {
-    color: COLORS.silver,
-    fontSize: 11,
-    fontWeight: "bold",
-  },
-});
