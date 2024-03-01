@@ -45,7 +45,7 @@ const ProfileOverlay = ({ isVisible, onClose, overlayAnimation }) => {
         console.log("Error in getting user data: ", error);
       }
     });
-  }, []);
+  }, [isVisible]);
 
   const handleLogout = async () => {
     // Clear user token from AsyncStorage
