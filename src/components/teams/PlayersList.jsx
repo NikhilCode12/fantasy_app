@@ -307,8 +307,12 @@ const PlayersList = ({
               {item.logo_url === "" ? (
                 <Ionicons
                   name="person"
-                  size={40}
-                  color={item.team === "ABC" ? COLORS.secondary : COLORS.silver}
+                  size={26}
+                  color={
+                    getTeamName(item) === teamA.team.abbr
+                      ? COLORS.secondary
+                      : COLORS.silver
+                  }
                   style={styles.playerLogo}
                 />
               ) : (

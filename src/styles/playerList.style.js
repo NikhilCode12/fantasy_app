@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 2,
     marginTop: 10,
+    marginLeft: 10,
   },
   playerName: {
     color: COLORS.light,
