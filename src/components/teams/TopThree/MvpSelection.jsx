@@ -21,10 +21,10 @@ import PlayerMvpComponent from "./PlayerMvpComponent.jsx";
 const MvpSelection = ({ route }) => {
   const { data, details, PlayersData, amount, variation } = route.params;
   const navigation = useNavigation();
-  const filterWK = PlayersData.filter((player) => player.skill === "WK");
-  const filterBAT = PlayersData.filter((player) => player.skill === "BAT");
-  const filterAR = PlayersData.filter((player) => player.skill === "AR");
-  const filterBOWL = PlayersData.filter((player) => player.skill === "BOWL");
+  const filterWK = PlayersData.filter((player) => player.skill === "wk");
+  const filterBAT = PlayersData.filter((player) => player.skill === "bat");
+  const filterAR = PlayersData.filter((player) => player.skill === "all");
+  const filterBOWL = PlayersData.filter((player) => player.skill === "bowl");
   const combinedData = [...filterWK, ...filterBAT, ...filterAR, ...filterBOWL];
   const [captainName, setcaptainName] = useState("");
   const [viceCaptainName, setViceCaptainName] = useState("");

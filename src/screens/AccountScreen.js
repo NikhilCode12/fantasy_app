@@ -108,6 +108,7 @@ export default function AccountScreen({ navigation }) {
 
     const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{username:username,usernameVerified:true});
    setData(userData.data);
+     AsyncStorage.setItem("user",userData.data);
     ToastAndroid.show("SuccessFully Updated",ToastAndroid.SHORT);
         // console.log("NEW DATA IS : ",userData.data);
       }
@@ -251,6 +252,7 @@ function isValidEmailAddress(email) {
 
         if (userData) {
           setData(userData.data);
+          AsyncStorage.setItem("user",userData.data);
           // console.log(data);
         }
       } catch (error) {

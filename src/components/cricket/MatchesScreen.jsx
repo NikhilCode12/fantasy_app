@@ -31,7 +31,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           timeRemaining: formatRemainingTime(match.dateTimeGMT),
         }))
       );
-      deleteExpiredMatches();
+      // deleteExpiredMatches();
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -44,19 +44,24 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         const matchesData = JSON.parse(cachedData);
         setMatches(matchesData);
         setDataLoading(false);
+        // await refreshMatchesData();
       } else {
         await refreshMatchesData();
       }
     } catch (err) {
       console.log("Error while fetching data from server: ", err);
     }
+    // console.log(matches.length);
   };
-
+  // useEffect(() => {
+  //   console.log(matches.length);
+  // }, [matches]);
   const refreshMatchesData = async () => {
     try {
       const response = await axios.get(
         "https://fanverse-backend.onrender.com/api/match/all"
       );
+      // console.log(response.data);
       const matchesData = response.data.map((match) => ({
         ...match,
         dateTimeGMT: match.date_start_ist,

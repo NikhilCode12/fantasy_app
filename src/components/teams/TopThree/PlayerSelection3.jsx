@@ -29,7 +29,7 @@ const PlayerSelection3 = ({ route }) => {
   const [allRounderCount, setallRounderCount] = useState(0);
   const [selectedPlayersData, setselectedPlayersData] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState(Array(3).fill(false));
-  const [activeTab, setActiveTab] = useState("WK");
+  const [activeTab, setActiveTab] = useState("wk");
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -49,17 +49,17 @@ const PlayerSelection3 = ({ route }) => {
     //   setbowlerCount(0);
     //   setallRounderCount(0);
     //   setSelectedPlayers(Array(3).fill(false));
-    //   setActiveTab("WK");
+    //   setActiveTab("wk");
     // }
     // console.log("WE ARE INSIDE 2");
     return () => backHandler.remove();
   }, []);
 
   const tabText = {
-    WK: "Pick 0-3 Wicket Keepers",
-    BAT: "Pick 0-3 Batsmen",
-    AR: "Pick 0-3 All-Rounders",
-    BOWL: "Pick 0-3 Bowlers",
+    wk: "Pick 0-3 Wicket Keepers",
+    bat: "Pick 0-3 Batsmen",
+    all: "Pick 0-3 All-Rounders",
+    bowl: "Pick 0-3 Bowlers",
   };
 
   const variationType = {
@@ -93,10 +93,10 @@ const PlayerSelection3 = ({ route }) => {
       newSelectedPlayers[emptyIndex] = player;
       setSelectedPlayers(newSelectedPlayers);
       setTotalPlayers(totalPlayers + 1);
-      if (tab === "WK") setWkCount((wkCount) => wkCount + 1);
-      else if (tab === "BAT")
+      if (tab === "wk") setWkCount((wkCount) => wkCount + 1);
+      else if (tab === "bat")
         setbatsmenCount((batsmenCount) => batsmenCount + 1);
-      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount + 1);
+      else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount + 1);
       else setallRounderCount((allRounderCount) => allRounderCount + 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers + 1);
@@ -112,10 +112,10 @@ const PlayerSelection3 = ({ route }) => {
       setTotalPlayers(totalPlayers - 1);
 
       // console.log(activeTab, totalPlayers);
-      if (tab === "WK") setWkCount((wkCount) => wkCount - 1);
-      else if (tab === "BAT")
+      if (tab === "wk") setWkCount((wkCount) => wkCount - 1);
+      else if (tab === "bat")
         setbatsmenCount((batsmenCount) => batsmenCount - 1);
-      else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount - 1);
+      else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount - 1);
       else setallRounderCount((allRounderCount) => allRounderCount - 1);
       if (player.team === "ABC") {
         setTeamABCPlayers(teamABCPlayers - 1);
@@ -136,11 +136,11 @@ const PlayerSelection3 = ({ route }) => {
   };
 
   const handleUpdateTotalPlayers = (count, tab) => {
-    // if (tab === "WK") setWkCount((wkCount) => wkCount + 1);
-    // else if (tab === "BAT") setbatsmenCount((batsmenCount) => batsmenCount + 1);
-    // else if (tab === "BOWL") setbowlerCount((bowlerCount) => bowlerCount + 1);
+    // if (tab === "wk") setWkCount((wkCount) => wkCount + 1);
+    // else if (tab === "bat") setbatsmenCount((batsmenCount) => batsmenCount + 1);
+    // else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount + 1);
     // else setallRounderCount((allRounderCount) => allRounderCount + 1);
-    // if (tab === "WK") console.log("cb");
+    // if (tab === "wk") console.log("cb");
     setTotalPlayers(count);
   };
 
@@ -188,11 +188,7 @@ const PlayerSelection3 = ({ route }) => {
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
-    } else if (
-      totalPlayers === 3 &&
-      teamABCPlayers <= 2 &&
-      teamDEFPlayers <= 2
-    ) {
+    } else if (totalPlayers === 3) {
       navigation.navigate("MvpSelection", {
         data: data,
         amount: amount,
@@ -236,17 +232,17 @@ const PlayerSelection3 = ({ route }) => {
     }
   };
   const CheckMaxLimit = (tab) => {
-    if (tab === "WK") return wkCount;
-    else if (tab === "BAT") return batsmenCount;
-    else if (tab === "BOWL") return bowlerCount;
+    if (tab === "wk") return wkCount;
+    else if (tab === "bat") return batsmenCount;
+    else if (tab === "bowl") return bowlerCount;
     return allRounderCount;
   };
   useEffect(() => {
     // console.log("---------------");
-    // console.log("WK : ", wkCount);
-    // console.log("BAT : ", batsmenCount);
-    // console.log("BOWL : ", bowlerCount);
-    // console.log("AR : ", allRounderCount);
+    // console.log("wk : ", wkCount);
+    // console.log("bat : ", batsmenCount);
+    // console.log("bowl : ", bowlerCount);
+    // console.log("all : ", allRounderCount);
     // console.log("Total : ", totalPlayers);
   }, [totalPlayers]);
   return (
@@ -359,9 +355,9 @@ const PlayerSelection3 = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* Tabs container to select WK(0), BAT(0), AR(0) and BOWL(0) */}
+      {/* Tabs container to select wk(0), bat(0), all(0) and bowl(0) */}
       <View style={styles2.tabsContainer}>
-        {["WK", "BAT", "AR", "BOWL"].map((tab, index) => (
+        {["wk", "bat", "all", "bowl"].map((tab, index) => (
           <TouchableOpacity
             key={index}
             style={[styles2.tab, activeTab === tab ? styles2.activeTab : null]}
