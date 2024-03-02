@@ -31,6 +31,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           timeRemaining: formatRemainingTime(match.dateTimeGMT),
         }))
       );
+      deleteExpiredMatches();
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -44,20 +45,49 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         setMatches(matchesData);
         setDataLoading(false);
       } else {
-        const response = await axios.get(
-          "https://fanverse-backend.onrender.com/api/match/all"
-        );
-        const matchesData = response.data.map((match) => ({
-          ...match,
-          dateTimeGMT: match.date_start_ist,
-        }));
-        setMatches(matchesData);
-        setFullResponse(response.data);
-        setDataLoading(false);
-        await AsyncStorage.setItem("matchesData", JSON.stringify(matchesData));
+        await refreshMatchesData();
       }
     } catch (err) {
       console.log("Error while fetching data from server: ", err);
+    }
+  };
+
+  const refreshMatchesData = async () => {
+    try {
+      const response = await axios.get(
+        "https://fanverse-backend.onrender.com/api/match/all"
+      );
+      const matchesData = response.data.map((match) => ({
+        ...match,
+        dateTimeGMT: match.date_start_ist,
+      }));
+      setMatches(matchesData);
+      setFullResponse(response.data);
+      setDataLoading(false);
+      await AsyncStorage.setItem("matchesData", JSON.stringify(matchesData));
+    } catch (err) {
+      console.log("Error while fetching data from server: ", err);
+    }
+  };
+
+  const deleteExpiredMatches = async (competitionId, matchId) => {
+    try {
+      const url = `https://fanverse-backend.onrender.com/api/matches/delete-expired?competitionId=${competitionId}&matchId=${matchId}`;
+      console.log("Delete URL:", url);
+
+      const response = await axios.delete(url);
+      console.log("Delete Response:", response);
+
+      if (response.status === 200) {
+        console.log("Expired match deleted successfully.");
+        await refreshMatchesData();
+      }
+
+      if (response.status === 404) {
+        console.log("No expired matches found.");
+      }
+    } catch (err) {
+      console.log("Error while deleting expired matches: ", err);
     }
   };
 
@@ -187,7 +217,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         </View>
       )}
       {matches
-        .slice(0, 6)
+        .slice(0, 5)
         .sort((a, b) => {
           const timeVenueA = new Date(a.dateTimeGMT).getTime();
           const timeVenueB = new Date(b.dateTimeGMT).getTime();
@@ -200,6 +230,10 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         .map((match) => {
           const remainingTime = formatRemainingTime(match.dateTimeGMT);
           const matchDay = formatTimeVenue(match.dateTimeGMT);
+
+          if (remainingTime === "00s") {
+            deleteExpiredMatches(match.competition.cid, match.match_id);
+          }
 
           if (matchDay.includes("Today") || matchDay.includes("Tomorrow")) {
             return (
@@ -228,6 +262,9 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 winnings={"5"}
               />
             );
+          } else {
+            deleteExpiredMatches(match.competition.cid, match.match_id);
+            return null;
           }
         })}
     </ScrollView>
