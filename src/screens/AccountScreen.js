@@ -102,18 +102,18 @@ export default function AccountScreen({ navigation }) {
   }
   async function updateUserName() {
     // console.log(username);
-    try {
-      const userData = await axios.put(
-        `https://fanverse-backend.onrender.com/api/user/${data._id}`,
-        { username: username, usernameVerified: true }
-      );
-      setData(userData.data);
-      AsyncStorage.setItem("user", userData.data);
-      ToastAndroid.show("SuccessFully Updated", ToastAndroid.SHORT);
-      // console.log("NEW DATA IS : ",userData.data);
-    } catch (e) {
-      console.log(e);
-    }
+    try{
+
+    const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{username:username,usernameVerified:true});
+   setData(userData.data);
+     AsyncStorage.setItem("user",JSON.stringify(userData.data));
+    ToastAndroid.show("SuccessFully Updated",ToastAndroid.SHORT);
+        // console.log("NEW DATA IS : ",userData.data);
+      }
+  catch (e)
+  {
+    console.log(e);
+  }
   }
   async function updateDob() {
     // console.log(username);
@@ -266,7 +266,7 @@ export default function AccountScreen({ navigation }) {
 
         if (userData) {
           setData(userData.data);
-          AsyncStorage.setItem("user", userData.data);
+              AsyncStorage.setItem("user",JSON.stringify(userData.data));
           // console.log(data);
         }
       } catch (error) {
@@ -322,10 +322,7 @@ export default function AccountScreen({ navigation }) {
         {/* personal INfo */}
         <View style={styles.personalInfoTop}>
           <View style={styles.imageContainer}>
-            <Image
-              source={require("../../assets/pic_sample.jpg")}
-              style={styles.image_profile}
-            />
+            <Text style={{fontSize:35, color:COLORS.light,textAlign:"center",marginTop:2}}>{data.username[0]}</Text>
           </View>
           <View style={styles.top_profile_left}>
             <View
