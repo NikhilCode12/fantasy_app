@@ -96,12 +96,12 @@ const MatchCard = ({
             {/* Cash Display Card */}
             <View style={styles.winningsCard}>
               <Text style={styles.winningsCardText}>
-                {"\u20B9"}
+                {/* {"\u20B9"} */}
                 {winnings}
-                {" Lakhs"}
+                {/* {" Lakhs"} */}
               </Text>
             </View>
-            <Text style={styles.winningsText}>Winnings</Text>
+            <Text style={styles.winningsText}>{""}</Text>
           </View>
           {/* Notifications Icon */}
           <TouchableOpacity
