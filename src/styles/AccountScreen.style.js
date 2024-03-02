@@ -42,10 +42,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   imageContainer: {
-    width: 75,
-    height: 75,
-    borderRadius: 50,
+    width: 55,
+    height: 55,
+    borderRadius: "50%",
+    backgroundColor:COLORS.darkRed,
     overflow: "hidden",
+    borderWidth:1,
+    borderColor:COLORS.light
   },
   image_profile: { flex: 1, width: null, height: null },
   top_profile_left: {
