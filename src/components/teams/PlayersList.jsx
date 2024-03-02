@@ -56,7 +56,8 @@ const PlayersList = ({
 
         const teamA = data.squads[0];
         const teamB = data.squads[1];
-
+        // console.log("team a is : ".teamA);
+        // console.log("team b is : ".teamB);
         setTeamA(teamA);
         setTeamB(teamB);
 
@@ -91,12 +92,14 @@ const PlayersList = ({
   };
 
   useEffect(() => {
+    // console.log(playersData.length);
     const filteredPlayers = playersData.filter(
       (player) =>
         player.playing_role.toLowerCase() === activePlayerTab.toLowerCase()
     );
 
-    console.log("filteredPlayers", filteredPlayers);
+    // console.log(filteredPlayers.length);
+    // console.log("filteredPlayers", filteredPlayers);
     if (pointsToggle) {
       sortPlayersByPoints(filteredPlayers, pointsToggle);
     } else {
@@ -272,136 +275,142 @@ const PlayersList = ({
       </View>
       {/* Players List */}
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        {shuffleArray(playersData).map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.playerContainer,
-              selectedPlayers.includes(item) && styles.selectedPlayerContainer,
-            ]}
-            onPress={() => handlePlayerPress(item)}
-          >
-            {/* Player logo */}
-            <View style={styles.playerLogoContainer}>
-              <Text
-                style={
-                  ([
-                    styles.playerTeamName,
-                    selectedPlayers.includes(item) && styles.selectedPlayerName,
-                  ],
-                  getTeamName(item) === teamA.team.abbr
-                    ? {
-                        ...styles.playerTeamName,
-                        backgroundColor: COLORS.secondary,
-                        color: COLORS.dark,
-                      }
-                    : {
-                        ...styles.playerTeamName,
-                        backgroundColor: COLORS.dark,
-                        color: COLORS.light,
-                      })
-                }
-              >
-                {getTeamName(item)}
-              </Text>
-              {item.logo_url === "" ? (
-                <Ionicons
-                  name="person"
-                  size={26}
-                  color={
+        {shuffleArray(playersData).map((item, index) =>
+          item.playing_role === activePlayerTab ? (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.playerContainer,
+                selectedPlayers.includes(item) &&
+                  styles.selectedPlayerContainer,
+              ]}
+              onPress={() => handlePlayerPress(item)}
+            >
+              {/* Player logo */}
+              <View style={styles.playerLogoContainer}>
+                <Text
+                  style={
+                    ([
+                      styles.playerTeamName,
+                      selectedPlayers.includes(item) &&
+                        styles.selectedPlayerName,
+                    ],
                     getTeamName(item) === teamA.team.abbr
-                      ? COLORS.secondary
-                      : COLORS.silver
+                      ? {
+                          ...styles.playerTeamName,
+                          backgroundColor: COLORS.secondary,
+                          color: COLORS.dark,
+                        }
+                      : {
+                          ...styles.playerTeamName,
+                          backgroundColor: COLORS.dark,
+                          color: COLORS.light,
+                        })
                   }
-                  style={styles.playerLogo}
-                />
-              ) : (
-                <Image
-                  style={styles.playerLogo}
-                  source={{ uri: item.logo_url }}
-                />
-              )}
-            </View>
-            {/* Player details like name and their selection percentage */}
-            <View style={styles.playerDetails}>
-              <Text
-                style={[
-                  styles.playerName,
-                  selectedPlayers.includes(item) && styles.selectedPlayerName,
-                ]}
-              >
-                {item.short_name}
-              </Text>
-              <Text
-                style={[
-                  styles.playerSelectionPercentage,
-                  selectedPlayers.includes(item) &&
-                    styles.selectedPlayerSelectionPercentage,
-                ]}
-              >
-                Sel by {"50%"}
-              </Text>
-              <View style={[styles.playerStatus, { width: 95 }]}>
-                {getLastMatchStatus(item) === "" ? null : (
+                >
+                  {getTeamName(item)}
+                </Text>
+                {item.logo_url === "" ? (
                   <Ionicons
-                    name="checkmark-done-circle"
-                    size={10}
-                    color={COLORS.secondary}
+                    name="person"
+                    size={26}
+                    color={
+                      getTeamName(item) === teamA.team.abbr
+                        ? COLORS.secondary
+                        : COLORS.silver
+                    }
+                    style={styles.playerLogo}
+                  />
+                ) : (
+                  <Image
+                    style={styles.playerLogo}
+                    source={{ uri: item.logo_url }}
                   />
                 )}
+              </View>
+              {/* Player details like name and their selection percentage */}
+              <View style={styles.playerDetails}>
                 <Text
                   style={[
-                    styles.playerStatusText,
-                    selectedPlayers.includes(item) &&
-                      styles.selectedPlayerStatusText,
+                    styles.playerName,
+                    selectedPlayers.includes(item) && styles.selectedPlayerName,
                   ]}
                 >
-                  {getLastMatchStatus(item)}
+                  {item.short_name}
+                </Text>
+                <Text
+                  style={[
+                    styles.playerSelectionPercentage,
+                    selectedPlayers.includes(item) &&
+                      styles.selectedPlayerSelectionPercentage,
+                  ]}
+                >
+                  Sel by {"50%"}
+                </Text>
+                <View style={[styles.playerStatus, { width: 95 }]}>
+                  {getLastMatchStatus(item) === "" ? null : (
+                    <Ionicons
+                      name="checkmark-done-circle"
+                      size={10}
+                      color={COLORS.secondary}
+                    />
+                  )}
+                  <Text
+                    style={[
+                      styles.playerStatusText,
+                      selectedPlayers.includes(item) &&
+                        styles.selectedPlayerStatusText,
+                    ]}
+                  >
+                    {getLastMatchStatus(item)}
+                  </Text>
+                </View>
+              </View>
+              {/* Player points */}
+              <View style={[styles.playerPoints, { width: 25 }]}>
+                <Text
+                  style={[
+                    styles.playerPointsText,
+                    selectedPlayers.includes(item) &&
+                      styles.selectedPlayerPointsText,
+                  ]}
+                >
+                  {Math.floor(Number(item.fantasy_player_rating)) * 15 + 1}
                 </Text>
               </View>
-            </View>
-            {/* Player points */}
-            <View style={[styles.playerPoints, { width: 25 }]}>
-              <Text
-                style={[
-                  styles.playerPointsText,
-                  selectedPlayers.includes(item) &&
-                    styles.selectedPlayerPointsText,
-                ]}
-              >
-                {Math.floor(Number(item.fantasy_player_rating)) * 15 + 1}
-              </Text>
-            </View>
-            {/* Player credits */}
-            <View style={styles.playerCredits}>
-              <Text
-                style={[
-                  styles.playerCreditsText,
-                  selectedPlayers.includes(item) &&
-                    styles.selectedPlayerCreditsText,
-                ]}
-              >
-                {item.fantasy_player_rating.toFixed(1)}
-              </Text>
-              {/* Add Player button */}
-              <TouchableOpacity onPress={() => handlePlayerPress(item)}>
-                <Ionicons
-                  name={
-                    selectedPlayers.includes(item)
-                      ? "remove-circle-outline"
-                      : "ios-add-circle-outline"
-                  }
-                  size={24}
-                  color={
-                    selectedPlayers.includes(item)
-                      ? COLORS.silver
-                      : COLORS.secondary
-                  }
-                />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        ))}
+              {/* Player credits */}
+              <View style={styles.playerCredits}>
+                <Text
+                  style={[
+                    styles.playerCreditsText,
+                    selectedPlayers.includes(item) &&
+                      styles.selectedPlayerCreditsText,
+                  ]}
+                >
+                  {item.fantasy_player_rating.toFixed(1)}
+                </Text>
+                {/* Add Player button */}
+                <TouchableOpacity onPress={() => handlePlayerPress(item)}>
+                  <Ionicons
+                    name={
+                      selectedPlayers.includes(item)
+                        ? "remove-circle-outline"
+                        : "ios-add-circle-outline"
+                    }
+                    size={24}
+                    color={
+                      selectedPlayers.includes(item)
+                        ? COLORS.silver
+                        : COLORS.secondary
+                    }
+                  />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )
+        )}
       </ScrollView>
     </View>
   );

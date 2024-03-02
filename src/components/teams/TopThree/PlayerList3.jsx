@@ -83,7 +83,7 @@ const PlayersList3 = ({
     const index = selectedPlayers.findIndex((p) => p === player);
     const isAddingPlayer = index === -1;
     if (
-      activePlayerTab === "WK" &&
+      activePlayerTab === "wk" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= 3
     ) {
@@ -95,31 +95,31 @@ const PlayersList3 = ({
       return;
     }
     if (
-      activePlayerTab === "BOWL" &&
+      activePlayerTab === "bowl" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= 3
     ) {
       ToastAndroid.showWithGravity(
-        "Max limit exceed for BOWL",
+        "Max limit exceed for Bowler",
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
       return;
     }
     if (
-      activePlayerTab === "BAT" &&
+      activePlayerTab === "bat" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= 3
     ) {
       ToastAndroid.showWithGravity(
-        "Max limit exceed for BATSMEN",
+        "Max limit exceed for Batsmen",
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
       return;
     }
     if (
-      activePlayerTab === "AR" &&
+      activePlayerTab === "all" &&
       isAddingPlayer &&
       CheckMaxLimit(activePlayerTab) >= 3
     ) {

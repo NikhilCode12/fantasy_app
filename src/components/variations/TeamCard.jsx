@@ -20,10 +20,10 @@ export default function TeamCard({
   viceCaptainName,
 }) {
   const navigation = useNavigation();
-  const filterWK = PlayersData.filter((player) => player.skill === "WK");
-  const filterBAT = PlayersData.filter((player) => player.skill === "BAT");
-  const filterAR = PlayersData.filter((player) => player.skill === "AR");
-  const filterBOWL = PlayersData.filter((player) => player.skill === "BOWL");
+  const filterWK = PlayersData.filter((player) => player.skill === "wk");
+  const filterBAT = PlayersData.filter((player) => player.skill === "bat");
+  const filterAR = PlayersData.filter((player) => player.skill === "all");
+  const filterBOWL = PlayersData.filter((player) => player.skill === "bowl");
   const teamA = PlayersData.filter((player) => player.team === "ABC");
   const teamB = PlayersData.filter((player) => player.team === "DEF");
   return (
