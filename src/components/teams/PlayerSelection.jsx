@@ -508,6 +508,7 @@ const PlayerSelection = ({ route }) => {
           tabConditions={tabText}
           CheckMaxLimit={CheckMaxLimit}
           variation={variation}
+          key={data.matchId}
           // on reset button clicked
         />
       </View>

@@ -264,7 +264,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                 timeRemaining={remainingTime}
                 timeVenue={matchDay}
                 format={match.format_str}
-                winnings={"5"}
+                winnings={"Free Entry"}
               />
             );
           } else {
