@@ -19,14 +19,34 @@ export default function TeamCard2({
   captainName,
   viceCaptainName,
   mvpName,
+  details,
 }) {
+  const getTeamName = (player) => {
+    if (details.teamA.players.includes(player)) {
+      return details.teamA.team.abbr;
+    }
+    if (details.teamB.players.includes(player)) {
+      return details.teamB.team.abbr;
+    }
+  };
   const navigation = useNavigation();
-  const filterWK = PlayersData.filter((player) => player.skill === "WK");
-  const filterBAT = PlayersData.filter((player) => player.skill === "BAT");
-  const filterAR = PlayersData.filter((player) => player.skill === "AR");
-  const filterBOWL = PlayersData.filter((player) => player.skill === "BOWL");
-  const teamA = PlayersData.filter((player) => player.team === "ABC");
-  const teamB = PlayersData.filter((player) => player.team === "DEF");
+  const filterWK = PlayersData.filter((player) => player.playing_role === "wk");
+  const filterBAT = PlayersData.filter(
+    (player) => player.playing_role === "bat"
+  );
+  const filterAR = PlayersData.filter(
+    (player) => player.playing_role === "all"
+  );
+  const filterBOWL = PlayersData.filter(
+    (player) => player.playing_role === "bowl"
+  );
+  // const teamA = PlayersData.filter(
+  //   (player) => getTeamName(player) === details.teamA
+  // );
+  // const teamB = PlayersData.filter(
+  //   (player) => getTeamName(player) === details.teamB
+  // );
+
   return (
     <View style={styles.mainContainer}>
       <View
@@ -81,12 +101,12 @@ export default function TeamCard2({
             <Text
               style={{ color: COLORS.silver, fontWeight: "800", fontSize: 16 }}
             >
-              {teamA.length}
+              {/* {teamA.length} */}
             </Text>
             <Text
               style={{ color: COLORS.silver, fontWeight: "800", fontSize: 16 }}
             >
-              {teamB.length}
+              {/* {teamB.length} */}
             </Text>
           </View>
         </View>

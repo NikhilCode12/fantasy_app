@@ -18,6 +18,7 @@ const PlayerMvpComponent = ({
   updateCaptain,
   updateViceCaptain,
   updateMvp,
+  details,
 }) => {
   const [CaptainSelected, setCaptainSelected] = useState(false);
   const [ViceCaptainSelected, setViceCaptainSelected] = useState(false);
@@ -25,7 +26,7 @@ const PlayerMvpComponent = ({
   function handleCaptain() {
     if (ViceCaptainSelected == false && MvpSelected == false) {
       // setCaptainSelected(!CaptainSelected);
-      updateCaptain(data.name, !CaptainSelected);
+      updateCaptain(data.title, !CaptainSelected);
     } else if (ViceCaptainSelected) {
       ToastAndroid.showWithGravity(
         "This Player is already Vice Captain...",
@@ -43,7 +44,7 @@ const PlayerMvpComponent = ({
   function handleViceCaptain() {
     if (CaptainSelected == false && MvpSelected == false) {
       // setViceCaptainSelected(!ViceCaptainSelected);
-      updateViceCaptain(data.name, !ViceCaptainSelected);
+      updateViceCaptain(data.title, !ViceCaptainSelected);
     } else if (CaptainSelected) {
       ToastAndroid.showWithGravity(
         "This Player is already  Captain...",
@@ -60,7 +61,7 @@ const PlayerMvpComponent = ({
   }
   function handleMvp() {
     if (CaptainSelected == false && ViceCaptainSelected == false) {
-      updateMvp(data.name, !MvpSelected);
+      updateMvp(data.title, !MvpSelected);
     } else if (CaptainSelected) {
       ToastAndroid.showWithGravity(
         "This Player is already Captain..",
@@ -76,7 +77,7 @@ const PlayerMvpComponent = ({
     }
   }
   useEffect(() => {
-    if (captainName === data.name) {
+    if (captainName === data.title) {
       setCaptainSelected(true);
     } else {
       setCaptainSelected(false);
@@ -84,7 +85,7 @@ const PlayerMvpComponent = ({
   }, [handleCaptain]);
 
   useEffect(() => {
-    if (viceCaptainName === data.name) {
+    if (viceCaptainName === data.title) {
       setViceCaptainSelected(true);
     } else {
       setViceCaptainSelected(false);
@@ -92,13 +93,21 @@ const PlayerMvpComponent = ({
   }, [handleViceCaptain]);
 
   useEffect(() => {
-    if (mvpName === data.name) {
+    if (mvpName === data.title) {
       setMvpSelected(true);
     } else {
       setMvpSelected(false);
     }
   }, [handleMvp]);
 
+  const getTeamName = (player) => {
+    if (details.teamA.players.includes(player)) {
+      return details.teamA.team.abbr;
+    }
+    if (details.teamB.players.includes(player)) {
+      return details.teamB.team.abbr;
+    }
+  };
   return (
     <View style={styles.playerContainer}>
       <View style={styles.playerLogoContainer}>
@@ -115,7 +124,7 @@ const PlayerMvpComponent = ({
               paddingHorizontal: 6,
             }}
           >
-            {data.team}
+            {getTeamName(data)}
           </Text>
           <Text
             style={{
@@ -128,7 +137,7 @@ const PlayerMvpComponent = ({
               paddingHorizontal: 6,
             }}
           >
-            {data.skill}
+            {data.playing_role}
           </Text>
         </View>
         <View style={styles.playerLogo} />
@@ -141,10 +150,10 @@ const PlayerMvpComponent = ({
         }}
       >
         <Text style={{ color: COLORS.light, fontSize: 13, fontWeight: "500" }}>
-          {data.name}
+          {data.title}
         </Text>
         <Text style={{ color: COLORS.silver, fontSize: 12, fontWeight: "500" }}>
-          {data.points} pts
+          {data.fantasy_player_rating} pts
         </Text>
       </View>
       <View style={{ flexDirection: "row", gap: 28 }}>

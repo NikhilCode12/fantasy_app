@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   ToastAndroid,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import COLORS from "../../../constants/colors";
@@ -23,6 +24,9 @@ const PlayersList2 = ({
   tabConditions,
   CheckMaxLimit,
   variation,
+  teamA,
+  teamB,
+  AllplayersData,
   // onSelectedPlayersChange,
 }) => {
   const [playersData, setPlayersData] = useState(allPlayersData);
@@ -34,10 +38,32 @@ const PlayersList2 = ({
   // useEffect(() => {
   //   onSelectedPlayersChange(selectedPlayers);
   // }, [selectedPlayers, onSelectedPlayersChange]);
+  // useEffect(() => {
+  //   console.log(activePlayerTab);
+  // }, [activePlayerTab]);
+  const getTeamName = (player) => {
+    if (teamA.players.includes(player)) {
+      return teamA.team.abbr;
+    }
+    if (teamB.players.includes(player)) {
+      return teamB.team.abbr;
+    }
+  };
+
+  const getLastMatchStatus = (player) => {
+    if (teamA.last_match_played.find((p) => p.title === player.title)) {
+      return "Played last";
+    }
+    if (teamB.last_match_played.find((p) => p.title === player.title)) {
+      return "Played last";
+    }
+    return "";
+  };
 
   useEffect(() => {
-    const filteredPlayers = allPlayersData.filter(
-      (player) => player.skill === activePlayerTab
+    console.log(AllplayersData.length);
+    const filteredPlayers = AllplayersData.filter(
+      (player) => player.playing_role === activePlayerTab
     );
     if (pointsToggle) {
       sortPlayersByPoints(filteredPlayers, pointsToggle);
@@ -49,7 +75,7 @@ const PlayersList2 = ({
   useEffect(() => {
     // Calculate total credits selected
     const totalCredits = selectedPlayers.reduce((total, player) => {
-      return total + parseFloat(player.credits);
+      return total + parseFloat(player.fantasy_player_rating);
     }, 0);
     // Update parent component with total credits
     onUpdateCredits(totalCredits);
@@ -131,11 +157,14 @@ const PlayersList2 = ({
       return;
     }
     if (isAddingPlayer) {
-      if (totalCreditsSelected + parseFloat(player.credits) <= 50) {
+      if (
+        totalCreditsSelected + parseFloat(player.fantasy_player_rating) <=
+        50
+      ) {
         if (selectedPlayers.length < 5) {
           setSelectedPlayers([...selectedPlayers, player]);
           setTotalCreditsSelected(
-            totalCreditsSelected + parseFloat(player.credits)
+            totalCreditsSelected + parseFloat(player.fantasy_player_rating)
           );
           onUpdateTotalPlayers((prev) => prev + 1);
           // if (player.team === "ABC") {
@@ -156,7 +185,7 @@ const PlayersList2 = ({
     } else {
       setSelectedPlayers(selectedPlayers.filter((p, i) => i !== index));
       setTotalCreditsSelected(
-        totalCreditsSelected - parseFloat(player.credits)
+        totalCreditsSelected - parseFloat(player.fantasy_player_rating)
       );
       onUpdateTotalPlayers((prev) => Math.max(prev - 1, 0));
       onPlayerSelectionPress(player, false, activePlayerTab);
@@ -214,8 +243,9 @@ const PlayersList2 = ({
         data={playersData}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
+            key={index}
             style={[
               styles.playerContainer,
               selectedPlayers.includes(item) && styles.selectedPlayerContainer,
@@ -230,7 +260,7 @@ const PlayersList2 = ({
                     styles.playerTeamName,
                     selectedPlayers.includes(item) && styles.selectedPlayerName,
                   ],
-                  item.team === "DEF"
+                  getTeamName(item) === teamA.team.abbr
                     ? {
                         ...styles.playerTeamName,
                         backgroundColor: COLORS.secondary,
@@ -243,9 +273,25 @@ const PlayersList2 = ({
                       })
                 }
               >
-                {item.team}
+                {getTeamName(item)}
               </Text>
-              <View style={styles.playerLogo} />
+              {item.logo_url === "" ? (
+                <Ionicons
+                  name="person"
+                  size={26}
+                  color={
+                    getTeamName(item) === teamA.team.abbr
+                      ? COLORS.secondary
+                      : COLORS.silver
+                  }
+                  style={styles.playerLogo}
+                />
+              ) : (
+                <Image
+                  style={styles.playerLogo}
+                  source={{ uri: item.logo_url }}
+                />
+              )}
             </View>
             {/* Player details like name and their selection percentage */}
             <View style={styles.playerDetails}>
@@ -255,7 +301,7 @@ const PlayersList2 = ({
                   selectedPlayers.includes(item) && styles.selectedPlayerName,
                 ]}
               >
-                {item.name}
+                {item.short_name}
               </Text>
               <Text
                 style={[
@@ -264,10 +310,10 @@ const PlayersList2 = ({
                     styles.selectedPlayerSelectionPercentage,
                 ]}
               >
-                Sel by {item.selection_percentage}
+                Sel by {"50%"}
               </Text>
               <View style={[styles.playerStatus, { width: 95 }]}>
-                {item.last_match_status === "" ? null : (
+                {getLastMatchStatus(item) === "" ? null : (
                   <Ionicons
                     name="checkmark-done-circle"
                     size={10}
@@ -281,7 +327,7 @@ const PlayersList2 = ({
                       styles.selectedPlayerStatusText,
                   ]}
                 >
-                  {item.last_match_status}
+                  {getLastMatchStatus(item)}
                 </Text>
               </View>
             </View>
@@ -294,11 +340,11 @@ const PlayersList2 = ({
                     styles.selectedPlayerPointsText,
                 ]}
               >
-                {item.points}
+                {Math.floor(Number(item.fantasy_player_rating)) * 15 + 1}
               </Text>
             </View>
             {/* Player credits */}
-            <View style={[styles.playerCredits, { width: 25 }]}>
+            <View style={styles.playerCredits}>
               <Text
                 style={[
                   styles.playerCreditsText,
@@ -306,9 +352,9 @@ const PlayersList2 = ({
                     styles.selectedPlayerCreditsText,
                 ]}
               >
-                {item.credits < 10
-                  ? item.credits.toFixed(1).concat(" ")
-                  : item.credits.toFixed(1)}
+                {item.fantasy_player_rating
+                  ? item.fantasy_player_rating.toFixed(1)
+                  : "1"}
               </Text>
               {/* Add Player button */}
               <TouchableOpacity onPress={() => handlePlayerPress(item)}>
