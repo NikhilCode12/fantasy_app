@@ -5,6 +5,7 @@ import {
   BackHandler,
   Image,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
@@ -31,16 +32,78 @@ const PlayerSelection = ({ route }) => {
   const [selectedPlayersData, setselectedPlayersData] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState(Array(11).fill(false));
   const [activeTab, setActiveTab] = useState("wk");
-  // useEffect(() => {
-  //   if (variation === "7 + 4" || variation === "10 + 1") {
-  //   } else {
-  //     navigation.navigate("PlayerSelection2", {
-  //       data: data,
-  //       amount: amount,
-  //       variation: variation,
-  //     });
-  //   }
-  // }, []);
+
+  const [refreshing, setRefreshing] = useState(true);
+  const [teamA, setTeamA] = useState([]);
+  const [teamB, setTeamB] = useState([]);
+  const [matchId, setMatchId] = useState(data.matchId);
+  const [competitionId, setCompetitionId] = useState(data.competitionId);
+  const [playersData, setPlayersData] = useState([]);
+  const [squadsData, setSquadsData] = useState([]);
+  useEffect(() => {
+    const getMatchIdandCompetitionId = async () => {
+      try {
+        const matchId = await AsyncStorage.getItem("matchId");
+        const competitionId = await AsyncStorage.getItem("competitionId");
+        console.log("matchId: ", matchId);
+        console.log("competitionId: ", competitionId);
+        setMatchId(matchId);
+        setCompetitionId(competitionId);
+      } catch (e) {
+        console.log("Error getting matchId and competitionId: ", e);
+      }
+    };
+
+    getMatchIdandCompetitionId();
+  }, []);
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://fanverse-backend.onrender.com/api/squads?competitionId=${competitionId}&matchId=${matchId}`
+        );
+        const data = await response.json();
+        setSquadsData(data.squads);
+
+        const teamA = data.squads[0];
+        const teamB = data.squads[1];
+        // console.log("team a is : ".teamA);
+        // console.log("team b is : ".teamB);
+        setTeamA(teamA);
+        setTeamB(teamB);
+
+        // find the object from the data.squads array
+
+        setPlayersData(shuffleArray(teamA.players.concat(teamB.players)));
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    if (playersData.length > 0) {
+      setRefreshing(false);
+    }
+  }, [playersData]);
+  const getTeamName = (player) => {
+    if (teamA.players.includes(player)) {
+      return teamA.team.abbr;
+    }
+    if (teamB.players.includes(player)) {
+      return teamB.team.abbr;
+    }
+  };
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -49,19 +112,7 @@ const PlayerSelection = ({ route }) => {
         return true;
       }
     );
-    // if (newTeam && newTeam == true) {
-    //   setTeamABCPlayers(0);
-    //   setTeamDEFPlayers(0);
-    //   setTotalCredits(100);
-    //   setTotalPlayers(0);
-    //   setselectedPlayersData([]);
-    //   setWkCount(0);
-    //   setbatsmenCount(0);
-    //   setbowlerCount(0);
-    //   setallRounderCount(0);
-    //   setSelectedPlayers(Array(11).fill(false));
-    //   setActiveTab("WK");
-    // }
+
     return () => backHandler.remove();
   }, []);
 
@@ -128,7 +179,7 @@ const PlayerSelection = ({ route }) => {
         setbatsmenCount((batsmenCount) => batsmenCount + 1);
       else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount + 1);
       else setallRounderCount((allRounderCount) => allRounderCount + 1);
-      if (player.team === "ABC") {
+      if (getTeamName(player) === teamA.team.abbr) {
         setTeamABCPlayers(teamABCPlayers + 1);
       } else {
         setTeamDEFPlayers(teamDEFPlayers + 1);
@@ -147,13 +198,13 @@ const PlayerSelection = ({ route }) => {
         setbatsmenCount((batsmenCount) => batsmenCount - 1);
       else if (tab === "bowl") setbowlerCount((bowlerCount) => bowlerCount - 1);
       else setallRounderCount((allRounderCount) => allRounderCount - 1);
-      if (player.team === "ABC") {
+      if (getTeamName(player) === teamA.team.abbr) {
         setTeamABCPlayers(teamABCPlayers - 1);
       } else {
         setTeamDEFPlayers(teamDEFPlayers - 1);
       }
       setselectedPlayersData(
-        selectedPlayersData.filter((p) => p.name !== player.name)
+        selectedPlayersData.filter((p) => p.title !== player.title)
       );
     }
     // console.log(totalPlayers);
@@ -214,13 +265,13 @@ const PlayerSelection = ({ route }) => {
       );
     } else if (teamABCPlayers < 1) {
       ToastAndroid.showWithGravity(
-        "Select atleast 1 from Team ABC.",
+        `Select atleast 1 from Team ${teamA.team.abbr}.`,
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
     } else if (teamDEFPlayers < 1) {
       ToastAndroid.showWithGravity(
-        "Select atleast 1 from Team DEF.",
+        `Select atleast 1 from Team ${teamB.team.abbr}.`,
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
@@ -258,6 +309,8 @@ const PlayerSelection = ({ route }) => {
           teamABCPlayers,
           teamDEFPlayers,
           totalCredits,
+          teamA,
+          teamB,
         },
       });
     } else {
@@ -436,7 +489,7 @@ const PlayerSelection = ({ route }) => {
                 activeTab === tab ? styles2.activeTabText : null,
               ]}
             >
-              {tab === "all" ? "AR" : tab.toUpperCase()}
+              {tab.toUpperCase()}
             </Text>
           </TouchableOpacity>
         ))}
@@ -494,23 +547,33 @@ const PlayerSelection = ({ route }) => {
       </View>
       {/* Component rendering on basis of above tab selection */}
       <View style={styles2.playerComponentContainer}>
-        <PlayerListComponent
-          dataWithID={data}
-          activePlayerTab={activeTab}
-          onAddPlayerPress={() => handleAddPlayer(0)}
-          onPlayerSelectionPress={(player, selectionStatus, tab) =>
-            handlePlayerSelectionPress(player, selectionStatus, tab)
-          }
-          onUpdateCredits={(credits) => handleUpdateCredits(credits)}
-          onUpdateTotalPlayers={handleUpdateTotalPlayers}
-          onUpdateTeamABCPlayers={handleUpdateTeamABCPlayers}
-          onUpdateTeamDEFPlayers={handleUpdateTeamDEFPlayers}
-          tabConditions={tabText}
-          CheckMaxLimit={CheckMaxLimit}
-          variation={variation}
-          key={data.matchId}
-          // on reset button clicked
-        />
+        {refreshing == true ? (
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            style={{ marginTop: "40%" }}
+          />
+        ) : (
+          <PlayerListComponent
+            data={data}
+            activePlayerTab={activeTab}
+            onAddPlayerPress={() => handleAddPlayer(0)}
+            onPlayerSelectionPress={(player, selectionStatus, tab) =>
+              handlePlayerSelectionPress(player, selectionStatus, tab)
+            }
+            onUpdateCredits={(credits) => handleUpdateCredits(credits)}
+            onUpdateTotalPlayers={handleUpdateTotalPlayers}
+            onUpdateTeamABCPlayers={handleUpdateTeamABCPlayers}
+            onUpdateTeamDEFPlayers={handleUpdateTeamDEFPlayers}
+            tabConditions={tabText}
+            CheckMaxLimit={CheckMaxLimit}
+            variation={variation}
+            teamA={teamA}
+            teamB={teamB}
+            AllplayersData={playersData}
+            // on reset button clicked
+          />
+        )}
       </View>
       {/* Buttons Container for preview and next */}
       <View style={styles2.buttonsContainer}>
