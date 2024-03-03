@@ -17,13 +17,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const MatchesScreen = ({ onMatchCardPress }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [matches, setMatches] = useState([]);
-  const [seriesData, setSeries] = useState({});
   const [dataLoading, setDataLoading] = useState(true);
-  const [fullResponse, setFullResponse] = useState({});
 
   useEffect(() => {
     console.log("MatchesScreen mounted");
     fetchMatchesData();
+
     const intervalId = setInterval(() => {
       setMatches((prevMatches) =>
         prevMatches.map((match) => ({
@@ -31,68 +30,71 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           timeRemaining: formatRemainingTime(match.dateTimeGMT),
         }))
       );
-      // deleteExpiredMatches();
     }, 1000);
 
-    return () => clearInterval(intervalId);
+    return () => {
+      console.log("MatchesScreen unmounted");
+      clearInterval(intervalId);
+    };
   }, []);
+
+  // const isMatchExpired = (match) => {
+  //   const currentTime = new Date().getTime();
+  //   const matchTime = new Date(match.dateTimeGMT).getTime();
+  //   return matchTime < currentTime;
+  // };
+
+  // const markMatchesAsExpired = async (matches) => {
+  //   try {
+  //     for (const match of matches) {
+  //       const url = `https://fanverse-backend.onrender.com/api/match/${match.match_id}`;
+  //       const payload = { isExpired: true };
+  //       const response = await axios.put(url, payload);
+  //       console.log("Mark Expired Response:", response);
+  //     }
+  //   } catch (err) {
+  //     console.log("Error marking matches as expired: ", err);
+  //   }
+  // };
 
   const fetchMatchesData = async () => {
     try {
-      const cachedData = await AsyncStorage.getItem("matchesData");
-      if (cachedData !== null) {
-        const matchesData = JSON.parse(cachedData);
-        setMatches(matchesData);
+      const matchesDataFromStorage = await AsyncStorage.getItem("matchesData");
+      if (matchesDataFromStorage) {
+        setMatches(JSON.parse(matchesDataFromStorage));
         setDataLoading(false);
-        // await refreshMatchesData();
-      } else {
-        await refreshMatchesData();
+        return;
       }
-    } catch (err) {
-      console.log("Error while fetching data from server: ", err);
-    }
-    // console.log(matches.length);
-  };
-  // useEffect(() => {
-  //   console.log(matches.length);
-  // }, [matches]);
-  const refreshMatchesData = async () => {
-    try {
-      const response = await axios.get(
+
+      const matchesResponse = await axios.get(
         "https://fanverse-backend.onrender.com/api/match/all"
       );
-      // console.log(response.data);
-      const matchesData = response.data.map((match) => ({
+
+      const matchesDataFromServer = matchesResponse.data.map((match) => ({
         ...match,
         dateTimeGMT: match.date_start_ist,
       }));
-      setMatches(matchesData);
-      setFullResponse(response.data);
+
+      setMatches(matchesDataFromServer);
       setDataLoading(false);
-      await AsyncStorage.setItem("matchesData", JSON.stringify(matchesData));
+      await AsyncStorage.setItem(
+        "matchesData",
+        JSON.stringify(matchesDataFromServer)
+      );
     } catch (err) {
       console.log("Error while fetching data from server: ", err);
     }
   };
 
-  const deleteExpiredMatches = async (competitionId, matchId) => {
+  const onRefresh = async () => {
+    setRefreshing(true);
     try {
-      const url = `https://fanverse-backend.onrender.com/api/matches/delete-expired?competitionId=${competitionId}&matchId=${matchId}`;
-      console.log("Delete URL:", url);
-
-      const response = await axios.delete(url);
-      console.log("Delete Response:", response);
-
-      if (response.status === 200) {
-        console.log("Expired match deleted successfully.");
-        await refreshMatchesData();
-      }
-
-      if (response.status === 404) {
-        console.log("No expired matches found.");
-      }
+      await AsyncStorage.removeItem("matchesData");
+      await fetchMatchesData();
     } catch (err) {
-      console.log("Error while deleting expired matches: ", err);
+      console.log("Error while refreshing data: ", err);
+    } finally {
+      setRefreshing(false);
     }
   };
 
@@ -162,18 +164,6 @@ const MatchesScreen = ({ onMatchCardPress }) => {
     return `${dateString}, ${matchDate.toLocaleTimeString("en-IN", options)}`;
   };
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    try {
-      await AsyncStorage.removeItem("matchesData");
-      await fetchMatchesData();
-    } catch (err) {
-      console.log("Error while refreshing data: ", err);
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
   return (
     <ScrollView
       style={styles.matchesContainer}
@@ -222,7 +212,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         </View>
       )}
       {matches
-        .slice(0, 5)
+        .slice(0, 6)
         .sort((a, b) => {
           const timeVenueA = new Date(a.dateTimeGMT).getTime();
           const timeVenueB = new Date(b.dateTimeGMT).getTime();
@@ -236,11 +226,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           const remainingTime = formatRemainingTime(match.dateTimeGMT);
           const matchDay = formatTimeVenue(match.dateTimeGMT);
 
-          if (remainingTime === "00s") {
-            deleteExpiredMatches(match.competition.cid, match.match_id);
-          }
-
-          if (matchDay.includes("Today") || matchDay.includes("Tomorrow")) {
+          if (true) {
             return (
               <MatchCard
                 key={match.match_id}
@@ -268,7 +254,6 @@ const MatchesScreen = ({ onMatchCardPress }) => {
               />
             );
           } else {
-            deleteExpiredMatches(match.competition.cid, match.match_id);
             return null;
           }
         })}

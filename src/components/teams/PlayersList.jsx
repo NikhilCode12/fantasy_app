@@ -11,7 +11,7 @@ import React, { useState, useEffect } from "react";
 import COLORS from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../../styles/playerList.style.js";
-import allPlayersData from "../../constants/dummyPlayers.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PlayersList = ({
   dataWithID,
@@ -33,9 +33,29 @@ const PlayersList = ({
   const [creditsToggle, setCreditsToggle] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [totalCreditsSelected, setTotalCreditsSelected] = useState(0);
-  const { competitionId, matchId } = dataWithID;
   const [teamA, setTeamA] = useState([]);
   const [teamB, setTeamB] = useState([]);
+
+  // get the matchId and competitionId from the async storage
+  const [matchId, setMatchId] = useState(dataWithID.matchId);
+  const [competitionId, setCompetitionId] = useState(dataWithID.competitionId);
+
+  useEffect(() => {
+    const getMatchIdandCompetitionId = async () => {
+      try {
+        const matchId = await AsyncStorage.getItem("matchId");
+        const competitionId = await AsyncStorage.getItem("competitionId");
+        console.log("matchId: ", matchId);
+        console.log("competitionId: ", competitionId);
+        setMatchId(matchId);
+        setCompetitionId(competitionId);
+      } catch (e) {
+        console.log("Error getting matchId and competitionId: ", e);
+      }
+    };
+
+    getMatchIdandCompetitionId();
+  }, []);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
