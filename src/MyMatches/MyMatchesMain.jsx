@@ -13,7 +13,9 @@ import Upcoming from "../components/upcoming/Upcoming";
 
 import LiveMatchScreen from "./cricket/LiveMatchScreen";
 import UpcomingMatchScreen from "./cricket/UpcomingMatchScreen";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
+const Tab = createMaterialTopTabNavigator();
 const games = {
   Cricket: {
     name: "Cricket",
@@ -131,7 +133,8 @@ const MyMatchesMain = ({ onMatchCardPress }) => {
           ))}
         </ScrollView>
       </View>
-      <View style={styles.midContainer}>
+
+      {/* <View style={styles.midContainer}>
         <TouchableOpacity
           style={[
             styles.widgetStyle,
@@ -206,9 +209,38 @@ const MyMatchesMain = ({ onMatchCardPress }) => {
             Completed
           </Text>
         </TouchableOpacity>
-      </View>
-
-      {selectedGame !== "Cricket" ? (
+      </View> */}
+      {selectedGame === "Cricket" ? (
+        <Tab.Navigator
+          screenOptions={{
+            tabBarLabelStyle: { fontSize: 12, fontWeight: "bold" },
+            tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+            tabBarStyle: { backgroundColor: COLORS.bgMateBlack },
+            tabBarActiveTintColor: COLORS.primary,
+            tabBarInactiveTintColor: COLORS.lightGray,
+          }}
+          initialRouteName="Live"
+        >
+          <Tab.Screen
+            name="Live"
+            component={LiveMatchScreen}
+            options={{ title: "Live" }}
+          />
+          <Tab.Screen
+            name="Upcoming"
+            component={UpcomingMatchScreen}
+            options={{ title: "Upcoming" }}
+          />
+          <Tab.Screen
+            name="Coming"
+            component={Upcoming}
+            options={{ title: "Completed" }}
+          />
+        </Tab.Navigator>
+      ) : (
+        <Upcoming />
+      )}
+      {/* {selectedGame !== "Cricket" ? (
         <Upcoming />
       ) : selectedWidget === "Live" ? (
         <LiveMatchScreen />
@@ -216,7 +248,7 @@ const MyMatchesMain = ({ onMatchCardPress }) => {
         <UpcomingMatchScreen />
       ) : (
         <Upcoming />
-      )}
+      )} */}
     </View>
   );
 };

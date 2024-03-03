@@ -79,7 +79,7 @@ const LeaderBoard = () => {
 
   // Find the current user in the leaderboard data
   const currentUserIndex = users.findIndex(
-    (user) => user.username === currentUser?.newUser.username
+    (user) => user.username === currentUser?.username
   );
   const currentUserData =
     currentUserIndex !== -1 ? users[currentUserIndex] : null;
@@ -123,11 +123,11 @@ const LeaderBoard = () => {
               ]}
             >
               <View style={styles.personInfo}>
-                <Ionicons
+                {/* <Ionicons
                   name="person-circle"
                   color={COLORS.secondary}
                   size={36}
-                />
+                /> */}
                 <View style={{ marginLeft: 8 }}>
                   <Text
                     style={[
@@ -174,11 +174,28 @@ const LeaderBoard = () => {
             return (
               <View key={index} style={styles.personCard}>
                 <View style={styles.personInfo}>
-                  <Ionicons
+                  <View
+                    style={{
+                      backgroundColor: COLORS.darkRed,
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 35,
+                      width: 35,
+                      borderRadius: 50,
+                      borderWidth: 1,
+                      borderColor: COLORS.light,
+                    }}
+                  >
+                    <Text style={{ color: COLORS.light, fontSize: 16 }}>
+                      {user.username.charAt(0).toUpperCase()}
+                    </Text>
+                  </View>
+                  {/* <Ionicons
                     name="person-circle"
                     color={COLORS.light}
                     size={36}
-                  />
+                  /> */}
                   <View style={{ marginLeft: 8 }}>
                     <Text style={styles.personNameText}>{user.username}</Text>
                     <Text style={styles.personPointsText}>
