@@ -69,13 +69,15 @@ const MatchesScreen = ({ onMatchCardPress }) => {
       const matchesResponse = await axios.get(
         "https://fanverse-backend.onrender.com/api/match/all"
       );
-
+      console.log(matchesResponse.data.length);
       const matchesDataFromServer = matchesResponse.data.map((match) => ({
         ...match,
         dateTimeGMT: match.date_start_ist,
       }));
 
       setMatches(matchesDataFromServer);
+      console.log("--- ", matches.length);
+      // if (matches.length > 0) console.log(matches[0]);
       setDataLoading(false);
       await AsyncStorage.setItem(
         "matchesData",
@@ -211,7 +213,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       )}
-      {matches
+      {/* {matches
         .slice(0, 6)
         .sort((a, b) => {
           const timeVenueA = new Date(a.dateTimeGMT).getTime();
@@ -227,6 +229,54 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           const matchDay = formatTimeVenue(match.dateTimeGMT);
 
           if (true) {
+            return (
+              <MatchCard
+                key={match.match_id}
+                onMatchCardPress={() =>
+                  onMatchCardPress({
+                    competitionId: match.competition.cid,
+                    matchId: match.match_id,
+                    teamAName: match.teama.short_name,
+                    teamBName: match.teamb.short_name,
+                    timeRemaining: remainingTime,
+                    timeVenue: matchDay,
+                    teamAImage: match.teama.logo_url,
+                    teamBImage: match.teamb.logo_url,
+                  })
+                }
+                league={match.competition.title}
+                teamAImage={match.teama.logo_url}
+                teamAName={match.teama.short_name}
+                teamBName={match.teamb.short_name}
+                teamBImage={match.teamb.logo_url}
+                timeRemaining={remainingTime}
+                timeVenue={matchDay}
+                format={match.format_str}
+                winnings={"Free Entry"}
+              />
+            );
+          } else {
+            return null;
+          }
+        })} */}
+      {/* {matches.slice(0, 10).map((match, index) => {
+        console.log(index, "  ", match.dateTimeGMT);
+      })} */}
+      {matches
+        .slice(0, 216)
+        .sort((a, b) => {
+          const timeVenueA = new Date(a.dateTimeGMT).getTime();
+          const timeVenueB = new Date(b.dateTimeGMT).getTime();
+          return timeVenueA - timeVenueB;
+        })
+        .map((match, index) => {
+          const currentTime = new Date().getTime();
+          const matchTime = new Date(match.dateTimeGMT).getTime();
+          const timeDifference = matchTime - currentTime;
+          if (timeDifference > 0 && timeDifference <= 48 * 60 * 60 * 1000) {
+            // console.log(index, "  ", match.dateTimeGMT);
+            const remainingTime = formatRemainingTime(match.dateTimeGMT);
+            const matchDay = formatTimeVenue(match.dateTimeGMT);
             return (
               <MatchCard
                 key={match.match_id}
