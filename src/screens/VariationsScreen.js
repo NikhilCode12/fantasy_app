@@ -10,11 +10,13 @@ const VariationsScreen = () => {
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
   const variations = [
-    { id: "1", title: "7 + 4" },
-    { id: "2", title: "10 player fantasy" },
-    { id: "3", title: "Powerplay" },
-    { id: "4", title: "Fanverse original" },
-    { id: "5", title: "Playgrounds" },
+     { id: "1", title: "7 + 4" },
+    { id: "2", title: "10 + 1" },
+    { id: "3", title: "Fantastic 5" },
+    { id: "4", title: "Top 3" },
+    { id: "5", title: "Fanverse Original" },
+    { id: "6", title: "Powerplay" },
+    { id: "7", title: "Playgrounds" },
   ];
   return (
     <SafeAreaView style={styles.container}>
