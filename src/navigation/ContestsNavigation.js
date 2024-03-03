@@ -31,7 +31,13 @@ const screenOptions = {
 
 const tabBarSize = 24;
 
-const ContestsNavigation = () => {
+const ContestsNavigation = ({ route }) => {
+  const { data, amount, variation } = route.params;
+
+  if (variation === "Ball by Ball Predictor") {
+    return null;
+  }
+
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen

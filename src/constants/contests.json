@@ -1,5 +1,82 @@
 [
   {
+    "winners": 80,
+    "overs": "1-3",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 50,
+    "totalSpots": 100,
+    "megaPrize": "₹0",
+    "title": "Overs: 1-3",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 50,
+    "overs": "3-6",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 40,
+    "totalSpots": 100,
+    "megaPrize": "₹0",
+    "title": "Overs: 3-6",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 40,
+    "overs": "6-9",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 50,
+    "totalSpots": 50,
+    "megaPrize": "₹0",
+    "title": "Overs: 6-9",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 25,
+    "overs": "9-12",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 40,
+    "totalSpots": 40,
+    "megaPrize": "₹0",
+    "title": "Overs: 9-12",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 15,
+    "overs": "12-15",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 20,
+    "totalSpots": 20,
+    "megaPrize": "₹0",
+    "title": "Overs: 12-15",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 10,
+    "overs": "15-18",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 15,
+    "totalSpots": 15,
+    "megaPrize": "₹0",
+    "title": "Overs: 15-18",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
+    "winners": 2,
+    "overs": "18-20",
+    "prizePool": "Free",
+    "entryFee": 0,
+    "spotsLeft": 5,
+    "totalSpots": 5,
+    "megaPrize": "₹0",
+    "title": "Overs: 18-20",
+    "variation": "Ball by Ball Predictor"
+  },
+  {
     "winners": 1000,
     "prizePool": "₹50 Lakhs",
     "entryFee": "₹50",

@@ -6,14 +6,14 @@ const cStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 5,
     backgroundColor: COLORS.bgLightBlack,
   },
   sortText: {
     color: COLORS.light_grey,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "500",
   },
   sortButton: {
@@ -24,7 +24,7 @@ const cStyles = StyleSheet.create({
   },
   sortButtonText: {
     color: COLORS.light_grey,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "500",
   },
   filterElement: {
@@ -34,10 +34,10 @@ const cStyles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: COLORS.transparentBg,
     paddingHorizontal: 8,
-    gap: 6,
+    gap: 4,
   },
   matchText2: {
-    fontSize: 12,
+    fontSize: 11,
     paddingVertical: 6,
     fontWeight: "500",
     color: COLORS.light_grey,

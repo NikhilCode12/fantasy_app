@@ -1,14 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
 const ContestCard = ({
   contest,
   variationSelected,
+  oversSelected,
   handleContestCardPress,
 }) => {
   const {
+    title,
     winners,
     prizePool,
     entryFee,
@@ -23,21 +25,62 @@ const ContestCard = ({
     return null;
   }
 
+  if (oversSelected !== title) {
+    return null;
+  }
+
   const spotsLeftFormatted = spotsLeft.toLocaleString("en-IN");
   const totalSpotsFormatted = totalSpots.toLocaleString("en-IN");
 
   const spotsTakenPercentage = ((totalSpots - spotsLeft) / totalSpots) * 100;
   const redProgressBarStyle = {
     width: `${spotsTakenPercentage}%`,
-    backgroundColor: COLORS.secondary,
+    backgroundColor:
+      variationSelected === "Ball by Ball Predictor"
+        ? "lightblue"
+        : COLORS.secondary,
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleContestCardPress}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => handleContestCardPress(entryFee)}
+    >
       <View style={styles.winnersInfoContainer}>
-        <View style={styles.topLeftContainer}>
-          <Ionicons name="medal" size={12} color={COLORS.bgMateBlack} />
-          <Text style={styles.winnersText}>Winners: {winners}</Text>
+        <View
+          style={[
+            styles.topLeftContainer,
+            {
+              backgroundColor:
+                variationSelected === "Ball by Ball Predictor"
+                  ? COLORS.btn
+                  : COLORS.silver,
+            },
+          ]}
+        >
+          {variationSelected === "Ball by Ball Predictor" ? (
+            <MaterialCommunityIcons
+              name="medal"
+              size={12}
+              color={COLORS.light_grey}
+            />
+          ) : (
+            <Ionicons name="medal" size={12} color={COLORS.bgMateBlack} />
+          )}
+          <Text
+            style={[
+              styles.winnersText,
+              {
+                color:
+                  variationSelected === "Ball by Ball Predictor"
+                    ? COLORS.light
+                    : COLORS.dark,
+                fontSize: 12,
+              },
+            ]}
+          >
+            Winners: {winners}
+          </Text>
         </View>
       </View>
       <View style={styles.contestDetailsContainer}>
@@ -47,14 +90,40 @@ const ContestCard = ({
         </View>
         <View style={styles.entryFeeContainer}>
           <Text style={styles.entryFeeText}>Entry Fee</Text>
-          <Text style={styles.entryFeeAmount}>{entryFee}</Text>
+          <Text
+            style={[
+              styles.entryFeeAmount,
+              {
+                backgroundColor:
+                  variationSelected === "Ball by Ball Predictor"
+                    ? COLORS.btn
+                    : COLORS.secondary,
+                color:
+                  variationSelected === "Ball by Ball Predictor"
+                    ? COLORS.light
+                    : COLORS.dark,
+              },
+            ]}
+          >
+            {entryFee}
+          </Text>
         </View>
       </View>
       <View style={styles.spotsLeftContainer}>
         <View style={[styles.progressBar, redProgressBarStyle]}></View>
         <View style={styles.whiteProgressBar}></View>
         <View style={styles.spotsLeftDetails}>
-          <Text style={styles.spotsLeftText}>
+          <Text
+            style={[
+              styles.spotsLeftText,
+              {
+                color:
+                  variationSelected === "Ball by Ball Predictor"
+                    ? "lightblue"
+                    : COLORS.secondary,
+              },
+            ]}
+          >
             {spotsLeftFormatted} Spots left
           </Text>
           <Text style={styles.totalSpotsText}>{totalSpotsFormatted} Spots</Text>
@@ -99,7 +168,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: COLORS.silver,
     paddingHorizontal: 6,
     paddingVertical: 2,
     gap: 4,
@@ -200,7 +268,7 @@ const styles = StyleSheet.create({
   prizeAmount: {
     color: COLORS.silver,
     fontSize: 11,
-    fontWeight: "500",
+    fontWeight: "700",
   },
   whiteProgressBar: {
     backgroundColor: COLORS.silver,

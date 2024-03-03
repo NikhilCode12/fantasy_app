@@ -41,14 +41,63 @@ const screenOptions = {
 const tabBarSize = 24;
 
 const BottomNavigation = ({ route }) => {
-  const { data, amount, variation, PlayersData, captainName, viceCaptainName } =
-    route.params;
+  const {
+    data,
+    amount,
+    variation,
+    PlayersData,
+    captainName,
+    viceCaptainName,
+    title,
+  } = route.params;
   // useEffect(() => {
   //   if (PlayersData) console.log("Have players data");
   //   else {
   //     console.log("NO PLAYERS DATA");
   //   }
   // }, []);
+
+  if (variation === "Ball by Ball Predictor") {
+    return (
+      <Tab.Navigator screenOptions={screenOptions}>
+        <Tab.Screen
+          name="Contests"
+          component={ContestsScreen}
+          initialParams={{ data, amount, variation, title }}
+          options={{
+            tabBarIcon: ({ focused }) => {
+              return (
+                <>
+                  <MaterialCommunityIcons
+                    name={focused ? "trophy-variant" : "trophy-variant-outline"}
+                    size={tabBarSize}
+                    color={focused ? COLORS.primary : COLORS.light_grey}
+                  />
+                </>
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="My Contests"
+          component={MyContestsScreen}
+          initialParams={{ data, amount, variation, title }}
+          options={{
+            tabBarIcon: ({ focused }) => {
+              return (
+                <MaterialCommunityIcons
+                  name={focused ? "trophy-variant" : "trophy-variant-outline"}
+                  size={tabBarSize}
+                  color={focused ? COLORS.primary : COLORS.light_grey}
+                />
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
