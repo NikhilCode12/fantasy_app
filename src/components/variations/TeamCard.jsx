@@ -18,14 +18,45 @@ export default function TeamCard({
   PlayersData,
   captainName,
   viceCaptainName,
+  details,
 }) {
+  const getTeamName = (player) => {
+    if (details.teamA.players.includes(player)) {
+      return details.teamA.team.abbr;
+    }
+    if (details.teamB.players.includes(player)) {
+      return details.teamB.team.abbr;
+    }
+  };
   const navigation = useNavigation();
-  const filterWK = PlayersData.filter((player) => player.skill === "wk");
-  const filterBAT = PlayersData.filter((player) => player.skill === "bat");
-  const filterAR = PlayersData.filter((player) => player.skill === "all");
-  const filterBOWL = PlayersData.filter((player) => player.skill === "bowl");
-  const teamA = PlayersData.filter((player) => player.team === "ABC");
-  const teamB = PlayersData.filter((player) => player.team === "DEF");
+  const filterWK = PlayersData.filter((player) => player.playing_role === "wk");
+  const filterBAT = PlayersData.filter(
+    (player) => player.playing_role === "bat"
+  );
+  const filterAR = PlayersData.filter(
+    (player) => player.playing_role === "all"
+  );
+  const filterBOWL = PlayersData.filter(
+    (player) => player.playing_role === "bowl"
+  );
+  // const teamA = PlayersData.filter(
+  //   (player) => getTeamName(player) === details.teamA.team.abbr
+  // );
+  // const teamB = PlayersData.filter(
+  //   (player) => getTeamName(player) === details.teamB.team.abbr
+  // );
+  // const [teamAlen, setTeamAlen] = useState(0);
+  // const [teamBlen, setTeamBlen] = useState(0);
+  // useEffect(() => {
+  //   PlayersData.map((player) => {
+  //     if (getTeamName(player) == details.teamA.team.abbr) {
+  //       setTeamAlen((x) => x + 1);
+  //     } else {
+  //       setTeamBlen((x) => x + 1);
+  //     }
+  //   });
+  // }, []);
+
   return (
     <View style={styles.mainContainer}>
       <View
@@ -80,12 +111,12 @@ export default function TeamCard({
             <Text
               style={{ color: COLORS.silver, fontWeight: "800", fontSize: 16 }}
             >
-              {teamA.length}
+              {/* {teamA.length} */}
             </Text>
             <Text
               style={{ color: COLORS.silver, fontWeight: "800", fontSize: 16 }}
             >
-              {teamB.length}
+              {/* {teamB.length} */}
             </Text>
           </View>
         </View>

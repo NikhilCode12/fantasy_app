@@ -16,13 +16,14 @@ const PlayerCardsComponent = ({
   viceCaptainName,
   updateCaptain,
   updateViceCaptain,
+  details,
 }) => {
   const [CaptainSelected, setCaptainSelected] = useState(false);
   const [ViceCaptainSelected, setViceCaptainSelected] = useState(false);
   function handleCaptain() {
     if (ViceCaptainSelected == false) {
       // setCaptainSelected(!CaptainSelected);
-      updateCaptain(data.name, !CaptainSelected);
+      updateCaptain(data.title, !CaptainSelected);
     } else {
       ToastAndroid.showWithGravity(
         "Captain and Vice Captain Cannot be same player's",
@@ -34,7 +35,7 @@ const PlayerCardsComponent = ({
   function handleViceCaptain() {
     if (CaptainSelected == false) {
       // setViceCaptainSelected(!ViceCaptainSelected);
-      updateViceCaptain(data.name, !ViceCaptainSelected);
+      updateViceCaptain(data.title, !ViceCaptainSelected);
     } else {
       ToastAndroid.showWithGravity(
         "Captain and Vice Captain Cannot be same player's",
@@ -44,7 +45,7 @@ const PlayerCardsComponent = ({
     }
   }
   useEffect(() => {
-    if (captainName === data.name) {
+    if (captainName === data.title) {
       setCaptainSelected(true);
     } else {
       setCaptainSelected(false);
@@ -52,13 +53,21 @@ const PlayerCardsComponent = ({
   }, [handleCaptain]);
 
   useEffect(() => {
-    if (viceCaptainName === data.name) {
+    if (viceCaptainName === data.title) {
       setViceCaptainSelected(true);
     } else {
       setViceCaptainSelected(false);
     }
   }, [handleViceCaptain]);
 
+  const getTeamName = (player) => {
+    if (details.teamA.players.includes(player)) {
+      return details.teamA.team.abbr;
+    }
+    if (details.teamB.players.includes(player)) {
+      return details.teamB.team.abbr;
+    }
+  };
   return (
     <View style={styles.playerContainer}>
       <View style={styles.playerLogoContainer}>
@@ -75,7 +84,7 @@ const PlayerCardsComponent = ({
               paddingHorizontal: 6,
             }}
           >
-            {data.team}
+            {getTeamName(data)}
           </Text>
           <Text
             style={{
@@ -88,7 +97,7 @@ const PlayerCardsComponent = ({
               paddingHorizontal: 6,
             }}
           >
-            {data.skill}
+            {data.playing_role}
           </Text>
         </View>
         <View style={styles.playerLogo} />
@@ -97,14 +106,14 @@ const PlayerCardsComponent = ({
         style={{
           flexDirection: "column",
           marginLeft: 60,
-          minWidth: 90,
+          minWidth: 80,
         }}
       >
         <Text style={{ color: COLORS.light, fontSize: 13, fontWeight: "500" }}>
-          {data.name}
+          {data.title}
         </Text>
         <Text style={{ color: COLORS.silver, fontSize: 12, fontWeight: "500" }}>
-          {data.points} pts
+          {data.fantasy_player_rating} pts
         </Text>
       </View>
       <TouchableOpacity
@@ -201,6 +210,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: COLORS.transparentBg,
+    // maxWidth: 200,
   },
   playerLogoContainer: {
     position: "relative",
