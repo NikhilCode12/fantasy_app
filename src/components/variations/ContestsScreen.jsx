@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ContestCard from "../common/ContestCard.js";
 import contests from "../../constants/contests.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ContestsScreen = ({ route }) => {
   const { data, amount, variation } = route.params;
@@ -38,6 +39,23 @@ const ContestsScreen = ({ route }) => {
     setTimeout(() => {
       setIsLoading(false);
     }, 200);
+  }, []);
+
+  // set the match Id and its competition id from data into async storage
+  useEffect(() => {
+    const storeMatchIdandCompetitionId = async () => {
+      try {
+        await AsyncStorage.setItem("matchId", JSON.stringify(data.matchId));
+        await AsyncStorage.setItem(
+          "competitionId",
+          JSON.stringify(data.competitionId)
+        );
+      } catch (e) {
+        console.log("Error storing matchId and competitionId: ", e);
+      }
+    };
+
+    storeMatchIdandCompetitionId();
   }, []);
 
   const handleCardPress = (fee) => {

@@ -499,6 +499,7 @@ export default function AccountScreen({ navigation }) {
                   position: "absolute",
                   top: 24,
                   right: 24,
+                  zIndex: 100,
                 },
               ]}
               onPress={() => setModalVisible(false)}

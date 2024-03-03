@@ -42,7 +42,6 @@ const LeaderBoard = () => {
         if (currentUserData) {
           setCurrentUser(JSON.parse(currentUserData));
         }
-        console.log(currentUserData);
 
         setUsers(data);
         setLoading(false);
@@ -123,11 +122,29 @@ const LeaderBoard = () => {
               ]}
             >
               <View style={styles.personInfo}>
-                {/* <Ionicons
-                  name="person-circle"
-                  color={COLORS.secondary}
-                  size={36}
-                /> */}
+                <View
+                  style={{
+                    backgroundColor: COLORS.darkRed,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 35,
+                    width: 35,
+                    borderRadius: 50,
+                    borderWidth: 1,
+                    borderColor: COLORS.light_grey,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.light,
+                      fontSize: 16,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {currentUser.username.charAt(0).toUpperCase()}
+                  </Text>
+                </View>
                 <View style={{ marginLeft: 8 }}>
                   <Text
                     style={[
@@ -187,7 +204,13 @@ const LeaderBoard = () => {
                       borderColor: COLORS.light,
                     }}
                   >
-                    <Text style={{ color: COLORS.light, fontSize: 16 }}>
+                    <Text
+                      style={{
+                        color: COLORS.light,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                      }}
+                    >
                       {user.username.charAt(0).toUpperCase()}
                     </Text>
                   </View>
@@ -209,7 +232,7 @@ const LeaderBoard = () => {
                     { backgroundColor: getColorForRank(user.rank) },
                   ]}
                 >
-                  {index > 3 ? (
+                  {index > 2 ? (
                     <Ionicons
                       name="medal"
                       size={13}
