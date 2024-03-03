@@ -12,20 +12,19 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 
-const VariationsScreen = ({ route }) => {
+const BallByBallPredictor = ({ route }) => {
   // const data = {};
-  const { data } = route.params;
+  const { data, variation } = route.params;
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
-  const variations = [
-    { id: "1", title: "7 + 4" },
-    { id: "2", title: "10 + 1" },
-    { id: "3", title: "Fantastic 5" },
-    { id: "4", title: "Top 3" },
-    { id: "5", title: "Ball by Ball Predictor" },
-    { id: "6", title: "Fanverse Original" },
-    { id: "7", title: "Powerplay" },
-    { id: "8", title: "Playgrounds" },
+  const choices = [
+    { id: "1", title: "Overs: 1-3" },
+    { id: "2", title: "Overs: 3-6" },
+    { id: "3", title: "Overs: 6-9" },
+    { id: "4", title: "Overs: 9-12" },
+    { id: "5", title: "Overs: 12-15" },
+    { id: "6", title: "Overs: 15-18" },
+    { id: "7", title: "Overs: 18-20" },
   ];
   return (
     <SafeAreaView style={styles.container}>
@@ -63,34 +62,28 @@ const VariationsScreen = ({ route }) => {
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.variationHeading}>Select Variation</Text>
+      <Text style={styles.variationHeading}>Select Overs</Text>
       <FlatList
-        data={variations}
+        data={choices}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.variationCard}
+            style={[
+              styles.variationCard,
+              {
+                backgroundColor:
+                  item.id === "1" || item.id === "2" || item.id === "7"
+                    ? COLORS.btn
+                    : COLORS.transparentBg,
+              },
+            ]}
             onPress={() => {
-              if (
-                item.id === "1" ||
-                item.id === "2" ||
-                item.id === "3" ||
-                item.id === "4"
-              ) {
-                navigation.navigate("ContestBottomNavigation", {
-                  data: data,
-                  amount: amount,
-                  variation: item.title,
-                });
-              } else if (item.id === "5") {
-                navigation.navigate("BallByBallPredictor", {
-                  data: data,
-                  amount: amount,
-                  variation: item.title,
-                });
-              } else {
-                ToastAndroid.show("Coming soon...", ToastAndroid.SHORT);
-              }
+              navigation.navigate("ContestBottomNavigation", {
+                data: data,
+                amount: amount,
+                variation: variation,
+                title: item.title,
+              });
             }}
           >
             <View
@@ -101,23 +94,48 @@ const VariationsScreen = ({ route }) => {
                 gap: 8,
               }}
             >
-              <Text style={styles.variationTitle}>{item.title}</Text>
-              {item.id === "5" && (
+              <Text
+                style={[
+                  styles.variationTitle,
+                  {
+                    color: COLORS.light,
+                  },
+                ]}
+              >
+                {item.title}
+              </Text>
+              {(item.id === "1" || item.id === "2") && (
                 <Text
                   style={{
                     color: COLORS.light,
                     fontSize: 10,
-                    fontWeight: "bold",
+                    fontWeight: "500",
                     paddingHorizontal: 10,
                     textAlign: "center",
                     paddingVertical: 4,
                     borderRadius: 4,
-                    backgroundColor: COLORS.btn,
+                    backgroundColor: COLORS.transparentBg,
                   }}
                 >
-                  New
+                  Powerplay
                 </Text>
               )}
+              {item.id === "7" ? (
+                <Text
+                  style={{
+                    color: COLORS.light,
+                    fontSize: 10,
+                    fontWeight: "500",
+                    paddingHorizontal: 10,
+                    textAlign: "center",
+                    paddingVertical: 4,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.transparentBg,
+                  }}
+                >
+                  Final Overs
+                </Text>
+              ) : null}
             </View>
             <Ionicons name="chevron-forward" size={22} color={COLORS.primary} />
           </TouchableOpacity>
@@ -127,4 +145,4 @@ const VariationsScreen = ({ route }) => {
   );
 };
 
-export default VariationsScreen;
+export default BallByBallPredictor;

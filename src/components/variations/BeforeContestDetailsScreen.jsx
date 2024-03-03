@@ -17,7 +17,7 @@ import COLORS from "../../constants/colors.js";
 const Tab = createMaterialTopTabNavigator();
 
 const BeforeContestDetailsScreen = ({ route }) => {
-  const { data, amount, variation } = route.params;
+  const { data, amount, variation, title, entryFee } = route.params;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -35,9 +35,8 @@ const BeforeContestDetailsScreen = ({ route }) => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const { confirmPayment, loading } = useConfirmPayment();
 
-  const handleJoinContest = async () => {
+  const handleJoinContest = async (entryFee) => {
     try {
-      const entryFee = 50;
       const gst = Math.floor((entryFee * 28) / 100);
       const totalAmount = entryFee + gst;
 
@@ -87,11 +86,18 @@ const BeforeContestDetailsScreen = ({ route }) => {
             amount: amount,
             variation: variation,
           });
-        } else {
+        } else if (variation === "Top 3") {
           navigation.navigate("PlayerSelection3", {
             data: data,
             amount: amount,
             variation: variation,
+          });
+        } else if (variation === "Ball by Ball Predictor") {
+          navigation.navigate("PlayerSelection4", {
+            data: data,
+            amount: amount,
+            variation: variation,
+            title: title,
           });
         }
       }
@@ -158,10 +164,22 @@ const BeforeContestDetailsScreen = ({ route }) => {
       {/* Join Contest Button */}
       <TouchableOpacity
         style={styles.joinContestButton}
-        onPress={handleJoinContest}
+        onPress={() => {
+          if (entryFee === 0) {
+            Alert.alert("You have joined the contest successfully!");
+            navigation.navigate("BallByBallPredictorGame", {
+              data: data,
+              amount: amount,
+              variation: variation,
+              title: title,
+            });
+          } else {
+            handleJoinContest(entryFee);
+          }
+        }}
       >
         <Text style={styles.joinContestButtonText}>
-          {"Join Contest at \u20B950"}
+          {"Join Contest at ₹" + entryFee}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

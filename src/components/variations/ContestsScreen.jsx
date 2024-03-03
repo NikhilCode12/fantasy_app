@@ -19,7 +19,7 @@ import contests from "../../constants/contests.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ContestsScreen = ({ route }) => {
-  const { data, amount, variation } = route.params;
+  const { data, amount, variation, title } = route.params;
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,6 +63,7 @@ const ContestsScreen = ({ route }) => {
       data: data,
       amount: amount,
       variation: variation,
+      title: title,
       entryFee: fee,
     });
   };
@@ -105,11 +106,22 @@ const ContestsScreen = ({ route }) => {
       </View>
       <View style={styles.variationsTitleContainer}>
         <Text style={styles.variationTitleText}>
-          {variation}
+          {variation === "Ball by Ball Predictor"
+            ? title === "Overs: 1-3" || title === "Overs: 3-6"
+              ? "Powerplay " + title
+              : title === "Overs: 18-20"
+              ? "Final " + title
+              : title
+            : variation}
           {variation === "7 + 4" ? " players" : ""}
         </Text>
       </View>
-      <View style={{ flex: 1, marginBottom: 130 }}>
+      <View
+        style={{
+          flex: 1,
+          marginBottom: variation === "Ball by Ball Predictor" ? 62 : 128,
+        }}
+      >
         <View style={cStyles.sortContainer}>
           <Text style={cStyles.sortText}>{"Sort by:"}</Text>
           <TouchableOpacity style={cStyles.sortButton}>
@@ -121,7 +133,7 @@ const ContestsScreen = ({ route }) => {
           <TouchableOpacity style={cStyles.filterElement}>
             <MaterialCommunityIcons
               name="filter"
-              size={16}
+              size={12}
               style={{ marginVertical: 4 }}
               color={COLORS.light_grey}
             />
@@ -146,6 +158,7 @@ const ContestsScreen = ({ route }) => {
               <ContestCard
                 contest={item}
                 variationSelected={variation}
+                oversSelected={title}
                 handleContestCardPress={() => handleCardPress(item.entryFee)}
               />
             )}
@@ -154,32 +167,34 @@ const ContestsScreen = ({ route }) => {
           />
         )}
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          if (variation === "7 + 4" || variation === "10 + 1") {
-            navigation.navigate("PlayerSelection", {
-              data: data,
-              amount: amount,
-              variation: variation,
-            });
-          } else if (variation === "Fantastic 5") {
-            navigation.navigate("PlayerSelection2", {
-              data: data,
-              amount: amount,
-              variation: variation,
-            });
-          } else {
-            navigation.navigate("PlayerSelection3", {
-              data: data,
-              amount: amount,
-              variation: variation,
-            });
-          }
-        }}
-        style={cStyles.createTeamButton}
-      >
-        <Text style={cStyles.buttonText}>Create New Team</Text>
-      </TouchableOpacity>
+      {variation !== "Ball by Ball Predictor" && (
+        <TouchableOpacity
+          onPress={() => {
+            if (variation === "7 + 4" || variation === "10 + 1") {
+              navigation.navigate("PlayerSelection", {
+                data: data,
+                amount: amount,
+                variation: variation,
+              });
+            } else if (variation === "Fantastic 5") {
+              navigation.navigate("PlayerSelection2", {
+                data: data,
+                amount: amount,
+                variation: variation,
+              });
+            } else {
+              navigation.navigate("PlayerSelection3", {
+                data: data,
+                amount: amount,
+                variation: variation,
+              });
+            }
+          }}
+          style={cStyles.createTeamButton}
+        >
+          <Text style={cStyles.buttonText}>Create New Team</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

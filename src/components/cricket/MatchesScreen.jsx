@@ -273,36 +273,40 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           const currentTime = new Date().getTime();
           const matchTime = new Date(match.dateTimeGMT).getTime();
           const timeDifference = matchTime - currentTime;
-          if (timeDifference > 0 && timeDifference <= 48 * 60 * 60 * 1000) {
-            // console.log(index, "  ", match.dateTimeGMT);
+          if (timeDifference > 0 && timeDifference <= 12 * 60 * 60 * 1000) {
+            {
+              /* // console.log(index, "  ", match.dateTimeGMT); */
+            }
             const remainingTime = formatRemainingTime(match.dateTimeGMT);
             const matchDay = formatTimeVenue(match.dateTimeGMT);
-            return (
-              <MatchCard
-                key={match.match_id}
-                onMatchCardPress={() =>
-                  onMatchCardPress({
-                    competitionId: match.competition.cid,
-                    matchId: match.match_id,
-                    teamAName: match.teama.short_name,
-                    teamBName: match.teamb.short_name,
-                    timeRemaining: remainingTime,
-                    timeVenue: matchDay,
-                    teamAImage: match.teama.logo_url,
-                    teamBImage: match.teamb.logo_url,
-                  })
-                }
-                league={match.competition.title}
-                teamAImage={match.teama.logo_url}
-                teamAName={match.teama.short_name}
-                teamBName={match.teamb.short_name}
-                teamBImage={match.teamb.logo_url}
-                timeRemaining={remainingTime}
-                timeVenue={matchDay}
-                format={match.format_str}
-                winnings={"Free Entry"}
-              />
-            );
+
+            if (matchDay.includes("Today") || matchDay.includes("Tomorrow"))
+              return (
+                <MatchCard
+                  key={match.match_id}
+                  onMatchCardPress={() =>
+                    onMatchCardPress({
+                      competitionId: match.competition.cid,
+                      matchId: match.match_id,
+                      teamAName: match.teama.short_name,
+                      teamBName: match.teamb.short_name,
+                      timeRemaining: remainingTime,
+                      timeVenue: matchDay,
+                      teamAImage: match.teama.logo_url,
+                      teamBImage: match.teamb.logo_url,
+                    })
+                  }
+                  league={match.competition.title}
+                  teamAImage={match.teama.logo_url}
+                  teamAName={match.teama.short_name}
+                  teamBName={match.teamb.short_name}
+                  teamBImage={match.teamb.logo_url}
+                  timeRemaining={remainingTime}
+                  timeVenue={matchDay}
+                  format={match.format_str}
+                  winnings={"Free Entry"}
+                />
+              );
           } else {
             return null;
           }
