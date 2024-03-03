@@ -102,18 +102,18 @@ export default function AccountScreen({ navigation }) {
   }
   async function updateUserName() {
     // console.log(username);
-    try{
-
-    const userData = await axios.put(`https://fanverse-backend.onrender.com/api/user/${data._id}`,{username:username,usernameVerified:true});
-   setData(userData.data);
-     AsyncStorage.setItem("user",JSON.stringify(userData.data));
-    ToastAndroid.show("SuccessFully Updated",ToastAndroid.SHORT);
-        // console.log("NEW DATA IS : ",userData.data);
-      }
-  catch (e)
-  {
-    console.log(e);
-  }
+    try {
+      const userData = await axios.put(
+        `https://fanverse-backend.onrender.com/api/user/${data._id}`,
+        { username: username, usernameVerified: true }
+      );
+      setData(userData.data);
+      AsyncStorage.setItem("user", JSON.stringify(userData.data));
+      ToastAndroid.show("SuccessFully Updated", ToastAndroid.SHORT);
+      // console.log("NEW DATA IS : ",userData.data);
+    } catch (e) {
+      console.log(e);
+    }
   }
   async function updateDob() {
     // console.log(username);
@@ -266,7 +266,7 @@ export default function AccountScreen({ navigation }) {
 
         if (userData) {
           setData(userData.data);
-              AsyncStorage.setItem("user",JSON.stringify(userData.data));
+          AsyncStorage.setItem("user", JSON.stringify(userData.data));
           // console.log(data);
         }
       } catch (error) {
@@ -311,7 +311,7 @@ export default function AccountScreen({ navigation }) {
           >
             Edit
           </Text>
-          <Ionicons name="ios-create" size={16} color={COLORS.primary} />
+          <Ionicons name="ios-create" size={16} color={COLORS.silver} />
         </TouchableOpacity>
       </View>
 
@@ -322,7 +322,16 @@ export default function AccountScreen({ navigation }) {
         {/* personal INfo */}
         <View style={styles.personalInfoTop}>
           <View style={styles.imageContainer}>
-            <Text style={{fontSize:35, color:COLORS.light,textAlign:"center",marginTop:2}}>{data.username[0]}</Text>
+            <Text
+              style={{
+                fontSize: 35,
+                color: COLORS.light,
+                textAlign: "center",
+                marginTop: 2,
+              }}
+            >
+              {data.username[0]}
+            </Text>
           </View>
           <View style={styles.top_profile_left}>
             <View
@@ -337,10 +346,15 @@ export default function AccountScreen({ navigation }) {
             <View style={styles.verfied_container}>
               <Ionicons
                 name={isVerified ? "shield-checkmark" : "warning"}
-                size={25}
-                color={isVerified ? COLORS.darkGreen : "#ad7736"}
+                size={14}
+                color={isVerified ? "lime" : "#ad7736"}
               />
-              <Text style={[styles.colorslight_grey, { marginLeft: 10 }]}>
+              <Text
+                style={[
+                  styles.colorslight_grey,
+                  { marginLeft: 6, fontSize: 12 },
+                ]}
+              >
                 {isVerified ? "Verified" : "Not Verified"}
               </Text>
             </View>
@@ -353,7 +367,7 @@ export default function AccountScreen({ navigation }) {
           }}
         >
           <View style={styles.financialHistoryContainer}>
-            <Text style={styles.financialHistoryText}>Financial history</Text>
+            <Text style={styles.financialHistoryText}>Financial History</Text>
           </View>
         </TouchableOpacity>
         {/*player contest records  */}
@@ -391,11 +405,18 @@ export default function AccountScreen({ navigation }) {
         {/* Primary Info */}
         <View style={styles.primaryInfoContainer}>
           <View>
-            <Text style={[styles.colorslight_grey]}>Primary Info</Text>
+            <Text
+              style={[
+                styles.colorslight_grey,
+                { marginLeft: 4, marginBottom: 4 },
+              ]}
+            >
+              Primary Info
+            </Text>
           </View>
           <View style={styles.primaryInfoBox}>
             <View style={styles.primaryInfoBoxRow}>
-              <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "column", gap: 1 }}>
                 <Text style={styles.colorslight}>Mobile No.</Text>
                 <Text style={styles.primaryItem}>+91 {data.mobile}</Text>
               </View>
@@ -404,7 +425,7 @@ export default function AccountScreen({ navigation }) {
               </View> */}
             </View>
             <View style={styles.primaryInfoBoxRow}>
-              <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "column", gap: 1 }}>
                 <Text style={styles.colorslight}>Email Id</Text>
                 <Text style={styles.primaryItem}>{data.email}</Text>
               </View>
@@ -417,7 +438,9 @@ export default function AccountScreen({ navigation }) {
         {/* Basic Info */}
         <View style={styles.basicInfoContainer}>
           <View>
-            <Text style={[styles.colorslight_grey]}>Basic Info</Text>
+            <Text style={[styles.colorslight_grey, { marginLeft: 4 }]}>
+              Basic Info
+            </Text>
           </View>
           <View style={styles.basicInfoBox}>
             <View style={styles.basicInfoRow1}>
@@ -455,41 +478,56 @@ export default function AccountScreen({ navigation }) {
         visible={isModalVisible}
         onRequestClose={() => setModalVisible(false)}
         animationType="slide"
-        presentationStyle=""
+        presentationStyle="pageSheet"
         style={{ flex: 1 }}
       >
-        <ScrollView showsHorizontalScrollIndicator style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
           <View
             style={{
               flex: 1,
               backgroundColor: COLORS.bgLightBlack,
-              padding: 30,
+              paddingHorizontal: 24,
+              paddingVertical: 24,
             }}
           >
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                position: "relative",
-                top: "2%",
-                left: "90%",
-              }}
+            <TouchableOpacity
+              style={[
+                styles.backArrow,
+                {
+                  width: 40,
+                  height: 40,
+                  position: "absolute",
+                  top: 24,
+                  right: 24,
+                },
+              ]}
+              onPress={() => setModalVisible(false)}
             >
-              <Ionicons
-                name="close"
-                size={24}
-                color={COLORS.primary}
-                onPress={() => setModalVisible(false)}
-              />
-            </View>
+              <Ionicons name="close" size={24} color={COLORS.primary} />
+            </TouchableOpacity>
             <View>
-              <Text style={{ color: COLORS.light, fontSize: 20 }}>
-                ENTER YOUR DETAILS
+              <Text
+                style={{
+                  color: COLORS.light_grey,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  marginTop: 6,
+                }}
+              >
+                Update your Profile
               </Text>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter UserName
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update username{" "}
+                <Text
+                  style={{
+                    color: COLORS.primary,
+                    fontSize: 12,
+                  }}
+                >
+                  (only once)
+                </Text>
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -497,25 +535,26 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 editable={usernameVerified ? false : true}
                 placeholder={data.username}
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
+              <View style={{ width: "100%", marginTop: 12 }}>
                 {usernameVerified ? (
-                  <Button title="Already Saved" />
+                  <Button title="Verified" color={"gray"} />
                 ) : (
-                  <Button title="SAVE CHANGES" onPress={updateUserName} />
+                  <Button title="Verify" onPress={updateUserName} />
                 )}
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter Email
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update Email
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -523,25 +562,26 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 editable={emailVerified ? false : true}
                 placeholder={data.email}
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
+              <View style={{ width: "100%", marginTop: 12 }}>
                 {emailVerified ? (
-                  <Button title="Already Saved" />
+                  <Button title="Verified" color={"gray"} />
                 ) : (
-                  <Button title="SAVE CHANGES" onPress={updateEmail} />
+                  <Button title="Verify" onPress={updateEmail} />
                 )}
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter MobileNo.
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update Mobile No.
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -549,25 +589,29 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 editable={mobileVerified ? false : true}
                 placeholder={data.mobile}
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
+              <View style={{ width: "100%", marginTop: 10 }}>
                 {mobileVerified ? (
-                  <Button title="Already Saved" />
+                  <Button title="Verified" color={"gray"} />
                 ) : (
-                  <Button title="SAVE CHANGES" onPress={updateMobile} />
+                  <Button title="Verify" onPress={updateMobile} />
                 )}
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter DOB
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update DOB{" "}
+                <Text style={{ color: COLORS.primary, fontSize: 12 }}>
+                  (eg. 01/01/2002)
+                </Text>
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -575,20 +619,21 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 placeholder="dd/mm/yyyy"
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
-                <Button title="SAVE CHANGES" onPress={updateDob} />
+              <View style={{ width: "100%", marginTop: 12 }}>
+                <Button title="Update DOB" onPress={updateDob} />
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter Country
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update Country
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -596,20 +641,21 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 placeholder="Your Country"
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
-                <Button title="SAVE CHANGES" onPress={updateCountry} />
+              <View style={{ width: "100%", marginTop: 12 }}>
+                <Button title="UPDATE Country" onPress={updateCountry} />
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter State
+            <View style={{ marginTop: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update State
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -617,20 +663,21 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 placeholder="Your State"
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
-                <Button title="SAVE CHANGES" onPress={updateState} />
+              <View style={{ width: "100%", marginTop: 12 }}>
+                <Button title="UPDATE STATE" onPress={updateState} />
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Text style={{ color: COLORS.light, fontSize: 15 }}>
-                Enter Gender
+            <View style={{ marginVertical: 36 }}>
+              <Text style={{ color: COLORS.light_grey, fontSize: 14 }}>
+                Update Gender
               </Text>
               <TextInput
                 placeholderTextColor={COLORS.lightGray}
@@ -638,15 +685,16 @@ export default function AccountScreen({ navigation }) {
                 style={{
                   borderWidth: 1,
                   marginTop: 10,
-                  borderColor: COLORS.light,
+                  borderColor: COLORS.lightGray,
                   color: COLORS.light,
                   paddingHorizontal: 14,
                   paddingVertical: 6,
+                  borderRadius: 5,
                 }}
                 placeholder="Male"
               />
-              <View style={{ width: 150, marginTop: 10, marginLeft: "50%" }}>
-                <Button title="SAVE CHANGES" onPress={updateGender} />
+              <View style={{ width: "100%", marginTop: 12 }}>
+                <Button title="UPDATE GENDER" onPress={updateGender} />
               </View>
             </View>
           </View>

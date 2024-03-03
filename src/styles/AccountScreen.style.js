@@ -35,20 +35,22 @@ const styles = StyleSheet.create({
   //personal info top
   personalInfoTop: {
     flexDirection: "row",
-    borderRadius: 12,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     backgroundColor: COLORS.transparentBg,
-    marginHorizontal: 24,
+    marginHorizontal: 16,
+    alignItems: "center",
   },
   imageContainer: {
     width: 55,
     height: 55,
     borderRadius: 50,
-    backgroundColor:COLORS.darkRed,
+    backgroundColor: COLORS.darkRed,
     overflow: "hidden",
-    borderWidth:1,
-    borderColor:COLORS.light
+    marginHorizontal: 8,
+    borderWidth: 1,
+    borderColor: COLORS.light,
   },
   image_profile: { flex: 1, width: null, height: null },
   top_profile_left: {
@@ -66,16 +68,16 @@ const styles = StyleSheet.create({
 
   // finacial history
   financialHistoryContainer: {
-    backgroundColor: COLORS.transparentBg,
+    backgroundColor: COLORS.btn,
     alignItems: "center",
     paddingVertical: "10",
-    marginHorizontal: 24,
+    marginHorizontal: 16,
     marginTop: 20,
-    borderRadius: 12,
+    borderRadius: 10,
   },
   financialHistoryText: {
-    color: COLORS.light_grey,
-    fontSize: 18,
+    color: COLORS.light,
+    fontSize: 16,
     paddingVertical: 15,
   },
   //   playing experience
@@ -86,44 +88,60 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     gap: 15,
   },
-  playingExperienceText: { color: COLORS.light_grey },
-  playingExperienceContainer: { marginTop: 15, paddingHorizontal: 25 },
+  playingExperienceText: {
+    color: COLORS.light_grey,
+    marginLeft: 4,
+    marginBottom: 10,
+  },
+  playingExperienceContainer: {
+    marginTop: 15,
+    paddingHorizontal: 16,
+    width: "100%",
+  },
 
   contestRecordBox: {
     backgroundColor: COLORS.transparentBg,
-    paddingHorizontal: 10,
-    paddingVertical: 18,
-    width: "45%",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    width: "47.5%",
     marginTop: 8,
     borderRadius: 10,
   },
-  contestRecordBoxPoints: { color: COLORS.light, fontSize: 20 },
-  contestRecordBoxPointsDesc: { color: COLORS.light_grey, fontSize: 15 },
+  contestRecordBoxPoints: {
+    color: COLORS.light_grey,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  contestRecordBoxPointsDesc: {
+    color: COLORS.silver,
+    fontSize: 14,
+    marginTop: 4,
+  },
   // primary info
-  primaryInfoContainer: { marginTop: 15, paddingHorizontal: 25 },
+  primaryInfoContainer: { marginTop: 12, paddingHorizontal: 16 },
   primaryInfoBox: {
     backgroundColor: COLORS.transparentBg,
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderRadius: 10,
     marginTop: 10,
+    gap: 14,
   },
   primaryInfoBoxRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 5,
   },
   ChangeText: { color: COLORS.primary, fontWeight: "bold", fontSize: 14 },
   primaryItem: { fontSize: 12, color: COLORS.light_grey },
   // basic info
-  basicInfoContainer: { marginTop: 15, paddingHorizontal: 25 },
+  basicInfoContainer: { marginTop: 14, paddingHorizontal: 16 },
   basicInfoBox: {
     backgroundColor: COLORS.transparentBg,
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    marginTop: 10,
-    borderRadius: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    marginTop: 14,
+    borderRadius: 10,
   },
   basicInfoRow1: { flexDirection: "row", justifyContent: "", gap: 70 },
   basicInfoRow2: {
