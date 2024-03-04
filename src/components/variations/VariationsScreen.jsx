@@ -110,9 +110,9 @@ const VariationsScreen = ({ route }) => {
                     fontWeight: "bold",
                     paddingHorizontal: 10,
                     textAlign: "center",
-                    paddingVertical: 4,
+                    paddingVertical: 2,
                     borderRadius: 4,
-                    backgroundColor: COLORS.btn,
+                    backgroundColor: COLORS.transparentBg,
                   }}
                 >
                   New

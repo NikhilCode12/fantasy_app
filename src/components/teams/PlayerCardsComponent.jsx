@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import COLORS from "../../constants/colors.js";
-import icon from "../../../assets/icon.png";
+import { Ionicons } from "@expo/vector-icons";
 
 const PlayerCardsComponent = ({
   data,
@@ -23,7 +23,7 @@ const PlayerCardsComponent = ({
   function handleCaptain() {
     if (ViceCaptainSelected == false) {
       // setCaptainSelected(!CaptainSelected);
-      updateCaptain(data.title, !CaptainSelected);
+      updateCaptain(data.short_name, !CaptainSelected);
     } else {
       ToastAndroid.showWithGravity(
         "Captain and Vice Captain Cannot be same player's",
@@ -35,7 +35,7 @@ const PlayerCardsComponent = ({
   function handleViceCaptain() {
     if (CaptainSelected == false) {
       // setViceCaptainSelected(!ViceCaptainSelected);
-      updateViceCaptain(data.title, !ViceCaptainSelected);
+      updateViceCaptain(data.short_name, !ViceCaptainSelected);
     } else {
       ToastAndroid.showWithGravity(
         "Captain and Vice Captain Cannot be same player's",
@@ -45,7 +45,8 @@ const PlayerCardsComponent = ({
     }
   }
   useEffect(() => {
-    if (captainName === data.title) {
+    console.log(data);
+    if (captainName === data.short_name) {
       setCaptainSelected(true);
     } else {
       setCaptainSelected(false);
@@ -53,7 +54,7 @@ const PlayerCardsComponent = ({
   }, [handleCaptain]);
 
   useEffect(() => {
-    if (viceCaptainName === data.title) {
+    if (viceCaptainName === data.short_name) {
       setViceCaptainSelected(true);
     } else {
       setViceCaptainSelected(false);
@@ -81,7 +82,8 @@ const PlayerCardsComponent = ({
               fontWeight: "500",
               textAlign: "center",
               borderBottomLeftRadius: 5,
-              paddingHorizontal: 6,
+              paddingVertical: 1,
+              width: 40,
             }}
           >
             {getTeamName(data)}
@@ -94,25 +96,47 @@ const PlayerCardsComponent = ({
               fontWeight: "500",
               textAlign: "center",
               borderBottomRightRadius: 5,
-              paddingHorizontal: 6,
+              paddingVertical: 1,
+              width: 40,
             }}
           >
-            {data.playing_role}
+            {data.playing_role.toUpperCase()}
           </Text>
         </View>
-        <View style={styles.playerLogo} />
+        <Ionicons
+          name="person"
+          size={26}
+          color={data.team === "NSCW" ? COLORS.secondary : COLORS.light}
+          style={styles.playerLogo}
+        />
       </View>
       <View
         style={{
           flexDirection: "column",
-          marginLeft: 60,
-          minWidth: 80,
+          justifyContent: "center",
+          alignItems: "flex-start",
+          width: 145,
         }}
       >
-        <Text style={{ color: COLORS.light, fontSize: 13, fontWeight: "500" }}>
-          {data.title}
+        <Text
+          style={{
+            color: COLORS.light,
+            fontSize: 12,
+            fontWeight: "500",
+            textAlign: "left",
+            marginLeft: 50,
+          }}
+        >
+          {data?.short_name}
         </Text>
-        <Text style={{ color: COLORS.silver, fontSize: 12, fontWeight: "500" }}>
+        <Text
+          style={{
+            color: COLORS.silver,
+            fontSize: 12,
+            fontWeight: "500",
+            marginLeft: 50,
+          }}
+        >
           {data.fantasy_player_rating} pts
         </Text>
       </View>
@@ -231,11 +255,9 @@ const styles = StyleSheet.create({
   },
   playerLogo: {
     width: 40,
-    height: 40,
     borderRadius: 5,
     marginRight: 2,
-    marginLeft: 6,
-    backgroundColor: COLORS.silver,
+    marginLeft: 10,
     marginTop: 10,
   },
 });

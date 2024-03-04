@@ -173,9 +173,6 @@ const MvpSelection = ({ route }) => {
           }}
         >
           <TouchableOpacity onPress={() => {}}>
-            <Text style={styles2.topTitle}>BY %MVP</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
             <Text style={styles2.topTitle}>BY %C</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>

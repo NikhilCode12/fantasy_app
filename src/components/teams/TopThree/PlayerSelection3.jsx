@@ -126,7 +126,7 @@ const PlayerSelection3 = ({ route }) => {
     "7 + 4": "Maximum 7 players from one team",
     "10 + 1": "Maximum 10 players from one team",
     "Fantastic 5": "Maximum 4 players from one team",
-    "Top 3": "Maximum 2 players from one team",
+    "Top 3": "No restrictions on team selection",
     Powerplay: "Select 1-4 players in powerplay",
     "Fanverse original": "SuperSmash players included",
     Playgrounds: "Create your own contests and play",
