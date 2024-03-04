@@ -68,15 +68,7 @@ const BallByBallPredictor = ({ route }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={[
-              styles.variationCard,
-              {
-                backgroundColor:
-                  item.id === "1" || item.id === "2" || item.id === "7"
-                    ? COLORS.btn
-                    : COLORS.transparentBg,
-              },
-            ]}
+            style={[styles.variationCard]}
             onPress={() => {
               navigation.navigate("ContestBottomNavigation", {
                 data: data,

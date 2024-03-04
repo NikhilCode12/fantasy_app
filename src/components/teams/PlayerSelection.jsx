@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PlayerListComponent from "./PlayersList.jsx";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PlayerSelection = ({ route }) => {
   const { data, amount, variation, newTeam } = route.params;
@@ -45,8 +46,7 @@ const PlayerSelection = ({ route }) => {
       try {
         const matchId = await AsyncStorage.getItem("matchId");
         const competitionId = await AsyncStorage.getItem("competitionId");
-        console.log("matchId: ", matchId);
-        console.log("competitionId: ", competitionId);
+
         setMatchId(matchId);
         setCompetitionId(competitionId);
       } catch (e) {
@@ -147,7 +147,7 @@ const PlayerSelection = ({ route }) => {
     "7 + 4": "Maximum 7 players from one team",
     "10 + 1": "Maximum 10 players from one team",
     "Fantastic 5": "Maximum 4 players from one team",
-    "Top 3": "Maximum 4 players from one team",
+    "Top 3": "All players can be from one team",
     Powerplay: "Select 1-4 players in powerplay",
     "Fanverse original": "SuperSmash players included",
     Playgrounds: "Create your own contests and play",
