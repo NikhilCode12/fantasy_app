@@ -13,23 +13,31 @@ import {
   Button,
   Image,
   ScrollView,
+  Modal,
   ToastAndroid,
+  Linking
 } from "react-native";
 import CheckBox from "../components/common/Checkbox";
 import BackArrow from "../components/common/BackArrow";
 import { Ionicons } from "@expo/vector-icons";
+import { ColorSpace } from "react-native-reanimated";
+import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose another icon library if needed
+
 // import { ScrollView } from "react-native-gesture-handler";
 
 export default function HelpandSupportScreen({navigation}) {
-    const [registration, setregistration ] =useState(false);
-    const [PlayingTheGame, setPlayingTheGame ] =useState(false);
-    const [ScoresAndPoints, setScoresAndPoints ] =useState(false);
-    const [contests, setcontests ] =useState(false);
-    const [cashPrize, setCashPrize ] =useState(false);
-    const [accounBalance, setaccounBalance ] =useState(false);
-    const [Verfication, setVerifiaction ] =useState(false);
-    const [withdrawls, setWithdrawls ] =useState(false);
-    const [payments, setPayments ] =useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [number, setNumber]=useState(1);
+const openTelegram = () => {
+    const telegramURL = `https://t.me/+57SB9W2TVbJkNDI1`;
+    Linking.openURL(telegramURL).catch((err) => console.error('Error opening URL:', err));
+  };
+  const sendEmail = () => {
+    const email = 'fanverse.official12@gmail.com'; // Replace with your email address
+    const subject = 'Help me !!'; // Customize the email subject
+    const emailURL = `mailto:${email}?subject=${subject}`;
+    Linking.openURL(emailURL);
+  };
   return (
         <SafeAreaView style={styles.container}>
 
@@ -46,177 +54,110 @@ export default function HelpandSupportScreen({navigation}) {
         </TouchableOpacity>
         <Text style={styles.headerText}>Help and Support</Text>
       </View>
-                        <ScrollView contentContainerStyle={{paddingBottom:30}}   showsVerticalScrollIndicator={false}>
-            <View style={styles.faqsmainContainer}>
+      <ScrollView contentContainerStyle={{paddingBottom:30}}   showsVerticalScrollIndicator={false}>
+            <View style={{margin:20}}>
+              <Text style={{fontSize:18, color:COLORS.light, fontWeight:"700"}}>
+                Most asked Questions
+              </Text>
+              </View>
+              <View style={styles.AllQuestionMain}>
+                <TouchableOpacity style={styles.questionContainer} onPress={() => {setNumber(1);setModalVisible(true)}}>
+                  <Text style={styles.questionText}>I haven't receive my withdrawl money , what should I do ?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.questionContainer} onPress={() => {setNumber(2);setModalVisible(true)}}>
+                  <Text style={styles.questionText}>I can't see my added money , what should I do ?</Text>
+                </TouchableOpacity>
+                    <TouchableOpacity style={styles.questionContainer} onPress={() => {setNumber(3);setModalVisible(true)}}>
+                  <Text style={styles.questionText}>I Want to Withdraw , how do I verify ?</Text>
+                </TouchableOpacity>
+                     <TouchableOpacity style={styles.questionContainer} onPress={() => {setNumber(4);setModalVisible(true)}}>
+                  <Text style={styles.questionText}>How do I withdraw my earnings ?</Text>
+                </TouchableOpacity>
+                     <TouchableOpacity style={styles.questionContainer} onPress={() => {setNumber(5);setModalVisible(true)}}>
+                  <Text style={styles.questionText}>How do I unlink Pan Card ?</Text>
+                </TouchableOpacity>
+              </View>
+                <View style={{marginHorizontal:20}}>
+                  <View>
+                  <Text style={{fontSize:18,fontWeight:"900", color:COLORS.light}}>CONTACT US :</Text>
+                  </View>
+                    <View style={{flexDirection:"row", gap:25,marginTop:25 ,alignItems:"center"}}>
+                      <TouchableOpacity onPress={openTelegram}>
+                   <Icon name="telegram" size={40} color="#0088cc" />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={sendEmail}>
 
+                   <Ionicons name="mail-sharp" size={40} color="#ffffff" />
+                      </TouchableOpacity>
+                    </View>
+                </View>
+             <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View style={{padding:10, borderBottomColor:COLORS.silver,borderBottomWidth:1}}>
+              <TouchableOpacity onPress={()=>setModalVisible(false)}>
+            <Ionicons name ="close-outline" size={35} color={COLORS.dark}/>
+              </TouchableOpacity>
+              </View>
+            <View style={{padding:15}}>
+              <Text style={{fontSize:16, fontWeight:"bold"}}>
+                {
+                    number===1? "I haven't receive my withdrawl money , what should I do ?":number===2?"I can't see my added money , what should I do ?":number===3?"I Want to Withdraw , how do I verify ?":number===4?"How do I withdraw my earnings ?":"How do I unlink Pan Card ?"
+                }
                
-                <TouchableOpacity onPress={()=>setregistration(!registration)}>
-                <View style={styles.faqBox}>
-                    <Text style={styles.faqTitle}>Registration</Text>
-                    <Ionicons name={registration?"remove":"add"} size={20} color={COLORS.light_grey}/>
-                </View>
-                </TouchableOpacity>
-                      {registration &&
-                      <View>
-                        <Text style={styles.faqQues}>
-                              What is Fantasy Akhada Referal Code?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       You can use the referral / promo code : AKHADA to get 500 Bonus while registration.
-                        </Text>
-                        <Text style={styles.faqQues}>
-                              Where Can I download Fantasy Akhada APK ?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Visit www.fantasyakhada.com and click on “Download the Android App” button to download the APK.
-                       </Text>
-                        <Text style={styles.faqQues}>
-                            How do I sign up on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        The users can sign up on Fantasy Akhada by filling a short registration form available on the homepage of Fantasy Akhada website.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                        How many accounts can I create with the same email id on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        Warning! You can create only one account with one email id on Fantasy Akhada. Creation of multiple accounts by a single user is strictly prohibited and violates our Fair Play policy.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                       Can I update / edit my information?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Sure! Simply log into Fantasy Akhada and click on ‘Profile’ at the bottom of the page. You will be able to update / edit your personal information. You can also edit your basic details like date of birth, address and state if your Fantasy Akhada account is ‘Unverified’. Remember, the Full Name, DOB, chosen by you, the email id and phone number registered once cannot be changed.
-                       </Text>
-                        </View>
-}
-                <TouchableOpacity onPress={()=>setPlayingTheGame(!PlayingTheGame)}>
-                <View style={styles.faqBox}>
-                    <Text style={styles.faqTitle}>Playing the game</Text>
-                    <Ionicons  name={PlayingTheGame?"remove":"add"} size={20} color={COLORS.light_grey}/>
-                </View>
-                </TouchableOpacity>
-                      {PlayingTheGame &&
-                      <View>
-                        <Text style={styles.faqQues}>
-                              What is Fantasy Akhada Referal Code?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       You can use the referral / promo code : AKHADA to get 500 Bonus while registration.
-                        </Text>
-                        <Text style={styles.faqQues}>
-                              Where Can I download Fantasy Akhada APK ?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Visit www.fantasyakhada.com and click on “Download the Android App” button to download the APK.
-                       </Text>
-                        <Text style={styles.faqQues}>
-                            How do I sign up on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        The users can sign up on Fantasy Akhada by filling a short registration form available on the homepage of Fantasy Akhada website.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                        How many accounts can I create with the same email id on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        Warning! You can create only one account with one email id on Fantasy Akhada. Creation of multiple accounts by a single user is strictly prohibited and violates our Fair Play policy.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                       Can I update / edit my information?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Sure! Simply log into Fantasy Akhada and click on ‘Profile’ at the bottom of the page. You will be able to update / edit your personal information. You can also edit your basic details like date of birth, address and state if your Fantasy Akhada account is ‘Unverified’. Remember, the Full Name, DOB, chosen by you, the email id and phone number registered once cannot be changed.
-                       </Text>
-                        </View>
-}
-                <TouchableOpacity onPress={()=>setScoresAndPoints(!ScoresAndPoints)}>
-                <View style={styles.faqBox}>
-                    <Text style={styles.faqTitle}>Scores and Points</Text>
-                    <Ionicons  name={ScoresAndPoints?"remove":"add"} size={20} color={COLORS.light_grey}/>
-                </View>
-                </TouchableOpacity>
-                      {ScoresAndPoints &&
-                      <View>
-                        <Text style={styles.faqQues}>
-                              What is Fantasy Akhada Referal Code?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       You can use the referral / promo code : AKHADA to get 500 Bonus while registration.
-                        </Text>
-                        <Text style={styles.faqQues}>
-                              Where Can I download Fantasy Akhada APK ?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Visit www.fantasyakhada.com and click on “Download the Android App” button to download the APK.
-                       </Text>
-                        <Text style={styles.faqQues}>
-                            How do I sign up on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        The users can sign up on Fantasy Akhada by filling a short registration form available on the homepage of Fantasy Akhada website.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                        How many accounts can I create with the same email id on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        Warning! You can create only one account with one email id on Fantasy Akhada. Creation of multiple accounts by a single user is strictly prohibited and violates our Fair Play policy.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                       Can I update / edit my information?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Sure! Simply log into Fantasy Akhada and click on ‘Profile’ at the bottom of the page. You will be able to update / edit your personal information. You can also edit your basic details like date of birth, address and state if your Fantasy Akhada account is ‘Unverified’. Remember, the Full Name, DOB, chosen by you, the email id and phone number registered once cannot be changed.
-                       </Text>
-                        </View>
-}
-                <TouchableOpacity onPress={()=>setcontests(!contests)}>
-                <View style={styles.faqBox}>
-                    <Text style={styles.faqTitle}>Contests</Text>
-                    <Ionicons  name={contests?"remove":"add"} size={20} color={COLORS.light_grey}/>
-                </View>
-                </TouchableOpacity>
-                      {contests &&
-                      <View>
-                        <Text style={styles.faqQues}>
-                              What is Fantasy Akhada Referal Code?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       You can use the referral / promo code : AKHADA to get 500 Bonus while registration.
-                        </Text>
-                        <Text style={styles.faqQues}>
-                              Where Can I download Fantasy Akhada APK ?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Visit www.fantasyakhada.com and click on “Download the Android App” button to download the APK.
-                       </Text>
-                        <Text style={styles.faqQues}>
-                            How do I sign up on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        The users can sign up on Fantasy Akhada by filling a short registration form available on the homepage of Fantasy Akhada website.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                        How many accounts can I create with the same email id on Fantasy Akhada?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                        Warning! You can create only one account with one email id on Fantasy Akhada. Creation of multiple accounts by a single user is strictly prohibited and violates our Fair Play policy.
-                       </Text>
-                     <Text style={styles.faqQues}>
-                       Can I update / edit my information?
-                        </Text>
-                       <Text  style={styles.faqAns}>
-                       Sure! Simply log into Fantasy Akhada and click on ‘Profile’ at the bottom of the page. You will be able to update / edit your personal information. You can also edit your basic details like date of birth, address and state if your Fantasy Akhada account is ‘Unverified’. Remember, the Full Name, DOB, chosen by you, the email id and phone number registered once cannot be changed.
-                       </Text>
-                        </View>
-}
-
+              </Text>
             </View>
+            <View style={{padding:15}}>
+              <Text style={{fontSize:14, fontWeight:"400"}}>
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </Text>
+            </View>
+            
+          </View>
+        </View>
+      </Modal>
          </ScrollView>
       </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
+  questionContainer:{
+    borderWidth:1,
+    borderColor:COLORS.primary,
+    paddingVertical:15,
+    marginBottom:25,
+    paddingHorizontal:10,
+    width:300,
+    borderRadius:10,
+  },
+  questionText:{
+    fontSize:14,
+    color:COLORS.light
+  },
+    modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end', // Align the modal to the bottom
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '100%',
+    height: 300, // Set the height of the modal
+    backgroundColor: COLORS.light_grey,
+    borderRadius: 10,
+  },
+  AllQuestionMain:{
+    marginHorizontal:14,
+    paddingVertical:20,
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:"space-around"
+  },
             container: {
     flex: 1,
     backgroundColor: COLORS.bgMateBlack,
