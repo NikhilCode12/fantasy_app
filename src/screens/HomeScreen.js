@@ -14,12 +14,15 @@ import Main from "../components/home/Main";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileOverlay from "../screens/ProfileOverlay";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const HomeScreen = ({}) => {
   const navigation = useNavigation();
   const [isProfileOverlayVisible, setProfileOverlayVisible] = useState(false);
   const [overlayAnimation] = useState(new Animated.Value(-300));
 
   const handleMatchCardPress = (data) => {
+    AsyncStorage.setItem("matchId",JSON.stringify(data.matchId));
+    AsyncStorage.setItem("competitionId",JSON.stringify(data.competitionId));
     navigation.navigate("VariationsScreen", { data: data });
   };
 
