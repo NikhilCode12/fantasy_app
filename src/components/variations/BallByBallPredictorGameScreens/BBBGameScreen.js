@@ -6,6 +6,7 @@ import {
   View,
   Alert,
   ToastAndroid,
+  Animated,
 } from "react-native";
 import COLORS from "../../../constants/colors.js";
 
@@ -20,6 +21,7 @@ const BBBGameScreen = ({ route }) => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [scoreTeamA, setScoreTeamA] = useState("0/0");
   const [scoreTeamB, setScoreTeamB] = useState("0/0");
+  const [animatedBorderWidth] = useState(new Animated.Value(100));
 
   const dummyBalls = [
     ".",
@@ -60,9 +62,18 @@ const BBBGameScreen = ({ route }) => {
   useEffect(() => {
     if (over === 3) {
       setIsGameOver(true);
-      ToastAndroid.show("Game Over", ToastAndroid.SHORT);
+      ToastAndroid.show("Game Over", ToastAndroid.SHORT, ToastAndroid.TOP);
     }
   }, [over, points]);
+
+  useEffect(() => {
+    const percentage = (timer / 20) * 100;
+    Animated.timing(animatedBorderWidth, {
+      toValue: percentage,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, [timer, animatedBorderWidth]);
 
   const handleTimerEnd = () => {
     const userChoice = selectedOption;
@@ -205,9 +216,8 @@ const BBBGameScreen = ({ route }) => {
                     },
                   balls[over * 6 + index] &&
                     !balls[over * 6 + index].result && {
-                      opacity: 0.5, // Less opaque for unattempted balls
+                      opacity: 0.5,
                     },
-                  // unplayed balls
                 ]}
                 disabled={true}
               >
@@ -251,7 +261,18 @@ const BBBGameScreen = ({ route }) => {
             )
           )}
         </View>
-        <View style={styles.timerContainer}>
+        <Animated.View
+          style={[
+            styles.timerContainer,
+            {
+              width: animatedBorderWidth.interpolate({
+                inputRange: [0, 100],
+                outputRange: ["100%", "0%"],
+              }),
+              borderColor: COLORS.secondary,
+            },
+          ]}
+        >
           <Text
             style={{
               color: COLORS.light,
@@ -262,7 +283,7 @@ const BBBGameScreen = ({ route }) => {
           >
             {timer > 0 ? timer : 0}
           </Text>
-        </View>
+        </Animated.View>
       </View>
     </View>
   );
@@ -320,7 +341,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timerContainer: {
-    borderWidth: 3,
     borderColor: COLORS.secondary,
     marginTop: 14,
     borderRadius: 50,
