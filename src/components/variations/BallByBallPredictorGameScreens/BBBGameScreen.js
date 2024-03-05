@@ -1,34 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import COLORS from "../../../constants/colors.js";
 
 const BBBGameScreen = ({ route }) => {
   const { data, title } = route.params;
-  const [balls, setBalls] = useState(Array(18).fill(null)); // 3 overs = 18 balls
+  const [balls, setBalls] = useState(Array(18).fill(null));
   const [over, setOver] = useState(0);
   const [ballIndex, setBallIndex] = useState(0);
   const [points, setPoints] = useState(0);
   const [timer, setTimer] = useState(20);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [scoreTeamA, setScoreTeamA] = useState("0/0");
+  const [scoreTeamB, setScoreTeamB] = useState("0/0");
 
-  // Dummy real match score for 18 balls i.e 3 overs
   const dummyBalls = [
     ".",
     1,
     2,
+    3,
     4,
     6,
     "W",
     ".",
     1,
     2,
+    3,
     4,
     6,
     "W",
     ".",
     1,
     2,
+    3,
     4,
     6,
     "W",
@@ -49,28 +60,31 @@ const BBBGameScreen = ({ route }) => {
   useEffect(() => {
     if (over === 3) {
       setIsGameOver(true);
-      Alert.alert("Game Over", `Final Score: ${points}`, [{ text: "OK" }]);
+      ToastAndroid.show("Game Over", ToastAndroid.SHORT);
     }
   }, [over, points]);
 
   const handleTimerEnd = () => {
     const userChoice = selectedOption;
     const ballResult = dummyBalls[ballIndex];
+    const resultIndex = result.findIndex((item) => item.dummy === ballResult);
 
-    const isCorrect = userChoice === ballResult;
+    const isCorrect = userChoice === result[resultIndex]?.meaning;
 
     updateBallResult(ballIndex, ballResult, isCorrect);
 
     if (isCorrect) {
-      const updatedPoints = calculatePoints(ballResult);
+      const updatedPoints = isCorrect
+        ? calculatePoints(result[resultIndex]?.dummy)
+        : 0;
+      ToastAndroid.show("Correct", ToastAndroid.SHORT);
       setPoints(points + updatedPoints);
     } else {
-      Alert.alert("Incorrect", "You chose the wrong option.", [{ text: "OK" }]);
+      ToastAndroid.show("Wrong", ToastAndroid.SHORT);
     }
 
     if ((ballIndex + 1) % 6 === 0) {
-      // If over completed
-      Alert.alert("Over Completed", "Move to the next over.", [{ text: "OK" }]);
+      ToastAndroid.show("Over Completed", ToastAndroid.SHORT);
       setOver((prevOver) => prevOver + 1);
       setBallIndex(0);
     } else {
@@ -87,6 +101,16 @@ const BBBGameScreen = ({ route }) => {
     setSelectedOption(option);
   };
 
+  const result = [
+    { dummy: "Dot", meaning: "." },
+    { dummy: "Single", meaning: 1 },
+    { dummy: "2/3 Runs", meaning: 2 },
+    { dummy: "2/3 Runs", meaning: 3 },
+    { dummy: "4 Runs", meaning: 4 },
+    { dummy: "6 Runs", meaning: 6 },
+    { dummy: "Wicket", meaning: "W" },
+  ];
+
   const updateBallResult = (index, result, isCorrect) => {
     const newBalls = [...balls];
     const actualIndex = over * 6 + index;
@@ -97,18 +121,18 @@ const BBBGameScreen = ({ route }) => {
   const calculatePoints = (ballResult) => {
     switch (ballResult) {
       case ".":
-        return 2;
+        return 1;
       case 1:
-        return 5;
+        return 1;
       case 2:
       case 3:
-        return 10;
+        return 2;
       case 4:
-        return 20;
+        return 5;
       case 6:
-        return 50;
+        return 8;
       case "W":
-        return 100;
+        return 25;
       default:
         return 0;
     }
@@ -130,7 +154,30 @@ const BBBGameScreen = ({ route }) => {
           >
             {title}
           </Text>
-          <Text style={styles.gameTitle}>Innings: {data.teamAName}</Text>
+          {/* Match Scorecard live */}
+          <View style={styles.liveScoreCard}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Text style={styles.teamTitle}>{data.teamAName}</Text>
+              <Text style={styles.teamTitle}>vs</Text>
+              <Text style={styles.teamTitle}>{data.teamBName}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Text style={styles.teamScore}>{scoreTeamA}</Text>
+              <Text style={styles.teamScore}>{scoreTeamB}</Text>
+            </View>
+          </View>
           <Text style={styles.gameTitle}>Over: {Math.floor(over) + 1}</Text>
         </View>
         <View style={styles.pointsContainer}>
@@ -150,12 +197,17 @@ const BBBGameScreen = ({ route }) => {
                   },
                   balls[over * 6 + index] &&
                     balls[over * 6 + index].isCorrect && {
-                      backgroundColor: COLORS.green,
+                      borderColor: COLORS.darkGreen,
                     },
                   balls[over * 6 + index] &&
                     !balls[over * 6 + index].isCorrect && {
-                      backgroundColor: COLORS.red,
+                      backgroundColor: COLORS.darkRed,
                     },
+                  balls[over * 6 + index] &&
+                    !balls[over * 6 + index].result && {
+                      opacity: 0.5, // Less opaque for unattempted balls
+                    },
+                  // unplayed balls
                 ]}
                 disabled={true}
               >
@@ -168,7 +220,7 @@ const BBBGameScreen = ({ route }) => {
                 >
                   {balls[over * 6 + index]
                     ? balls[over * 6 + index].result
-                    : "."}
+                    : ""}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -184,10 +236,11 @@ const BBBGameScreen = ({ route }) => {
                 style={[
                   styles.btns,
                   selectedOption !== null || timer === 0
-                    ? { backgroundColor: COLORS.disabledBg, opacity: 0.5 }
-                    : null,
+                    ? { backgroundColor: COLORS.transparentBg, opacity: 0.5 }
+                    : { backgroundColor: COLORS.transparentBg },
                   selectedOption === option && {
-                    backgroundColor: COLORS.secondary,
+                    opacity: 1,
+                    backgroundColor: COLORS.dark,
                   },
                 ]}
                 onPress={() => handleOptionSelect(option)}
@@ -218,6 +271,29 @@ const BBBGameScreen = ({ route }) => {
 export default BBBGameScreen;
 
 const styles = StyleSheet.create({
+  teamTitle: {
+    color: COLORS.light,
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  teamScore: {
+    color: COLORS.light,
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  liveScoreCard: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "45%",
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderColor: COLORS.primary,
+    borderRadius: 10,
+  },
   btns: {
     borderWidth: 1,
     borderColor: COLORS.primary,
@@ -239,14 +315,14 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     gap: 20,
-    padding: 12,
+    padding: 4,
     justifyContent: "center",
     alignItems: "center",
   },
   timerContainer: {
     borderWidth: 3,
     borderColor: COLORS.secondary,
-    marginTop: 10,
+    marginTop: 14,
     borderRadius: 50,
     height: 65,
     width: 65,
@@ -255,7 +331,7 @@ const styles = StyleSheet.create({
   },
   lowerContainer: {
     backgroundColor: COLORS.transparentBg,
-    marginVertical: 30,
+    marginVertical: 20,
     paddingVertical: 20,
     marginHorizontal: 20,
     borderRadius: 25,
@@ -279,7 +355,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 50,
     backgroundColor: COLORS.lightGray,
-    borderWidth: 2,
+    borderWidth: 1,
   },
   gameContainer: {
     flex: 1,

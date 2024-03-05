@@ -1,79 +1,9 @@
 [
   {
     "id": 145832479,
-    "type":"Withdrawn",
-    "amount":"200",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 321459674,
-    "type":"Withdrawn",
-    "amount":"1400",
-    "date":"9/01/2024",
-    "time":"12:05"
-  },
-  {
-    "id": 145726548,
-    "type":"Added",
-    "amount":"1500",
-    "date":"05/01/2024",
-    "time":"20:05"
-  },
-  {
-    "id": 247452148,
-    "type":"Withdrawn",
-    "amount":"200",
-    "date":"30/01/2024",
-    "time":"12:05"
-  },
-  {
-    "id": 321452785,
-    "type":"Added",
-    "amount":"100",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 245122786,
-    "type":"Withdrawn",
-    "amount":"200",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 945122787,
-    "type":"Added",
-    "amount":"400",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 345218674,
-    "type":"Withdrawn",
-    "amount":"200",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 369751483,
-    "type":"Added",
-    "amount":"400",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 145236754,
-    "type":"Withdrawn",
-    "amount":"200",
-    "date":"29/01/2024",
-    "time":"10:05"
-  },
-  {
-    "id": 652348521,
-    "type":"Added",
-    "amount":"400",
-    "date":"29/01/2024",
-    "time":"10:05"
+    "type": "Testing",
+    "amount": "0",
+    "date": "06/03/2024",
+    "time": "03:05 am"
   }
 ]
