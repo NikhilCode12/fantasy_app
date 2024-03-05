@@ -1,11 +1,5 @@
-import {
-  FlatList,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React from "react";
+import { FlatList, Text, TouchableOpacity, View, Animated } from "react-native";
+import React, { useEffect } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,14 +12,38 @@ const BallByBallPredictor = ({ route }) => {
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
   const choices = [
-    { id: "1", title: "Overs: 1-3" },
-    { id: "2", title: "Overs: 3-6" },
-    { id: "3", title: "Overs: 6-9" },
-    { id: "4", title: "Overs: 9-12" },
-    { id: "5", title: "Overs: 12-15" },
-    { id: "6", title: "Overs: 15-18" },
-    { id: "7", title: "Overs: 18-20" },
+    { id: "1", title: "Overs: 1-3", isLive: true },
+    { id: "2", title: "Overs: 3-6", isLive: false },
+    { id: "3", title: "Overs: 6-9", isLive: false },
+    { id: "4", title: "Overs: 9-12", isLive: false },
+    { id: "5", title: "Overs: 12-15", isLive: false },
+    { id: "6", title: "Overs: 15-18", isLive: false },
+    { id: "7", title: "Overs: 18-20", isLive: false },
   ];
+
+  const opacity = new Animated.Value(0);
+
+  const animateLiveIcon = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  };
+
+  useEffect(() => {
+    animateLiveIcon();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -111,6 +129,40 @@ const BallByBallPredictor = ({ route }) => {
                 >
                   Powerplay
                 </Text>
+              )}
+              {/* Live icon */}
+              {item.isLive && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingVertical: 4,
+                    paddingHorizontal: 10,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.transparentBg,
+                    gap: 4,
+                  }}
+                >
+                  {/* ellipse icon should be blinking */}
+                  <Animated.View
+                    style={{
+                      opacity: opacity,
+                    }}
+                  >
+                    <Ionicons name="ellipse" size={8} color={COLORS.darkRed} />
+                  </Animated.View>
+                  <Text
+                    style={{
+                      color: COLORS.light,
+                      fontSize: 10,
+                      fontWeight: "500",
+                      textAlign: "center",
+                    }}
+                  >
+                    Live
+                  </Text>
+                </View>
               )}
               {item.id === "7" ? (
                 <Text

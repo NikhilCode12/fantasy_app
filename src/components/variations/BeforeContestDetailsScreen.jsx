@@ -158,8 +158,14 @@ const BeforeContestDetailsScreen = ({ route }) => {
         initialRouteName="Details"
       >
         <Tab.Screen name="Details" component={DetailsScreen} />
-        <Tab.Screen name="Rules" component={RulesScreen} />
-        <Tab.Screen name="Teams" component={TeamsScreen} />
+        <Tab.Screen
+          name="Rules"
+          component={RulesScreen}
+          initialParams={{ variation }}
+        />
+        {variation !== "Ball by Ball Predictor" && (
+          <Tab.Screen name="Teams" component={TeamsScreen} />
+        )}
       </Tab.Navigator>
       {/* Join Contest Button */}
       <TouchableOpacity
