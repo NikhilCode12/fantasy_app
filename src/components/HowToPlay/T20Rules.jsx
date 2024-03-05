@@ -22,7 +22,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import DeleteIcon from "../../components/common/DeleteIcon.js";
 import Toast from "react-native-toast-message";
-
+import styles from "./allRules.styles.js";
 export default function T20Rules() {
   const [battingOpened, setBattingOpened] = useState(false);
   const [bowlingOpened, setBowlingOpened] = useState(false);
@@ -204,7 +204,7 @@ export default function T20Rules() {
       flag: true,
     },
     {
-      t: "Catch Bonus ",
+      t: "3 Catch Bonus",
       p: "+4 pts",
       flag: true,
     },
@@ -231,8 +231,8 @@ export default function T20Rules() {
       flag: true,
     },
     {
-      t: "Vice-Captain Bonus ",
-      p: "+4 pts",
+      t: "Vice-Captain Points ",
+      p: "1.5x",
       flag: true,
     },
     {
@@ -249,6 +249,91 @@ export default function T20Rules() {
   return (
     <View style={styles.mainContainer}>
       <ScrollView style={styles.ScrollContainer}>
+        <View style={styles.impContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.darkRed,
+              paddingVertical: 4,
+              paddingHorizontal: 4,
+              width: 210,
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+            }}
+          >
+            <Text style={{ color: COLORS.light }}>
+              IMPORTANT FANTASY POINTS
+            </Text>
+          </View>
+          <View style={styles.impRow}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text
+                style={{ fontSize: 16, color: COLORS.light, fontWeight: "700" }}
+              >
+                Wicket
+              </Text>
+              <Text style={{ fontSize: 14, color: COLORS.silver }}>
+                (Excluding run out)
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLORS.secondary,
+                  fontWeight: "bold",
+                }}
+              >
+                +25 pts
+              </Text>
+            </View>
+          </View>
+          <View style={styles.impRow}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text
+                style={{ fontSize: 16, color: COLORS.light, fontWeight: "700" }}
+              >
+                Century Bonus
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLORS.secondary,
+                  fontWeight: "bold",
+                }}
+              >
+                +16 pts
+              </Text>
+            </View>
+          </View>
+          <View style={styles.impRow}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text
+                style={{ fontSize: 16, color: COLORS.light, fontWeight: "700" }}
+              >
+                5 Wicket Bonus
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLORS.secondary,
+                  fontWeight: "bold",
+                }}
+              >
+                +16 pts
+              </Text>
+            </View>
+          </View>
+        </View>
         <View style={styles.container}>
           <TouchableWithoutFeedback onPress={toggleAccordion}>
             <View style={styles.header}>
@@ -411,70 +496,3 @@ export default function T20Rules() {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  mainContainer: { backgroundColor: COLORS.bgLightBlack, flex: 1 },
-  ScrollContainer: { marginBottom: 40 },
-  colorRed: { color: COLORS.darkRed },
-  insideTitle: {
-    color: COLORS.primary,
-    fontSize: 16,
-    fontWeight: "bold",
-    paddingHorizontal: 10,
-  },
-  insideminiTitle: {
-    color: COLORS.secondary,
-    fontSize: 16,
-    fontWeight: "bold",
-    paddingHorizontal: 10,
-  },
-  PointRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: COLORS.bgMateBlack,
-
-    marginTop: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-  },
-  tiltleLeft: {
-    maxWidth: 220,
-    color: COLORS.primary,
-    fontSize: 14,
-  },
-  pointsRight: {
-    color: COLORS.secondary,
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  details: {
-    // opacity: 0.65,
-  },
-  title: {
-    textTransform: "capitalize",
-    color: COLORS.light,
-    fontSize: 20,
-    fontWeight: "bold",
-    // marginBottom: 10,
-    color: COLORS.light_grey,
-  },
-  content: {
-    marginTop: 8,
-    // backgroundColor: COLORS.transparentBg,
-  },
-  container: {
-    margin: 10,
-    marginTop: 15,
-    backgroundColor: COLORS.dark,
-    padding: 15,
-    // backgroundColor: "white",
-    borderRadius: 6,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-
-    // marginBottom: 20,
-    // backgroundColor: COLORS.lightGray,
-  },
-});
