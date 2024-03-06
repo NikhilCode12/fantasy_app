@@ -42,8 +42,10 @@ const PlayerSelection3 = ({ route }) => {
   useEffect(() => {
     const getMatchIdandCompetitionId = async () => {
       try {
-        const matchId = await AsyncStorage.getItem("matchId");
-        const competitionId = await AsyncStorage.getItem("competitionId");
+        // const matchId = await AsyncStorage.getItem("matchId");
+        // const competitionId = await AsyncStorage.getItem("competitionId");
+        const matchId = data.matchId;
+        const competitionId = data.competitionId;
         console.log("matchId: ", matchId);
         console.log("competitionId: ", competitionId);
         setMatchId(matchId);
