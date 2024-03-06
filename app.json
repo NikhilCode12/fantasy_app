@@ -27,11 +27,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "ed3a5384-321c-49c3-a6e0-adcec0abb687"
-      }
-    },
     "owner": "nikhil12n",
     "plugins": [
       [
@@ -45,6 +40,11 @@
           ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ed3a5384-321c-49c3-a6e0-adcec0abb687"
+      }
+    }
   }
 }

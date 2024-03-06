@@ -39,12 +39,22 @@ const DetailsScreen = () => {
     { rank: "501-1000", prize: "2,000" },
   ];
 
-  const prize = "10 Lakhs";
+  const freePrizeBreakdown = [];
+
+  const prize = "Free Entry";
   const winners = 1000;
-  const entryFee = 50;
+  const entryFee = 0;
 
   const handleExpand = () => {
     setExpanded((prev) => !prev);
+  };
+
+  const getPrizeBreakDown = (prize) => {
+    if (prize === "Free Entry") {
+      return freePrizeBreakdown;
+    } else {
+      return prizeBreakdown;
+    }
   };
 
   return (
@@ -81,7 +91,9 @@ const DetailsScreen = () => {
               }}
             >
               <Text style={styles.teamText}>
-                {"\u20B9" + prize.toLocaleString("en-IN")}
+                {prize !== "Free Entry"
+                  ? "\u20B9"
+                  : "" + prize.toLocaleString("en-IN")}
               </Text>
             </View>
           </View>
@@ -175,7 +187,7 @@ const DetailsScreen = () => {
               PRIZE
             </Text>
           </View>
-          {prizeBreakdown.map((item, index) => (
+          {getPrizeBreakDown(prize).map((item, index) => (
             <View
               key={index}
               style={{

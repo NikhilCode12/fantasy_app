@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
 
   // finacial history
   financialHistoryContainer: {
-    backgroundColor: COLORS.btn,
+    backgroundColor: COLORS.transparentBg,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
     alignItems: "center",
     paddingVertical: "10",
     marginHorizontal: 16,

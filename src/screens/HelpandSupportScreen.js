@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, KeyboardAvoidingView, Platform } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
 import DeleteIcon from "../components/common/DeleteIcon";
@@ -17,6 +17,7 @@ import {
   ToastAndroid,
   Linking
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import CheckBox from "../components/common/Checkbox";
 import BackArrow from "../components/common/BackArrow";
 import { Ionicons } from "@expo/vector-icons";
@@ -38,19 +39,26 @@ const openTelegram = () => {
     const emailURL = `mailto:${email}?subject=${subject}`;
     Linking.openURL(emailURL);
   };
+export default function HelpandSupportScreen({ navigation }) {
+  const [registration, setregistration] = useState(false);
+  const [PlayingTheGame, setPlayingTheGame] = useState(false);
+  const [ScoresAndPoints, setScoresAndPoints] = useState(false);
+  const [contests, setcontests] = useState(false);
+  const [cashPrize, setCashPrize] = useState(false);
+  const [accounBalance, setaccounBalance] = useState(false);
+  const [Verfication, setVerifiaction] = useState(false);
+  const [withdrawls, setWithdrawls] = useState(false);
+  const [payments, setPayments] = useState(false);
   return (
-        <SafeAreaView style={styles.container}>
-
-         <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backArrow}  onPress={() => {
-              navigation.goBack();
-            }}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-           
-            color={COLORS.primary}
-            />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          style={styles.backArrow}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Help and Support</Text>
       </View>
@@ -162,37 +170,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.bgMateBlack,
   },
-  scrollarea:{
-     flex: 1,
+  scrollarea: {
+    flex: 1,
     // paddingBottom:5,
     // marginBottom:15
   },
-   headerContainer: {
+  headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
     backgroundColor: COLORS.bgMateBlack,
   },
-    headerText: {
+  headerText: {
     fontSize: 18,
     color: COLORS.light_grey,
     marginHorizontal: 20,
     fontWeight: "bold",
   },
-    backArrow: {
+  backArrow: {
     backgroundColor: COLORS.transparentBg,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
   },
-  colorslight:{color:COLORS.light},
-  colorslight_grey:{color:COLORS.light_grey},
+  colorslight: { color: COLORS.light },
+  colorslight_grey: { color: COLORS.light_grey },
 
-  // bottom 
-  faqsmainContainer:{flexDirection:"column", marginHorizontal:20},
-  faqBox:{flexDirection:"row", justifyContent:"space-between",paddingHorizontal:20, marginTop:15,backgroundColor:COLORS.transparentBg,paddingVertical:10},
-  faqTitle:{color:COLORS.light_grey,fontSize:16},
-  faqQues:{color:COLORS.light , marginTop:30},
-  faqAns:{color:COLORS.light_grey , marginTop:5},
-})  
+  // bottom
+  faqsmainContainer: { flexDirection: "column", marginHorizontal: 20 },
+  faqBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginTop: 15,
+    backgroundColor: COLORS.transparentBg,
+    paddingVertical: 10,
+  },
+  faqTitle: { color: COLORS.light_grey, fontSize: 16 },
+  faqQues: { color: COLORS.light, marginTop: 30 },
+  faqAns: { color: COLORS.light_grey, marginTop: 5 },
+});

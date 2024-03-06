@@ -50,7 +50,49 @@ const BonusRules = [
 const EconomyRateRules = [];
 const StrikeRateRules = [];
 
-const RulesScreen = () => {
+const ballByBallRules = [
+  {
+    title: "Dot Ball",
+    point: 1,
+  },
+  {
+    title: "Single - 1 Run",
+    point: 1,
+  },
+  {
+    title: "2 Runs",
+    point: 2,
+  },
+  {
+    title: "3 Runs",
+    point: 3,
+  },
+  {
+    title: "Boundary - 4 Runs",
+    point: 5,
+  },
+  {
+    title: "Sixer - 6 Runs",
+    point: 8,
+  },
+  {
+    title: "Wicket",
+    point: 25,
+  },
+];
+
+const RulesScreen = ({ route }) => {
+  const { variation } = route.params;
+
+  const getRules = (variation) => {
+    switch (variation) {
+      case "Ball by Ball Predictor":
+        return ballByBallRules;
+      default:
+        return normalRules;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ flex: 1 }}>
@@ -62,10 +104,14 @@ const RulesScreen = () => {
         </View>
         {/* Rules */}
         <View style={styles.detailsContainer}>
-          <Text style={styles.rulesHeading}>Normal</Text>
+          {variation === "Ball by Ball Predictor" ? (
+            <Text style={styles.rulesHeading}>Predictor Rules</Text>
+          ) : (
+            <Text style={styles.rulesHeading}>Normal</Text>
+          )}
           <View style={{ gap: 3 }}>
             {/* Normal Rules */}
-            {normalRules.map((rule, index) => (
+            {getRules(variation).map((rule, index) => (
               <View
                 key={index}
                 style={{
@@ -90,19 +136,25 @@ const RulesScreen = () => {
             ))}
           </View>
           {/* Bonus Rules */}
-          <View>
-            <Text style={styles.rulesHeading}>Bonus</Text>
-          </View>
+          {variation === "Ball by Ball Predictor" ? null : (
+            <View>
+              <Text style={styles.rulesHeading}>Bonus</Text>
+            </View>
+          )}
 
           {/* Economy Rates Rules */}
-          <View>
-            <Text style={styles.rulesHeading}>Economy Rate</Text>
-          </View>
+          {variation === "Ball by Ball Predictor" ? null : (
+            <View>
+              <Text style={styles.rulesHeading}>Economy Rate</Text>
+            </View>
+          )}
 
           {/* Strike Rate */}
-          <View>
-            <Text style={styles.rulesHeading}>Strike Rate</Text>
-          </View>
+          {variation === "Ball by Ball Predictor" ? null : (
+            <View>
+              <Text style={styles.rulesHeading}>Strike Rate</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -138,15 +190,15 @@ const styles = StyleSheet.create({
   },
   rulesHeading: {
     color: COLORS.light_grey,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "bold",
   },
   rulesText: {
     color: COLORS.silver,
-    fontSize: 12,
+    fontSize: 14,
   },
   rulesPoint: {
     color: "lightgreen",
-    fontSize: 12,
+    fontSize: 14,
   },
 });
