@@ -39,16 +39,16 @@ const openTelegram = () => {
     const emailURL = `mailto:${email}?subject=${subject}`;
     Linking.openURL(emailURL);
   };
-export default function HelpandSupportScreen({ navigation }) {
-  const [registration, setregistration] = useState(false);
-  const [PlayingTheGame, setPlayingTheGame] = useState(false);
-  const [ScoresAndPoints, setScoresAndPoints] = useState(false);
-  const [contests, setcontests] = useState(false);
-  const [cashPrize, setCashPrize] = useState(false);
-  const [accounBalance, setaccounBalance] = useState(false);
-  const [Verfication, setVerifiaction] = useState(false);
-  const [withdrawls, setWithdrawls] = useState(false);
-  const [payments, setPayments] = useState(false);
+// export default function HelpandSupportScreen({ navigation }) {
+  // const [registration, setregistration] = useState(false);
+  // const [PlayingTheGame, setPlayingTheGame] = useState(false);
+  // const [ScoresAndPoints, setScoresAndPoints] = useState(false);
+  // const [contests, setcontests] = useState(false);
+  // const [cashPrize, setCashPrize] = useState(false);
+  // const [accounBalance, setaccounBalance] = useState(false);
+  // const [Verfication, setVerifiaction] = useState(false);
+  // const [withdrawls, setWithdrawls] = useState(false);
+  // const [payments, setPayments] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>

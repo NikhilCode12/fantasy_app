@@ -71,18 +71,7 @@ const VariationsScreen = ({ route }) => {
           <TouchableOpacity
             style={styles.variationCard}
             onPress={() => {
-              if (
-                item.id === "1" ||
-                item.id === "2" ||
-                item.id === "3" ||
-                item.id === "4"
-              ) {
-                navigation.navigate("ContestBottomNavigation", {
-                  data: data,
-                  amount: amount,
-                  variation: item.title,
-                });
-              } else if (item.id === "5") {
+              if (item.id === "5") {
                 navigation.navigate("BallByBallPredictor", {
                   data: data,
                   amount: amount,
@@ -91,6 +80,26 @@ const VariationsScreen = ({ route }) => {
               } else {
                 ToastAndroid.show("Coming soon...", ToastAndroid.SHORT);
               }
+              // if (
+              //   item.id === "1" ||
+              //   item.id === "2" ||
+              //   item.id === "3" ||
+              //   item.id === "4"
+              // ) {
+              //   navigation.navigate("ContestBottomNavigation", {
+              //     data: data,
+              //     amount: amount,
+              //     variation: item.title,
+              //   });
+              // } else if (item.id === "5") {
+              //   navigation.navigate("BallByBallPredictor", {
+              //     data: data,
+              //     amount: amount,
+              //     variation: item.title,
+              //   });
+              // } else {
+              //   ToastAndroid.show("Coming soon...", ToastAndroid.SHORT);
+              // }
             }}
           >
             <View
