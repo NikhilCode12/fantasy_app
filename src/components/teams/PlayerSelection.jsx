@@ -44,8 +44,10 @@ const PlayerSelection = ({ route }) => {
   useEffect(() => {
     const getMatchIdandCompetitionId = async () => {
       try {
-        const matchId = await AsyncStorage.getItem("matchId");
-        const competitionId = await AsyncStorage.getItem("competitionId");
+        // const matchId = await AsyncStorage.getItem("matchId");
+        // const competitionId = await AsyncStorage.getItem("competitionId");
+        const matchId = data.matchId;
+        const competitionId = data.competitionId;
 
         setMatchId(matchId);
         setCompetitionId(competitionId);
@@ -55,7 +57,7 @@ const PlayerSelection = ({ route }) => {
     };
 
     getMatchIdandCompetitionId();
-  }, []);
+  }, [competitionId]);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
