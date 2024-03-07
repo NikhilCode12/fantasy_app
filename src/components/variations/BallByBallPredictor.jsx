@@ -130,6 +130,23 @@ const BallByBallPredictor = ({ route }) => {
                   Powerplay
                 </Text>
               )}
+
+              {item.id === "7" && (
+                <Text
+                  style={{
+                    color: COLORS.light,
+                    fontSize: 10,
+                    fontWeight: "500",
+                    paddingHorizontal: 10,
+                    textAlign: "center",
+                    paddingVertical: 4,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.transparentBg,
+                  }}
+                >
+                  Final Overs
+                </Text>
+              )}
               {/* Live icon */}
               {item.isLive && (
                 <View
@@ -164,22 +181,6 @@ const BallByBallPredictor = ({ route }) => {
                   </Text>
                 </View>
               )}
-              {item.id === "7" ? (
-                <Text
-                  style={{
-                    color: COLORS.light,
-                    fontSize: 10,
-                    fontWeight: "500",
-                    paddingHorizontal: 10,
-                    textAlign: "center",
-                    paddingVertical: 4,
-                    borderRadius: 4,
-                    backgroundColor: COLORS.transparentBg,
-                  }}
-                >
-                  Final Overs
-                </Text>
-              ) : null}
             </View>
             <Ionicons name="chevron-forward" size={22} color={COLORS.primary} />
           </TouchableOpacity>

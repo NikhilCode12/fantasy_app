@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-  ToastAndroid,
-  Animated,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import COLORS from "../../../constants/colors.js";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const BBBGameScreen = ({ route }) => {
+  const navigate = useNavigation();
   const { data, title } = route.params;
   const [balls, setBalls] = useState(Array(18).fill(null));
   const [over, setOver] = useState(0);
@@ -21,131 +16,56 @@ const BBBGameScreen = ({ route }) => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [scoreTeamA, setScoreTeamA] = useState("0/0");
   const [scoreTeamB, setScoreTeamB] = useState("0/0");
-  const [animatedBorderWidth] = useState(new Animated.Value(100));
-
-  const dummyBalls = [
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-  ];
+  const [liveInning, setLiveInning] = useState(1);
+  const [recentScores, setRecentScores] = useState("");
 
   useEffect(() => {
+    fetchLiveMatchData(data.matchId);
+
+    // fetch live match data every 10 seconds
     const interval = setInterval(() => {
-      if (timer === 0) {
-        handleTimerEnd();
-      } else {
-        setTimer((prev) => prev - 1);
-      }
-    }, 1000);
+      fetchLiveMatchData(data.matchId);
+    }, 20000);
 
     return () => clearInterval(interval);
-  }, [timer]);
+  }, []);
 
-  useEffect(() => {
-    if (over === 3) {
-      setIsGameOver(true);
-      ToastAndroid.show("Game Over", ToastAndroid.SHORT, ToastAndroid.TOP);
-    }
-  }, [over, points]);
+  const fetchLiveMatchData = async (matchId) => {
+    try {
+      // get data by sending match id as query param to the api
+      const response = await axios.get(
+        `https://fanverse-backend.onrender.com/api/live-match/?matchId=${matchId}`
+      );
+      const responseData = response.data.response;
+      const { teams, live_inning } = responseData;
+      const teamA = teams[0];
+      const teamB = teams[1];
 
-  useEffect(() => {
-    const percentage = (timer / 20) * 100;
-    Animated.timing(animatedBorderWidth, {
-      toValue: percentage,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  }, [timer, animatedBorderWidth]);
+      // Split recent scores string into an array
+      const recentScoresArray = live_inning.recent_scores.split(",");
+      const lastScore = recentScoresArray[recentScoresArray.length - 1];
 
-  const handleTimerEnd = () => {
-    const userChoice = selectedOption;
-    const ballResult = dummyBalls[ballIndex];
-    const resultIndex = result.findIndex((item) => item.dummy === ballResult);
+      // Update the balls array with the last score
+      const updatedBalls = [...balls];
+      updatedBalls[balls.length - 1] = lastScore;
 
-    const isCorrect = userChoice === result[resultIndex]?.meaning;
+      // Update other state variables
+      setBalls(updatedBalls);
+      setScoreTeamA(teamA.scores);
+      setScoreTeamB(teamB.scores);
 
-    updateBallResult(ballIndex, ballResult, isCorrect);
-
-    if (isCorrect) {
-      const updatedPoints = isCorrect
-        ? calculatePoints(result[resultIndex]?.dummy)
-        : 0;
-      ToastAndroid.show("Correct", ToastAndroid.SHORT);
-      setPoints(points + updatedPoints);
-    } else {
-      ToastAndroid.show("Wrong", ToastAndroid.SHORT);
-    }
-
-    if ((ballIndex + 1) % 6 === 0) {
-      ToastAndroid.show("Over Completed", ToastAndroid.SHORT);
-      setOver((prevOver) => prevOver + 1);
-      setBallIndex(0);
-    } else {
-      setBallIndex((prevIndex) => (prevIndex + 1) % 6);
-    }
-
-    setTimer(20);
-    setSelectedOption(null);
-  };
-
-  const handleOptionSelect = (option) => {
-    if (isGameOver || selectedOption !== null || timer === 0) return;
-
-    setSelectedOption(option);
-  };
-
-  const result = [
-    { dummy: "Dot", meaning: "." },
-    { dummy: "Single", meaning: 1 },
-    { dummy: "2/3 Runs", meaning: 2 },
-    { dummy: "2/3 Runs", meaning: 3 },
-    { dummy: "4 Runs", meaning: 4 },
-    { dummy: "6 Runs", meaning: 6 },
-    { dummy: "Wicket", meaning: "W" },
-  ];
-
-  const updateBallResult = (index, result, isCorrect) => {
-    const newBalls = [...balls];
-    const actualIndex = over * 6 + index;
-    newBalls[actualIndex] = { result, isCorrect };
-    setBalls(newBalls);
-  };
-
-  const calculatePoints = (ballResult) => {
-    switch (ballResult) {
-      case ".":
-        return 1;
-      case 1:
-        return 1;
-      case 2:
-      case 3:
-        return 2;
-      case 4:
-        return 5;
-      case 6:
-        return 8;
-      case "W":
-        return 25;
-      default:
-        return 0;
+      if (
+        parseInt(scoreTeamA.split("/")[0]) >
+          parseInt(scoreTeamB.split("/")[0]) ||
+        parseInt(scoreTeamA.split("/")[0]) < parseInt(scoreTeamB.split("/")[0])
+      ) {
+        Alert.alert("Game Over", "Game is over. You can not predict now.");
+        navigate.goBack();
+      }
+      setOver(responseData.live_score.overs);
+      setLiveInning(responseData.live_inning_number);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -185,11 +105,29 @@ const BBBGameScreen = ({ route }) => {
                 width: "100%",
               }}
             >
-              <Text style={styles.teamScore}>{scoreTeamA}</Text>
-              <Text style={styles.teamScore}>{scoreTeamB}</Text>
+              <Text
+                style={[
+                  styles.teamScore,
+                  {
+                    color: liveInning === 1 ? COLORS.primary : COLORS.light,
+                  },
+                ]}
+              >
+                {scoreTeamA}
+              </Text>
+              <Text
+                style={[
+                  styles.teamScore,
+                  {
+                    color: liveInning === 2 ? COLORS.primary : COLORS.light,
+                  },
+                ]}
+              >
+                {scoreTeamB}
+              </Text>
             </View>
           </View>
-          <Text style={styles.gameTitle}>Over: {Math.floor(over) + 1}</Text>
+          <Text style={styles.gameTitle}>Over: {over}</Text>
         </View>
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsText}>
@@ -206,20 +144,20 @@ const BBBGameScreen = ({ route }) => {
                     borderColor: COLORS.primary,
                     borderWidth: 1,
                   },
-                  balls[over * 6 + index] &&
-                    balls[over * 6 + index].isCorrect && {
+                  balls[index] &&
+                    balls[index].isCorrect && {
                       borderColor: COLORS.darkGreen,
                     },
-                  balls[over * 6 + index] &&
-                    !balls[over * 6 + index].isCorrect && {
+                  balls[index] &&
+                    !balls[index].isCorrect && {
                       backgroundColor: COLORS.darkRed,
                     },
-                  balls[over * 6 + index] &&
-                    !balls[over * 6 + index].result && {
+                  balls[index] &&
+                    !balls[index].result && {
                       opacity: 0.5,
                     },
                 ]}
-                disabled={true}
+                disabled={false}
               >
                 <Text
                   style={{
@@ -228,9 +166,7 @@ const BBBGameScreen = ({ route }) => {
                     fontSize: 11,
                   }}
                 >
-                  {balls[over * 6 + index]
-                    ? balls[over * 6 + index].result
-                    : ""}
+                  {balls[index]}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -253,7 +189,6 @@ const BBBGameScreen = ({ route }) => {
                     backgroundColor: COLORS.dark,
                   },
                 ]}
-                onPress={() => handleOptionSelect(option)}
                 disabled={selectedOption !== null || timer === 0}
               >
                 <Text style={styles.options}>{option}</Text>
@@ -261,18 +196,7 @@ const BBBGameScreen = ({ route }) => {
             )
           )}
         </View>
-        <Animated.View
-          style={[
-            styles.timerContainer,
-            {
-              width: animatedBorderWidth.interpolate({
-                inputRange: [0, 100],
-                outputRange: ["100%", "0%"],
-              }),
-              borderColor: COLORS.secondary,
-            },
-          ]}
-        >
+        <View style={[styles.timerContainer]}>
           <Text
             style={{
               color: COLORS.light,
@@ -283,7 +207,7 @@ const BBBGameScreen = ({ route }) => {
           >
             {timer > 0 ? timer : 0}
           </Text>
-        </Animated.View>
+        </View>
       </View>
     </View>
   );
@@ -308,7 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "45%",
+    width: "35%",
     borderWidth: 1,
     paddingVertical: 10,
     paddingHorizontal: 12,
@@ -411,7 +335,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     fontSize: 14,
     fontWeight: "bold",
-    width: "37%",
+    width: "32.5%",
   },
   points: {
     color: COLORS.light,

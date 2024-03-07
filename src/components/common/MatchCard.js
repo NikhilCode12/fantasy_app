@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import COLORS from "../../constants/colors";
 import styles from "../../styles/matchcard.style.js";
@@ -24,6 +24,26 @@ const MatchCard = ({
     const data = { timeRemaining };
     onMatchCardPress(data);
   };
+
+  // useEffect(() => {
+  //   console.log("Time Remaining: ", timeRemaining);
+  // }, []);
+
+  // Time remaining is in the format "00d : 00h" || "00h : 00m" || "00m : 00s"
+
+  // if time remaining is less than 5 minutes, then display time in red color
+  const timeRemainingArray = timeRemaining.split(" : ");
+
+  const changeTimeColor = (timeRemainingArray) => {
+    if (
+      timeRemainingArray[0].includes("m") ||
+      timeRemainingArray[0].includes("s")
+    ) {
+      if (parseInt(timeRemainingArray[0]) < 5) return { color: COLORS.darkRed };
+      else return { color: COLORS.darkRed };
+    } else return { color: COLORS.light_grey };
+  };
+
   return (
     <TouchableOpacity onPress={handleMatchCardPress}>
       {/* Card Container */}
@@ -63,7 +83,16 @@ const MatchCard = ({
             </View>
             {/* Date,time and remaining time display of match */}
             <View style={styles.timeContainer}>
-              <Text style={styles.remainTimeText}>{timeRemaining}</Text>
+              <Text
+                style={[
+                  styles.remainTimeText,
+                  {
+                    ...changeTimeColor(timeRemainingArray),
+                  },
+                ]}
+              >
+                {timeRemaining}
+              </Text>
               <Text style={styles.dateTimeText}>
                 {/* {"Today, "} */}
                 {timeVenue}
