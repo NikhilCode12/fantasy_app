@@ -14,15 +14,73 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import ContestCard from "../common/ContestCard.js";
-import contests from "../../constants/contests.json";
+import ContestCard2 from "../common/ContestCard2.js";
+// import contests from "../../constants/contests.json";
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BallByBallContestScreen = ({ route }) => {
   const { data, amount, variation, title } = route.params;
+  const [contests, setContests] = useState([]);
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    async function updateContests() {
+      if (title === "Overs: 1-3") {
+        console.log("here");
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/onetothree/getall",
+          { matchId: data.matchId }
+        );
+        setContests(responseData.data);
+        console.log(responseData.data);
+      } else if (title === "Overs: 3-6") {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/fourtosix/getall",
+          { matchId: data.matchId }
+        );
+        console.log(responseData.data);
+        setContests(responseData.data);
+      } else if (title === "Overs: 6-9") {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/seventonine/getall",
+          { matchId: data.matchId }
+        );
+        // console.log(responseData.data);
+        setContests(responseData.data);
+      } else if (title === "Overs: 9-12") {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/tentotwelve/getall",
+          { matchId: data.matchId }
+        );
+        // console.log(responseData.data);
+        setContests(responseData.data);
+      } else if (title === "Overs: 12-15") {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/thirteentofifteen/getall",
+          { matchId: data.matchId }
+        );
+        // console.log(responseData.data);
+        setContests(responseData.data);
+      } else if (title === "Overs: 15-18") {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/sixteentoeighteen/getall",
+          { matchId: data.matchId }
+        );
+        // console.log(responseData.data);
+        setContests(responseData.data);
+      } else {
+        const responseData = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ballbyball/nineteentotwenty/getall",
+          { matchId: data.matchId }
+        );
+        // console.log(responseData.data);
+        setContests(responseData.data);
+      }
+    }
+    updateContests();
+  }, []);
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -54,17 +112,18 @@ const BallByBallContestScreen = ({ route }) => {
         console.log("Error storing matchId and competitionId: ", e);
       }
     };
-
+    console.log("match id is :", data.matchId);
     storeMatchIdandCompetitionId();
   }, []);
 
-  const handleCardPress = (fee) => {
+  const handleCardPress = (fee, contestId) => {
     navigation.navigate("BeforeContestDetails", {
       data: data,
       amount: amount,
       variation: variation,
       title: title,
       entryFee: fee,
+      contestId: contestId,
     });
   };
 
@@ -140,7 +199,7 @@ const BallByBallContestScreen = ({ route }) => {
             <Text style={cStyles.matchText2}>{"Filter"}</Text>
           </TouchableOpacity>
         </View>
-        {isLoading ? (
+        {contests.length === 0 ? (
           <View
             style={{
               flex: 1,
@@ -155,11 +214,13 @@ const BallByBallContestScreen = ({ route }) => {
           <FlatList
             data={contests}
             renderItem={({ item }) => (
-              <ContestCard
+              <ContestCard2
                 contest={item}
                 variationSelected={variation}
                 oversSelected={title}
-                handleContestCardPress={() => handleCardPress(item.entryFee)}
+                handleContestCardPress={() =>
+                  handleCardPress(item.EntryFees, item._id)
+                }
               />
             )}
             keyExtractor={(item, index) => index.toString()}
