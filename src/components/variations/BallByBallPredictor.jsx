@@ -1,27 +1,137 @@
 import { FlatList, Text, TouchableOpacity, View, Animated } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/variations.style.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const BallByBallPredictor = ({ route }) => {
-  // const data = {};
   const { data, variation } = route.params;
   const navigation = useNavigation();
   const amount = (0).toPrecision(3);
-  const choices = [
-    { id: "1", title: "Overs: 1-3", isLive: true },
-    { id: "2", title: "Overs: 3-6", isLive: false },
-    { id: "3", title: "Overs: 6-9", isLive: false },
-    { id: "4", title: "Overs: 9-12", isLive: false },
-    { id: "5", title: "Overs: 12-15", isLive: false },
-    { id: "6", title: "Overs: 15-18", isLive: false },
-    { id: "7", title: "Overs: 18-20", isLive: false },
-  ];
 
+  const [isMatchLive, setIsMatchLive] = useState(false);
+  const [choices, setChoices] = useState([
+    {
+      id: "1",
+      title: "Overs: 1-3",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: true,
+    },
+    {
+      id: "2",
+      title: "Overs: 3-6",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+    {
+      id: "3",
+      title: "Overs: 6-9",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+    {
+      id: "4",
+      title: "Overs: 9-12",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+    {
+      id: "5",
+      title: "Overs: 12-15",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+    {
+      id: "6",
+      title: "Overs: 15-18",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+    {
+      id: "7",
+      title: "Overs: 18-20",
+      isLive: false,
+      isStarting: false,
+      isYetToStart: false,
+    },
+  ]);
   const opacity = new Animated.Value(0);
+
+  useEffect(() => {
+    fetchLiveMatchData(data.matchId);
+  }, []);
+
+  const fetchLiveMatchData = async (matchId) => {
+    try {
+      const response = await axios.get(
+        `https://fanverse-backend.onrender.com/api/live-match/?matchId=${matchId}`
+      );
+      // const responseData = ""; // Placeholder for actual response data
+      const responseData = response.data;
+      if (responseData === "Data unavailable") {
+        setIsMatchLive(false);
+        console.log(responseData);
+      } else {
+        setIsMatchLive(true);
+        console.log(responseData);
+
+        const { live_score } = responseData;
+
+        // const live_score = {
+        //   overs: 8,
+        // };
+        const currentOver = live_score?.overs;
+
+        const [minutes, seconds] = "00m:20s"
+          .split(":")
+          .map((part) => part.trim())
+          .map((part) =>
+            part.endsWith("m") ? parseInt(part) * 60 : parseInt(part)
+          );
+
+        const remainingSeconds = minutes + seconds;
+
+        const isTimeLessThanThirtySeconds = remainingSeconds < 30;
+
+        const updatedChoices = choices.map((choice, index) => {
+          // 1-3, 3-6, 6-9, 9-12, 12-15, 15-18, 18-20
+          const [startOver, endOver] = choice.title
+            .substring(7)
+            .split("-")
+            .map(Number);
+
+          const isLive = currentOver >= startOver && currentOver <= endOver;
+          const isStarting =
+            currentOver >= startOver + 1 && currentOver <= endOver && !isLive;
+          const isYetToStart =
+            isTimeLessThanThirtySeconds &&
+            currentOver < startOver &&
+            !isLive &&
+            !isStarting;
+
+          return {
+            ...choice,
+            isLive,
+            isStarting,
+            isYetToStart,
+          };
+        });
+
+        setChoices(updatedChoices);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const animateLiveIcon = () => {
     Animated.loop(
@@ -147,7 +257,6 @@ const BallByBallPredictor = ({ route }) => {
                   Final Overs
                 </Text>
               )}
-              {/* Live icon */}
               {item.isLive && (
                 <View
                   style={{
@@ -161,7 +270,6 @@ const BallByBallPredictor = ({ route }) => {
                     gap: 4,
                   }}
                 >
-                  {/* ellipse icon should be blinking */}
                   <Animated.View
                     style={{
                       opacity: opacity,
@@ -177,7 +285,65 @@ const BallByBallPredictor = ({ route }) => {
                       textAlign: "center",
                     }}
                   >
-                    Live
+                    {"Live"}
+                  </Text>
+                </View>
+              )}
+              {item.isStarting && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingVertical: 4,
+                    paddingHorizontal: 10,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.transparentBg,
+                    gap: 4,
+                  }}
+                >
+                  <Animated.View
+                    style={{
+                      opacity: opacity,
+                    }}
+                  >
+                    <Ionicons name="ellipse" size={8} color={"yellow"} />
+                  </Animated.View>
+                  <Text
+                    style={{
+                      color: COLORS.light,
+                      fontSize: 10,
+                      fontWeight: "500",
+                      textAlign: "center",
+                    }}
+                  >
+                    {"Starting"}
+                  </Text>
+                </View>
+              )}
+              {item.isYetToStart && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingVertical: 4,
+                    paddingHorizontal: 10,
+                    borderRadius: 4,
+                    backgroundColor: COLORS.transparentBg,
+                    gap: 4,
+                  }}
+                >
+                  <Ionicons name="ellipse" size={8} color={COLORS.silver} />
+                  <Text
+                    style={{
+                      color: COLORS.light,
+                      fontSize: 10,
+                      fontWeight: "500",
+                      textAlign: "center",
+                    }}
+                  >
+                    {"Soon"}
                   </Text>
                 </View>
               )}

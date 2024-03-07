@@ -83,11 +83,18 @@ const VariationsScreen = ({ route }) => {
                   variation: item.title,
                 });
               } else if (item.id === "5") {
-                navigation.navigate("BallByBallPredictor", {
-                  data: data,
-                  amount: amount,
-                  variation: item.title,
-                });
+                if (
+                  data.format.includes("T20") ||
+                  data.format.includes("Test")
+                ) {
+                  navigation.navigate("BallByBallPredictor", {
+                    data: data,
+                    amount: amount,
+                    variation: item.title,
+                  });
+                } else {
+                  ToastAndroid.show("Work in Progress...", ToastAndroid.SHORT);
+                }
               } else {
                 ToastAndroid.show("Coming soon...", ToastAndroid.SHORT);
               }
