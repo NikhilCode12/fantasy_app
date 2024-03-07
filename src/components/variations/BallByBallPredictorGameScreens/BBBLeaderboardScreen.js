@@ -1,9 +1,30 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../../constants/colors.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BBBLeaderboardScreen = () => {
+  const [username, setUsername] = useState("");
+  const [showTopPoints, setShowTopPoints] = useState(false);
+  const topPointsAnimation = new Animated.Value(0);
+
+  useEffect(() => {
+    // get user name from the async storage
+    const fetchUserData = async () => {
+      try {
+        const user = await AsyncStorage.getItem("user");
+        if (user !== null) {
+          setUsername(JSON.parse(user).username);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -16,7 +37,22 @@ const BBBLeaderboardScreen = () => {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <RankingEntry rank={4} username="User" points={160} />
+      <View style={[styles.topPointsContainer]}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+          }}
+        >
+          <Ionicons name="trophy-sharp" size={30} color={COLORS.primary} />
+          <Text style={styles.topPointsText}>{"1600" + " Points"}</Text>
+        </View>
+        <Text style={styles.topPointsText}>
+          {username + ", you ranked 4th!"}
+        </Text>
+      </View>
       <RankingEntry rank={1} username="John" points={1200} />
       <RankingEntry rank={2} username="Alice" points={1100} />
       <RankingEntry rank={3} username="Bob" points={1050} />
@@ -31,7 +67,7 @@ const RankingEntry = ({ rank, username, points }) => {
         styles.personCard,
         {
           backgroundColor:
-            username === "User" ? COLORS.lightGray : COLORS.bgLightBlack,
+            username === "User" ? "slategray" : COLORS.bgLightBlack,
           elevation: 0,
         },
       ]}
@@ -44,7 +80,15 @@ const RankingEntry = ({ rank, username, points }) => {
         </View>
         <View style={{ marginLeft: 8 }}>
           <Text style={styles.personNameText}>{username}</Text>
-          <Text style={styles.personPointsText}>
+          <Text
+            style={[
+              styles.personPointsText,
+              {
+                color: username === "User" ? COLORS.light : COLORS.light_grey,
+                fontWeight: username === "User" ? "bold" : "normal",
+              },
+            ]}
+          >
             {points.toFixed(2)} Points
           </Text>
         </View>
@@ -138,6 +182,22 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 5,
+  },
+  topPointsContainer: {
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 14,
+  },
+  topPointsText: {
+    color: COLORS.light,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

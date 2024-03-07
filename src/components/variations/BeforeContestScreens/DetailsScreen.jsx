@@ -42,7 +42,7 @@ const DetailsScreen = () => {
   const freePrizeBreakdown = [];
 
   const prize = "Free Entry";
-  const winners = 1000;
+  const winners = "All";
   const entryFee = 0;
 
   const handleExpand = () => {

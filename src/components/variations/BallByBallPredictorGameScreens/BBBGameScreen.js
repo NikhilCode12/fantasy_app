@@ -8,26 +8,28 @@ const BBBGameScreen = ({ route }) => {
   const navigate = useNavigation();
   const { data, title } = route.params;
   const [balls, setBalls] = useState(Array(18).fill(null));
-  const [over, setOver] = useState(0);
+  const [over, setOver] = useState("--");
   const [ballIndex, setBallIndex] = useState(0);
   const [points, setPoints] = useState(0);
   const [timer, setTimer] = useState(20);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [scoreTeamA, setScoreTeamA] = useState("0/0");
-  const [scoreTeamB, setScoreTeamB] = useState("0/0");
+  const [scoreTeamA, setScoreTeamA] = useState("-- / --");
+  const [scoreTeamB, setScoreTeamB] = useState("-- / --");
   const [liveInning, setLiveInning] = useState(1);
   const [recentScores, setRecentScores] = useState("");
 
   useEffect(() => {
     fetchLiveMatchData(data.matchId);
 
-    // fetch live match data every 10 seconds
-    const interval = setInterval(() => {
-      fetchLiveMatchData(data.matchId);
-    }, 20000);
+    // fetch live match data every 20 seconds
+    // const interval = setInterval(() => {
+    //   if (fetchLiveMatchData(data.matchId) === null) {
+    //     clearInterval(interval);
+    //   }
+    // }, 20000);
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, []);
 
   const fetchLiveMatchData = async (matchId) => {
@@ -37,6 +39,14 @@ const BBBGameScreen = ({ route }) => {
         `https://fanverse-backend.onrender.com/api/live-match/?matchId=${matchId}`
       );
       const responseData = response.data.response;
+
+      if (responseData === "Data unavailable") {
+        Alert.alert(
+          "Match not started yet!",
+          "Time to start, " + data.timeRemaining
+        );
+        return null;
+      }
       const { teams, live_inning } = responseData;
       const teamA = teams[0];
       const teamB = teams[1];
