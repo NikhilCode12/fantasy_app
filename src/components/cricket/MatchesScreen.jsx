@@ -273,7 +273,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           const currentTime = new Date().getTime();
           const matchTime = new Date(match.dateTimeGMT).getTime();
           const timeDifference = matchTime - currentTime;
-          if (timeDifference <= 24 * 60 * 60 * 1000 && timeDifference > 0) {
+          if (timeDifference <= 2 * 60 * 60 * 1000) {
             {
               /* // console.log(index, "  ", match.dateTimeGMT); */
             }
