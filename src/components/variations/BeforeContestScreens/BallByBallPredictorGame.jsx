@@ -88,7 +88,14 @@ const BallByBallPredictorGame = ({ route }) => {
           component={BBBGameScreen}
           initialParams={{ data, title }}
         />
-        <Tab.Screen name="Ranking" component={BBBLeaderboardScreen} />
+        <Tab.Screen
+          name="Ranking"
+          component={BBBLeaderboardScreen}
+          initialParams={{
+            username,
+            points,
+          }}
+        />
         {/* <Tab.Screen name="Result" component={BBBResultScreen} /> */}
       </Tab.Navigator>
     </SafeAreaView>

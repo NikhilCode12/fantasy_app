@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import COLORS from "../../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const BBBGameScreen = ({ route }) => {
@@ -29,10 +30,34 @@ const BBBGameScreen = ({ route }) => {
   const [contestOver, setContestOver] = useState(false);
 
   useEffect(() => {
+    const userUpdation = async () => {
+      try {
+        const user = await AsyncStorage.getItem("user");
+        const parsedUser = JSON.parse(user);
+        const response = await axios.post(
+          "https://fanverse-backend.onrender.com/api/ranking",
+          {
+            username: user.username,
+            points: points,
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const gameWorking = async () => {
       const [startOver, endOver] = title.substring(7).split("-").map(Number);
 
       if (parseInt(over) < startOver) {
+        await userUpdation();
+        setContestOver(false);
+        setPoints(0);
+        setTimer(0);
+        setScoreTeamA("-- / --");
+        setScoreTeamB("-- / --");
+        setOver("--");
         setIsOptionLocked(true);
       }
       if (parseInt(over) > endOver) {
@@ -42,6 +67,8 @@ const BBBGameScreen = ({ route }) => {
         setOver("--");
         setTimer(0);
         ToastAndroid.show("Contest Over!", ToastAndroid.SHORT);
+
+        await userUpdation();
         navigate.navigate("Ranking");
       }
     };
