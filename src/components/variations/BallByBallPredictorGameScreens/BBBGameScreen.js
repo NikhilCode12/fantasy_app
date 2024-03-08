@@ -4,8 +4,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ToastAndroid,
   Alert,
-  Animated,
 } from "react-native";
 import COLORS from "../../../constants/colors.js";
 import { useNavigation } from "@react-navigation/native";
@@ -17,7 +17,7 @@ const BBBGameScreen = ({ route }) => {
   const [balls, setBalls] = useState(Array(6).fill(null));
   const [over, setOver] = useState("--");
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(20);
+  const [timer, setTimer] = useState(15);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOptionLocked, setIsOptionLocked] = useState(false);
   const [scoreTeamA, setScoreTeamA] = useState("-- / --");
@@ -25,6 +25,29 @@ const BBBGameScreen = ({ route }) => {
   const [liveInning, setLiveInning] = useState("");
   const [teamAName, setTeamAName] = useState("");
   const [teamBName, setTeamBName] = useState("");
+  const [currentBallIndex, setCurrentBallIndex] = useState(-1);
+  const [contestOver, setContestOver] = useState(false);
+
+  useEffect(() => {
+    const gameWorking = async () => {
+      const [startOver, endOver] = title.substring(7).split("-").map(Number);
+
+      if (parseInt(over) < startOver) {
+        setIsOptionLocked(true);
+      }
+      if (parseInt(over) > endOver) {
+        setContestOver(true);
+        setScoreTeamA("-- / --");
+        setScoreTeamB("-- / --");
+        setOver("--");
+        setTimer(0);
+        ToastAndroid.show("Contest Over!", ToastAndroid.SHORT);
+        navigate.navigate("Ranking");
+      }
+    };
+
+    gameWorking();
+  }, [over]);
 
   useEffect(() => {
     fetchLiveMatchData(data.matchId);
@@ -47,12 +70,15 @@ const BBBGameScreen = ({ route }) => {
     } else {
       // Timer expired, reset timer and unlock option
       clearInterval(interval);
-      setTimer(20);
-      setIsOptionLocked(false);
+      setTimer(15);
+      if (!selectedOption) {
+        // If no option selected, disable options
+        setIsOptionLocked(true);
+      }
     }
 
     return () => clearInterval(interval);
-  }, [timer, isOptionLocked]);
+  }, [timer, isOptionLocked, selectedOption]);
 
   const fetchLiveMatchData = async (matchId) => {
     try {
@@ -63,10 +89,7 @@ const BBBGameScreen = ({ route }) => {
       const responseData = response.data.response;
 
       if (responseData === "Data unavailable") {
-        Alert.alert(
-          "Match not started yet!",
-          "Time to start, " + data.timeRemaining
-        );
+        ToastAndroid.show("Match not started yet!", ToastAndroid.SHORT);
         return null;
       }
       const { teams, live_inning } = responseData;
@@ -119,22 +142,38 @@ const BBBGameScreen = ({ route }) => {
         }
       }
 
-      if (ballIndex < 6) {
-        newBalls[ballIndex - 1] = commentary.score;
-      }
+      newBalls[ballIndex - 1] = score;
 
       ballIndex++;
     });
 
     setBalls(newBalls);
+
+    // Set the index of the current ball
+    setCurrentBallIndex((parseInt(over) - 1) * 6 + ballIndex - 1);
   };
 
-  const handleOptionSelection = (option) => {
-    if (!isOptionLocked) {
-      setSelectedOption(option);
-      setIsOptionLocked(true);
+  const getCorrectMap = (option) => {
+    switch (option) {
+      case "Dot":
+        return 0;
+      case "Single":
+        return 1;
+      case "2/3 Runs":
+        return 3;
+      case "4 Runs":
+        return 4;
+      case "6 Runs":
+        return 6;
+      case "Wicket":
+        return "w";
+    }
+  };
 
-      // Calculate points based on the selection
+  const handleOptionSelection = (option, actualScore) => {
+    if (timer > 0) {
+      const currentBallIndex =
+        (parseInt(over) - 1) * 6 + balls.filter((ball) => ball !== null).length;
       let selectedScore;
       switch (option) {
         case "Dot":
@@ -144,7 +183,7 @@ const BBBGameScreen = ({ route }) => {
           selectedScore = 1;
           break;
         case "2/3 Runs":
-          selectedScore = 2 || 3;
+          selectedScore = 3;
           break;
         case "4 Runs":
           selectedScore = 4;
@@ -159,19 +198,18 @@ const BBBGameScreen = ({ route }) => {
           selectedScore = "";
       }
 
-      updatePoints(selectedScore);
+      updatePoints(selectedScore, actualScore);
+
+      setTimer(15);
+      setSelectedOption(null);
+      setIsOptionLocked(false);
     }
   };
 
-  const updatePoints = (selectedScore) => {
+  const updatePoints = (selectedScore, actualScore) => {
     let newPoints = points;
 
-    // Check if the selected score matches the actual score of the current ball
-    const currentBallIndex = (parseInt(over) - 1) * 6; // Calculate the index of the current ball
-    const actualScore = balls[currentBallIndex]; // Get the actual score of the current ball
-
     if (selectedScore === actualScore) {
-      // Award points based on the selected score
       switch (selectedScore) {
         case "w":
           newPoints += 25;
@@ -191,24 +229,16 @@ const BBBGameScreen = ({ route }) => {
           newPoints += 1;
           break;
         default:
+          newPoints += 0;
           break;
       }
+      setPoints((prevPoints) => prevPoints + newPoints);
 
-      // Display an alert to notify the user of correct prediction and their total points
-      Alert.alert(
-        "Correct Prediction!",
-        `You earned points for predicting the score correctly. Total points: ${newPoints}`
-      );
+      ToastAndroid.show("Correct Prediction!", ToastAndroid.SHORT);
     } else {
-      // Display an alert to notify the user of incorrect prediction
-      Alert.alert(
-        "Incorrect Prediction!",
-        "You did not earn any points for this prediction."
-      );
+      setPoints((prevPoints) => prevPoints + 0);
+      ToastAndroid.show("Incorrect Prediction!", ToastAndroid.SHORT);
     }
-
-    // Update the points state with the new points value
-    setPoints(newPoints);
   };
 
   return (
@@ -280,7 +310,27 @@ const BBBGameScreen = ({ route }) => {
           </Text>
           <View style={styles.ballsContainer}>
             {balls.map((ball, index) => (
-              <View key={index} style={[styles.balls]}>
+              <View
+                key={index}
+                style={[
+                  styles.balls,
+                  {
+                    backgroundColor:
+                      index === currentBallIndex
+                        ? selectedOption === ball
+                          ? "green"
+                          : actualScore === ball
+                          ? "red"
+                          : COLORS.lightGray
+                        : COLORS.lightGray,
+                    borderWidth: 1,
+                    borderColor:
+                      index === currentBallIndex
+                        ? COLORS.primary
+                        : "transparent",
+                  },
+                ]}
+              >
                 <Text
                   style={{
                     color: COLORS.light,
@@ -311,7 +361,12 @@ const BBBGameScreen = ({ route }) => {
                     backgroundColor: COLORS.dark,
                   },
                 ]}
-                onPress={() => handleOptionSelection(option)}
+                onPress={() =>
+                  handleOptionSelection(
+                    getCorrectMap(option),
+                    balls[(parseInt(over) - 1) * 6 + index]
+                  )
+                }
                 disabled={isOptionLocked || timer === 0}
               >
                 <Text style={styles.options}>{option}</Text>
@@ -421,7 +476,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
-    backgroundColor: COLORS.lightGray,
     borderWidth: 1,
   },
   gameContainer: {

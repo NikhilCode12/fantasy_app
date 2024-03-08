@@ -68,6 +68,10 @@ const BallByBallPredictor = ({ route }) => {
 
   useEffect(() => {
     fetchLiveMatchData(data.matchId);
+
+    const interval = setInterval(() => {
+      fetchLiveMatchData(data.matchId);
+    }, 100000);
   }, []);
 
   const fetchLiveMatchData = async (matchId) => {
@@ -79,19 +83,14 @@ const BallByBallPredictor = ({ route }) => {
       const responseData = response.data;
       if (responseData === "Data unavailable") {
         setIsMatchLive(false);
-        console.log(responseData);
       } else {
         setIsMatchLive(true);
-        console.log(responseData);
 
         const { live_score } = responseData;
 
-        // const live_score = {
-        //   overs: 8,
-        // };
         const currentOver = live_score?.overs;
 
-        const [minutes, seconds] = "00m:20s"
+        const [minutes, seconds] = data.timeRemaining
           .split(":")
           .map((part) => part.trim())
           .map((part) =>
