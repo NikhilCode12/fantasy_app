@@ -3,27 +3,35 @@ import { StyleSheet, Text, View, ScrollView, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../../constants/colors.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const BBBLeaderboardScreen = () => {
-  const [username, setUsername] = useState("");
-  const [showTopPoints, setShowTopPoints] = useState(false);
-  const topPointsAnimation = new Animated.Value(0);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // get user name from the async storage
-    const fetchUserData = async () => {
+    const fetchUsersForRanking = async () => {
       try {
-        const user = await AsyncStorage.getItem("user");
-        if (user !== null) {
-          setUsername(JSON.parse(user).username);
-        }
-      } catch (e) {
-        console.log(e);
+        const response = await axios.get(
+          "https://fanverse-backend.onrender.com/api/ranking/all"
+        );
+        console.log(response.data);
+        setUsers(response.data);
+      } catch (error) {
+        console.error(error);
       }
     };
+    fetchUsersForRanking();
 
-    fetchUserData();
+    // fetch data for each interval of 20 seconds
+    const interval = setInterval(() => {
+      fetchUsersForRanking();
+    }, 20000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  // Sorting users based on points in descending order
+  const sortedUsers = [...users].sort((a, b) => b.points - a.points);
 
   return (
     <ScrollView
@@ -47,15 +55,26 @@ const BBBLeaderboardScreen = () => {
           }}
         >
           <Ionicons name="trophy-sharp" size={30} color={COLORS.primary} />
-          <Text style={styles.topPointsText}>{"1600" + " Points"}</Text>
+          <Text style={styles.topPointsText}>
+            {sortedUsers.length > 0
+              ? sortedUsers[0].points + " Points"
+              : "0 Points"}
+          </Text>
         </View>
         <Text style={styles.topPointsText}>
-          {username + ", you ranked 4th!"}
+          {sortedUsers.length > 0
+            ? sortedUsers[0].username + ", you ranked 1st!"
+            : "No users found"}
         </Text>
       </View>
-      <RankingEntry rank={1} username="John" points={1200} />
-      <RankingEntry rank={2} username="Alice" points={1100} />
-      <RankingEntry rank={3} username="Bob" points={1050} />
+      {sortedUsers.map((user, index) => (
+        <RankingEntry
+          key={index}
+          rank={index + 1}
+          username={user.username}
+          points={user.points}
+        />
+      ))}
     </ScrollView>
   );
 };
