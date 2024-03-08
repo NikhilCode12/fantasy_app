@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
-const ContestCard = ({
+const ContestCard2 = ({
   contest,
   variationSelected,
   oversSelected,
@@ -11,27 +11,22 @@ const ContestCard = ({
 }) => {
   const {
     title,
-    winners,
-    prizePool,
-    entryFee,
-    spotsLeft,
-    totalSpots,
-    megaPrize,
+    // winners,
+    PrizePool,
+    EntryFees,
+    SpotsLeft,
+    TotalSpots,
+    MegaPrize,
     variation,
-    teams,
+    // teams,
   } = contest;
 
-  if (variation !== variationSelected) {
-    return null;
-  }
-  if (oversSelected !== title) {
-    return null;
-  }
 
-  const spotsLeftFormatted = spotsLeft.toLocaleString("en-IN");
-  const totalSpotsFormatted = totalSpots.toLocaleString("en-IN");
 
-  const spotsTakenPercentage = ((totalSpots - spotsLeft) / totalSpots) * 100;
+  const spotsLeftFormatted = SpotsLeft.toLocaleString("en-IN");
+  const totalSpotsFormatted = TotalSpots.toLocaleString("en-IN");
+
+  const spotsTakenPercentage = ((TotalSpots - SpotsLeft) / TotalSpots) * 100;
   const redProgressBarStyle = {
     width: `${spotsTakenPercentage}%`,
     backgroundColor:
@@ -43,7 +38,7 @@ const ContestCard = ({
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => handleContestCardPress(entryFee)}
+      onPress={() => handleContestCardPress(EntryFees,contest._id)}
     >
       <View style={styles.winnersInfoContainer}>
         <View
@@ -78,14 +73,14 @@ const ContestCard = ({
               },
             ]}
           >
-            Winners: {winners}
+            Winners: {TotalSpots}
           </Text>
         </View>
       </View>
       <View style={styles.contestDetailsContainer}>
         <View style={styles.prizeContainer}>
           <Text style={styles.prizePoolText}>Prize Pool</Text>
-          <Text style={styles.prizePoolAmount}>{prizePool}</Text>
+          <Text style={styles.prizePoolAmount}>{PrizePool==="0"?"Free":PrizePool}</Text>
         </View>
         <View style={styles.entryFeeContainer}>
           <Text style={styles.entryFeeText}>Entry Fee</Text>
@@ -104,7 +99,7 @@ const ContestCard = ({
               },
             ]}
           >
-            {entryFee}
+            {EntryFees}
           </Text>
         </View>
       </View>
@@ -130,7 +125,7 @@ const ContestCard = ({
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.prizeText}>
-          Mega Prize: <Text style={styles.prizeAmount}>{megaPrize}</Text>
+          Mega Prize: <Text style={styles.prizeAmount}>{MegaPrize}</Text>
         </Text>
         <View
           style={{
@@ -140,14 +135,14 @@ const ContestCard = ({
             alignItems: "center",
           }}
         >
-          {teams ? (
+          {/* {teams ? (
             <>
               <Ionicons name="shirt" size={12} color={COLORS.silver} />
               <Text style={styles.prizeText}>
                 Teams: <Text style={styles.prizeAmount}>{teams}</Text>
               </Text>
             </>
-          ) : null}
+          ) : null} */}
         </View>
       </View>
     </TouchableOpacity>
@@ -278,4 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContestCard;
+export default ContestCard2;

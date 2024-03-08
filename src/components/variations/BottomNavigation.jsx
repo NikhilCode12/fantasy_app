@@ -12,6 +12,7 @@ import COLORS from "../../constants/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import MyContestsScreen from "./MyContestsScreen";
 import MyTeamsScreen from "./MyTeamsScreen";
+import BallByBallContestScreen from "./BallByBallContestScreen";
 import { NavigationContainer } from "@react-navigation/native";
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -62,7 +63,7 @@ const BottomNavigation = ({ route }) => {
       <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen
           name="Contests"
-          component={ContestsScreen}
+          component={BallByBallContestScreen}
           initialParams={{ data, amount, variation, title }}
           options={{
             tabBarIcon: ({ focused }) => {

@@ -37,6 +37,7 @@ import MyTeamsScreen from "./src/components/variations/MyTeamsScreen";
 import PlayerSelection2 from "./src/components/teams/FantasticFive/PlayerSelection2";
 import PlayerSelection3 from "./src/components/teams/TopThree/PlayerSelection3";
 import MvpSelection from "./src/components/teams/TopThree/MvpSelection";
+import BallByBallContestScreen from "./src/components/variations/BallByBallContestScreen";
 const Stack = createNativeStackNavigator();
 import { StripeProvider } from "@stripe/stripe-react-native";
 
@@ -59,6 +60,11 @@ function App() {
           <Stack.Screen
             name="BallByBallPredictor"
             component={BallByBallPredictor}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BallByBallContestScreen"
+            component={BallByBallContestScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
