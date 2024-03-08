@@ -25,9 +25,9 @@ const ContestCard = ({
     return null;
   }
 
-  if (oversSelected !== title) {
-    return null;
-  }
+  // if (oversSelected !== title) {
+  //   return null;
+  // }
 
   const spotsLeftFormatted = spotsLeft.toLocaleString("en-IN");
   const totalSpotsFormatted = totalSpots.toLocaleString("en-IN");

@@ -4,148 +4,240 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Alert,
   ToastAndroid,
-  Animated,
+  Alert,
 } from "react-native";
 import COLORS from "../../../constants/colors.js";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const BBBGameScreen = ({ route }) => {
+  const navigate = useNavigation();
   const { data, title } = route.params;
-  const [balls, setBalls] = useState(Array(18).fill(null));
-  const [over, setOver] = useState(0);
-  const [ballIndex, setBallIndex] = useState(0);
+  const [balls, setBalls] = useState(Array(6).fill(null));
+  const [over, setOver] = useState("--");
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(20);
+  const [timer, setTimer] = useState(15);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [scoreTeamA, setScoreTeamA] = useState("0/0");
-  const [scoreTeamB, setScoreTeamB] = useState("0/0");
-  const [animatedBorderWidth] = useState(new Animated.Value(100));
-
-  const dummyBalls = [
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-    ".",
-    1,
-    2,
-    3,
-    4,
-    6,
-    "W",
-  ];
+  const [isOptionLocked, setIsOptionLocked] = useState(false);
+  const [scoreTeamA, setScoreTeamA] = useState("-- / --");
+  const [scoreTeamB, setScoreTeamB] = useState("-- / --");
+  const [liveInning, setLiveInning] = useState("");
+  const [teamAName, setTeamAName] = useState("");
+  const [teamBName, setTeamBName] = useState("");
+  const [currentBallIndex, setCurrentBallIndex] = useState(-1);
+  const [contestOver, setContestOver] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (timer === 0) {
-        handleTimerEnd();
-      } else {
-        setTimer((prev) => prev - 1);
+    const gameWorking = async () => {
+      const [startOver, endOver] = title.substring(7).split("-").map(Number);
+
+      if (parseInt(over) < startOver) {
+        setIsOptionLocked(true);
       }
-    }, 1000);
+      if (parseInt(over) > endOver) {
+        setContestOver(true);
+        setScoreTeamA("-- / --");
+        setScoreTeamB("-- / --");
+        setOver("--");
+        setTimer(0);
+        ToastAndroid.show("Contest Over!", ToastAndroid.SHORT);
+        navigate.navigate("Ranking");
+      }
+    };
+
+    gameWorking();
+  }, [over]);
+
+  useEffect(() => {
+    fetchLiveMatchData(data.matchId);
+
+    // fetch live match data every 20 seconds
+    const interval = setInterval(() => {
+      fetchLiveMatchData(data.matchId);
+    }, 20000);
 
     return () => clearInterval(interval);
-  }, [timer]);
+  }, []);
 
   useEffect(() => {
-    if (over === 3) {
-      setIsGameOver(true);
-      ToastAndroid.show("Game Over", ToastAndroid.SHORT, ToastAndroid.TOP);
-    }
-  }, [over, points]);
-
-  useEffect(() => {
-    const percentage = (timer / 20) * 100;
-    Animated.timing(animatedBorderWidth, {
-      toValue: percentage,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  }, [timer, animatedBorderWidth]);
-
-  const handleTimerEnd = () => {
-    const userChoice = selectedOption;
-    const ballResult = dummyBalls[ballIndex];
-    const resultIndex = result.findIndex((item) => item.dummy === ballResult);
-
-    const isCorrect = userChoice === result[resultIndex]?.meaning;
-
-    updateBallResult(ballIndex, ballResult, isCorrect);
-
-    if (isCorrect) {
-      const updatedPoints = isCorrect
-        ? calculatePoints(result[resultIndex]?.dummy)
-        : 0;
-      ToastAndroid.show("Correct", ToastAndroid.SHORT);
-      setPoints(points + updatedPoints);
+    // Timer logic
+    let interval;
+    if (timer > 0 && !isOptionLocked) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
     } else {
-      ToastAndroid.show("Wrong", ToastAndroid.SHORT);
+      // Timer expired, reset timer and unlock option
+      clearInterval(interval);
+      setTimer(15);
+      if (!selectedOption) {
+        // If no option selected, disable options
+        setIsOptionLocked(true);
+      }
     }
 
-    if ((ballIndex + 1) % 6 === 0) {
-      ToastAndroid.show("Over Completed", ToastAndroid.SHORT);
-      setOver((prevOver) => prevOver + 1);
-      setBallIndex(0);
-    } else {
-      setBallIndex((prevIndex) => (prevIndex + 1) % 6);
-    }
+    return () => clearInterval(interval);
+  }, [timer, isOptionLocked, selectedOption]);
 
-    setTimer(20);
-    setSelectedOption(null);
+  const fetchLiveMatchData = async (matchId) => {
+    try {
+      // get data by sending match id as query param to the api
+      const response = await axios.get(
+        `https://fanverse-backend.onrender.com/api/live-match/?matchId=${matchId}`
+      );
+      const responseData = response.data.response;
+
+      if (responseData === "Data unavailable") {
+        ToastAndroid.show("Match not started yet!", ToastAndroid.SHORT);
+        return null;
+      }
+      const { teams, live_inning } = responseData;
+      const teamA = teams[0];
+      const teamB = teams[1];
+      if (live_inning.short_name.includes(teamAName)) {
+        setLiveInning(teamAName);
+      } else {
+        setLiveInning(teamBName);
+      }
+
+      setTeamAName(teamA.abbr);
+      setTeamBName(teamB.abbr);
+      setScoreTeamA(teamA.scores || "-- / --");
+      setScoreTeamB(teamB.scores || "-- / --");
+      setOver(responseData.live_score.overs);
+      updateBallScore(responseData.commentaries);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleOptionSelect = (option) => {
-    if (isGameOver || selectedOption !== null || timer === 0) return;
+  const updateBallScore = (commentaries) => {
+    if (!commentaries || !Array.isArray(commentaries)) return;
 
-    setSelectedOption(option);
-  };
+    let newBalls = Array(6).fill(null);
+    let ballIndex = 0;
+    let currentOver = -1;
+    let extraBall = false;
 
-  const result = [
-    { dummy: "Dot", meaning: "." },
-    { dummy: "Single", meaning: 1 },
-    { dummy: "2/3 Runs", meaning: 2 },
-    { dummy: "2/3 Runs", meaning: 3 },
-    { dummy: "4 Runs", meaning: 4 },
-    { dummy: "6 Runs", meaning: 6 },
-    { dummy: "Wicket", meaning: "W" },
-  ];
+    commentaries.forEach((commentary) => {
+      const over = parseInt(commentary.over);
+      const ball = parseInt(commentary.ball);
+      const score = commentary.score;
 
-  const updateBallResult = (index, result, isCorrect) => {
-    const newBalls = [...balls];
-    const actualIndex = over * 6 + index;
-    newBalls[actualIndex] = { result, isCorrect };
+      if (score === "nb" || score === "wd") {
+        extraBall = true;
+      } else {
+        extraBall = false;
+      }
+
+      if (over !== currentOver) {
+        currentOver = over;
+        ballIndex = 0;
+
+        if (extraBall) {
+          newBalls = Array(7).fill(null);
+        } else {
+          newBalls = Array(6).fill(null);
+        }
+      }
+
+      newBalls[ballIndex - 1] = score;
+
+      ballIndex++;
+    });
+
     setBalls(newBalls);
+
+    // Set the index of the current ball
+    setCurrentBallIndex((parseInt(over) - 1) * 6 + ballIndex - 1);
   };
 
-  const calculatePoints = (ballResult) => {
-    switch (ballResult) {
-      case ".":
-        return 1;
-      case 1:
-        return 1;
-      case 2:
-      case 3:
-        return 2;
-      case 4:
-        return 5;
-      case 6:
-        return 8;
-      case "W":
-        return 25;
-      default:
+  const getCorrectMap = (option) => {
+    switch (option) {
+      case "Dot":
         return 0;
+      case "Single":
+        return 1;
+      case "2/3 Runs":
+        return 3;
+      case "4 Runs":
+        return 4;
+      case "6 Runs":
+        return 6;
+      case "Wicket":
+        return "w";
+    }
+  };
+
+  const handleOptionSelection = (option, actualScore) => {
+    if (timer > 0) {
+      const currentBallIndex =
+        (parseInt(over) - 1) * 6 + balls.filter((ball) => ball !== null).length;
+      let selectedScore;
+      switch (option) {
+        case "Dot":
+          selectedScore = 0;
+          break;
+        case "Single":
+          selectedScore = 1;
+          break;
+        case "2/3 Runs":
+          selectedScore = 3;
+          break;
+        case "4 Runs":
+          selectedScore = 4;
+          break;
+        case "6 Runs":
+          selectedScore = 6;
+          break;
+        case "Wicket":
+          selectedScore = "w";
+          break;
+        default:
+          selectedScore = "";
+      }
+
+      updatePoints(selectedScore, actualScore);
+
+      setTimer(15);
+      setSelectedOption(null);
+      setIsOptionLocked(false);
+    }
+  };
+
+  const updatePoints = (selectedScore, actualScore) => {
+    let newPoints = points;
+
+    if (selectedScore === actualScore) {
+      switch (selectedScore) {
+        case "w":
+          newPoints += 25;
+          break;
+        case 6:
+          newPoints += 8;
+          break;
+        case 4:
+          newPoints += 5;
+          break;
+        case 3:
+        case 2:
+          newPoints += 3;
+          break;
+        case 1:
+        case 0:
+          newPoints += 1;
+          break;
+        default:
+          newPoints += 0;
+          break;
+      }
+      setPoints((prevPoints) => prevPoints + newPoints);
+
+      ToastAndroid.show("Correct Prediction!", ToastAndroid.SHORT);
+    } else {
+      setPoints((prevPoints) => prevPoints + 0);
+      ToastAndroid.show("Incorrect Prediction!", ToastAndroid.SHORT);
     }
   };
 
@@ -174,9 +266,9 @@ const BBBGameScreen = ({ route }) => {
                 width: "100%",
               }}
             >
-              <Text style={styles.teamTitle}>{data.teamAName}</Text>
+              <Text style={styles.teamTitle}>{teamAName}</Text>
               <Text style={styles.teamTitle}>vs</Text>
-              <Text style={styles.teamTitle}>{data.teamBName}</Text>
+              <Text style={styles.teamTitle}>{teamBName}</Text>
             </View>
             <View
               style={{
@@ -185,11 +277,31 @@ const BBBGameScreen = ({ route }) => {
                 width: "100%",
               }}
             >
-              <Text style={styles.teamScore}>{scoreTeamA}</Text>
-              <Text style={styles.teamScore}>{scoreTeamB}</Text>
+              <Text
+                style={[
+                  styles.teamScore,
+                  {
+                    color:
+                      liveInning === teamAName ? COLORS.primary : COLORS.light,
+                  },
+                ]}
+              >
+                {scoreTeamA}
+              </Text>
+              <Text
+                style={[
+                  styles.teamScore,
+                  {
+                    color:
+                      liveInning === teamBName ? COLORS.primary : COLORS.light,
+                  },
+                ]}
+              >
+                {scoreTeamB}
+              </Text>
             </View>
           </View>
-          <Text style={styles.gameTitle}>Over: {Math.floor(over) + 1}</Text>
+          <Text style={styles.gameTitle}>Over: {over}</Text>
         </View>
         <View style={styles.pointsContainer}>
           <Text style={styles.pointsText}>
@@ -197,29 +309,27 @@ const BBBGameScreen = ({ route }) => {
             <Text style={styles.points}>{points}</Text>
           </Text>
           <View style={styles.ballsContainer}>
-            {[0, 1, 2, 3, 4, 5].map((index) => (
-              <TouchableOpacity
+            {balls.map((ball, index) => (
+              <View
                 key={index}
                 style={[
                   styles.balls,
-                  index === ballIndex && {
-                    borderColor: COLORS.primary,
+                  {
+                    backgroundColor:
+                      index === currentBallIndex
+                        ? selectedOption === ball
+                          ? "green"
+                          : actualScore === ball
+                          ? "red"
+                          : COLORS.lightGray
+                        : COLORS.lightGray,
                     borderWidth: 1,
+                    borderColor:
+                      index === currentBallIndex
+                        ? COLORS.primary
+                        : "transparent",
                   },
-                  balls[over * 6 + index] &&
-                    balls[over * 6 + index].isCorrect && {
-                      borderColor: COLORS.darkGreen,
-                    },
-                  balls[over * 6 + index] &&
-                    !balls[over * 6 + index].isCorrect && {
-                      backgroundColor: COLORS.darkRed,
-                    },
-                  balls[over * 6 + index] &&
-                    !balls[over * 6 + index].result && {
-                      opacity: 0.5,
-                    },
                 ]}
-                disabled={true}
               >
                 <Text
                   style={{
@@ -228,11 +338,9 @@ const BBBGameScreen = ({ route }) => {
                     fontSize: 11,
                   }}
                 >
-                  {balls[over * 6 + index]
-                    ? balls[over * 6 + index].result
-                    : ""}
+                  {ball}
                 </Text>
-              </TouchableOpacity>
+              </View>
             ))}
           </View>
         </View>
@@ -245,7 +353,7 @@ const BBBGameScreen = ({ route }) => {
                 key={index}
                 style={[
                   styles.btns,
-                  selectedOption !== null || timer === 0
+                  isOptionLocked || timer === 0
                     ? { backgroundColor: COLORS.transparentBg, opacity: 0.5 }
                     : { backgroundColor: COLORS.transparentBg },
                   selectedOption === option && {
@@ -253,26 +361,20 @@ const BBBGameScreen = ({ route }) => {
                     backgroundColor: COLORS.dark,
                   },
                 ]}
-                onPress={() => handleOptionSelect(option)}
-                disabled={selectedOption !== null || timer === 0}
+                onPress={() =>
+                  handleOptionSelection(
+                    getCorrectMap(option),
+                    balls[(parseInt(over) - 1) * 6 + index]
+                  )
+                }
+                disabled={isOptionLocked || timer === 0}
               >
                 <Text style={styles.options}>{option}</Text>
               </TouchableOpacity>
             )
           )}
         </View>
-        <Animated.View
-          style={[
-            styles.timerContainer,
-            {
-              width: animatedBorderWidth.interpolate({
-                inputRange: [0, 100],
-                outputRange: ["100%", "0%"],
-              }),
-              borderColor: COLORS.secondary,
-            },
-          ]}
-        >
+        <View style={[styles.timerContainer]}>
           <Text
             style={{
               color: COLORS.light,
@@ -283,7 +385,7 @@ const BBBGameScreen = ({ route }) => {
           >
             {timer > 0 ? timer : 0}
           </Text>
-        </Animated.View>
+        </View>
       </View>
     </View>
   );
@@ -308,7 +410,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "45%",
+    width: "35%",
     borderWidth: 1,
     paddingVertical: 10,
     paddingHorizontal: 12,
@@ -374,7 +476,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
-    backgroundColor: COLORS.lightGray,
     borderWidth: 1,
   },
   gameContainer: {
@@ -407,11 +508,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   pointsText: {
-    color: COLORS.light_grey,
+    color: COLORS.light,
     paddingHorizontal: 6,
     fontSize: 14,
     fontWeight: "bold",
-    width: "37%",
+    width: "32.5%",
   },
   points: {
     color: COLORS.light,
