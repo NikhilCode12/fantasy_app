@@ -13,11 +13,12 @@ import { useStripe, useConfirmPayment } from "@stripe/stripe-react-native";
 import axios from "axios";
 import styles from "../../styles/variations.style.js";
 import COLORS from "../../constants/colors.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
 const BeforeContestDetailsScreen = ({ route }) => {
-  const { data, amount, variation, title, entryFee } = route.params;
+  const { data, amount, variation, title, entryFee, contestId } = route.params;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -106,6 +107,76 @@ const BeforeContestDetailsScreen = ({ route }) => {
       Alert.alert("Something went wrong during payment!");
     }
   };
+  async function handlejoin() {
+    try {
+      if (entryFee === 0) {
+        Alert.alert("You have joined the contest successfully!");
+        const token = await AsyncStorage.getItem("userToken");
+        console.log("token is :", token);
+        console.log("Contest id is :", contestId);
+        // const response = await axios.post(
+        //   "https://fanverse-backend.onrender.com/api/user/joincontest",
+        //   {
+        //     token: token,
+        //     contestId: contestId,
+        //   }
+        // );
+        // console.log(response.data);
+        navigation.navigate("BallByBallPredictorGame", {
+          data: data,
+          amount: amount,
+          variation: variation,
+          title: title,
+        });
+      } else {
+        handleJoinContest(entryFee);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  // async function handlejoin() {
+  //   try {
+  //     if (entryFee === 0) {
+  //       Alert.alert("You have joined the contest successfully!");
+  //       const token = await AsyncStorage.getItem("userToken");
+  //       console.log("token is:", token);
+  //       console.log("Contest id is:", contestId);
+
+  //       const response = await fetch(
+  //         "https://fanverse-backend.onrender.com/api/user/joincontest",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             token: token,
+  //             contestId: contestId,
+  //           }),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       const responseData = await response.json();
+  //       console.log(responseData);
+
+  //       navigation.navigate("BallByBallPredictorGame", {
+  //         data: data,
+  //         amount: amount,
+  //         variation: variation,
+  //         title: title,
+  //       });
+  //     } else {
+  //       handleJoinContest(entryFee);
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -168,22 +239,7 @@ const BeforeContestDetailsScreen = ({ route }) => {
         )}
       </Tab.Navigator>
       {/* Join Contest Button */}
-      <TouchableOpacity
-        style={styles.joinContestButton}
-        onPress={() => {
-          if (entryFee === 0) {
-            Alert.alert("You have joined the contest successfully!");
-            navigation.navigate("BallByBallPredictorGame", {
-              data: data,
-              amount: amount,
-              variation: variation,
-              title: title,
-            });
-          } else {
-            handleJoinContest(entryFee);
-          }
-        }}
-      >
+      <TouchableOpacity style={styles.joinContestButton} onPress={handlejoin}>
         <Text style={styles.joinContestButtonText}>
           {"Join Contest at ₹" + entryFee}
         </Text>

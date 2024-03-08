@@ -1,13 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import COLORS from "../../constants/colors";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import picc from "../../../assets/batsmenPic.jpg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 export default function MyContestsScreen({ route }) {
   const navigation = useNavigation();
   const { data, amount, variation } = route.params;
+  const [mycontests, setmycontest] = useState([]);
+  // useEffect(() => {
+  //   const getUserByToken = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("userToken");
+
+  //       if (!token) {
+  //         console.error("Token is missing!");
+  //         return;
+  //       }
+
+  //       const response = await axios.get(
+  //         "https://fanverse-backend.onrender.com/api/user/",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       // console.log(response.data);
+  //       // Handle the response
+  //       if (response.status === 200) {
+  //         const user = response.data;
+  //         console.log("User:", user);
+  //         // Handle the user data as needed
+  //       } else {
+  //         console.error("Error:", response.status, response.data);
+  //         // Handle other status codes or error responses
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error.message);
+  //       // Handle any other errors
+  //     }
+  //   };
+  //   getUserByToken();
+  // }, []);
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.bgMateBlack, flex: 1 }}>
       <View style={styles.headerContainer}>
