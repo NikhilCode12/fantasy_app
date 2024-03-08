@@ -273,7 +273,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
           const currentTime = new Date().getTime();
           const matchTime = new Date(match.dateTimeGMT).getTime();
           const timeDifference = matchTime - currentTime;
-          if (timeDifference > 0 && timeDifference <= 24 * 60 * 60 * 1000) {
+          if (timeDifference <= 2 * 60 * 60 * 1000) {
             {
               /* // console.log(index, "  ", match.dateTimeGMT); */
             }
@@ -294,6 +294,7 @@ const MatchesScreen = ({ onMatchCardPress }) => {
                       timeVenue: matchDay,
                       teamAImage: match.teama.logo_url,
                       teamBImage: match.teamb.logo_url,
+                      format: match.format_str,
                     })
                   }
                   league={match.competition.title}

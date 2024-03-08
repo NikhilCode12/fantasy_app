@@ -24,7 +24,6 @@ const ContestCard = ({
   if (variation !== variationSelected) {
     return null;
   }
-  
   if (oversSelected !== title) {
     return null;
   }

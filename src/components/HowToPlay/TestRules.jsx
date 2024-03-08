@@ -180,7 +180,7 @@ export default function TestRules() {
               borderTopRightRadius: 8,
             }}
           >
-            <Text style={{ color: COLORS.light }}>
+            <Text style={{ color: COLORS.light, textAlign: "center" }}>
               IMPORTANT FANTASY POINTS
             </Text>
           </View>
