@@ -235,7 +235,7 @@ const BBBGameScreen = ({ route }) => {
 
   const updatePoints = (selectedScore, actualScore) => {
     let newPoints = points;
-
+    
     if (selectedScore === actualScore) {
       switch (selectedScore) {
         case "w":

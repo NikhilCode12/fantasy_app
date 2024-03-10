@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  Button,
   ActivityIndicator,
 } from "react-native";
 import styles from "../../styles/cricket.matches.style";
@@ -18,7 +19,11 @@ const MatchesScreen = ({ onMatchCardPress }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [matches, setMatches] = useState([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [visibleMatches, setVisibleMatches] = useState(5); // Number of initially visible matches
 
+  const loadMoreMatches = () => {
+    setVisibleMatches((prevVisibleMatches) => prevVisibleMatches + 5);
+  };
   useEffect(() => {
     console.log("MatchesScreen mounted");
     fetchMatchesData();
@@ -263,55 +268,73 @@ const MatchesScreen = ({ onMatchCardPress }) => {
         console.log(index, "  ", match.dateTimeGMT);
       })} */}
       {matches
-        .slice(0, 216)
+        .filter((match) => {
+          const currentTime = new Date().getTime();
+          const matchTime = new Date(match.dateTimeGMT).getTime();
+          const timeDifference = matchTime - currentTime;
+          return timeDifference > 0; // Filter out past matches
+        })
         .sort((a, b) => {
           const timeVenueA = new Date(a.dateTimeGMT).getTime();
           const timeVenueB = new Date(b.dateTimeGMT).getTime();
           return timeVenueA - timeVenueB;
         })
+        .slice(0, 5) // Limit to the first 5 upcoming matches
         .map((match, index) => {
-          const currentTime = new Date().getTime();
-          const matchTime = new Date(match.dateTimeGMT).getTime();
-          const timeDifference = matchTime - currentTime;
-          if (timeDifference <= 2 * 60 * 60 * 1000) {
-            {
-              /* // console.log(index, "  ", match.dateTimeGMT); */
-            }
-            const remainingTime = formatRemainingTime(match.dateTimeGMT);
-            const matchDay = formatTimeVenue(match.dateTimeGMT);
+          const remainingTime = formatRemainingTime(match.dateTimeGMT);
+          const matchDay = formatTimeVenue(match.dateTimeGMT);
 
-            if (matchDay.includes("Today") || matchDay.includes("Tomorrow"))
-              return (
-                <MatchCard
-                  key={match.match_id}
-                  onMatchCardPress={() =>
-                    onMatchCardPress({
-                      competitionId: match.competition.cid,
-                      matchId: match.match_id,
-                      teamAName: match.teama.short_name,
-                      teamBName: match.teamb.short_name,
-                      timeRemaining: remainingTime,
-                      timeVenue: matchDay,
-                      teamAImage: match.teama.logo_url,
-                      teamBImage: match.teamb.logo_url,
-                      format: match.format_str,
-                    })
-                  }
-                  league={match.competition.title}
-                  teamAImage={match.teama.logo_url}
-                  teamAName={match.teama.short_name}
-                  teamBName={match.teamb.short_name}
-                  teamBImage={match.teamb.logo_url}
-                  timeRemaining={remainingTime}
-                  timeVenue={matchDay}
-                  format={match.format_str}
-                  winnings={"Free Entry"}
-                />
-              );
-          } else {
-            return null;
-          }
+          return (
+            <MatchCard
+              key={match.match_id}
+              onMatchCardPress={() =>
+                onMatchCardPress({
+                  competitionId: match.competition.cid,
+                  matchId: match.match_id,
+                  teamAName: match.teama.short_name,
+                  teamBName: match.teamb.short_name,
+                  timeRemaining: remainingTime,
+                  timeVenue: matchDay,
+                  teamAImage: match.teama.logo_url,
+                  teamBImage: match.teamb.logo_url,
+                  format: match.format_str,
+                })
+              }
+              league={match.competition.title}
+              teamAImage={match.teama.logo_url}
+              teamAName={match.teama.short_name}
+              teamBName={match.teamb.short_name}
+              teamBImage={match.teamb.logo_url}
+              timeRemaining={remainingTime}
+              timeVenue={matchDay}
+              format={match.format_str}
+              winnings={"Free Entry"}
+            />
+          );
         })}
+      {/* {visibleMatches < matches.length && (
+        <TouchableOpacity
+          style={{
+            backgroundColor: COLORS.bgLightBlack,
+            paddingVertical: 5,
+            paddingHorizontal: 8,
+            marginTop: 10,
+            borderColor: COLORS.primary,
+            borderWidth: 1,
+            borderRadius: 3,
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.primary,
+              fontSize: 18,
+              textAlign: "center",
+            }}
+          >
+            Load More
+          </Text>
+        </TouchableOpacity>
+      )} */}
     </ScrollView>
   );
 };
